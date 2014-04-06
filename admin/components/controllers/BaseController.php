@@ -34,20 +34,20 @@ class BaseController extends CApplicationController
             $this->redirect(Yii::app()->user->getReturnUrl());
         
         $model = new LoginForm('login');
-        if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
+        if(filter_input(INPUT_POST,'ajax')=='login-form')
         {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
         // collect user input data
-        if(isset($_POST['login']))
+        if(filter_has_var(INPUT_POST,'login'))
         {
-            $model->attributes = $_POST['login'];
+            $model->attributes = filter_get(INPUT_POST,'login');
             if($model->validate() && $model->login())
                 $this->redirect(Yii::app()->user->returnUrl);
         }
         // display the login form
-        $this->renderPartial('auth',array('model' => $model));
+        $this->renderPartial('login',array('model' => $model));
     }
     
     public function actionLogout()
@@ -64,6 +64,11 @@ class BaseController extends CApplicationController
 
     public function actionIndex()
     {
+        Yii::app()->clientScript->registerCssFile(
+            Yii::app()->assetManager->publish(
+                Yii::getPathOfAlias('application.vendors.bootstrap').'/bootstrap.css'
+            )
+        );
         $this->render('test');
     }
 }

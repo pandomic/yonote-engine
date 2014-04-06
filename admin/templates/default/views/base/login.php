@@ -13,7 +13,6 @@ $template = Yii::app()->request->baseUrl.'/templates/'.Yii::app()->getTheme()->n
     
     <title>Bootstrap 101 Template</title>
 
-    <link href="<?php echo $template; ?>/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo $template; ?>/css/bootstrap-theme.css" rel="stylesheet">
 
     <!--[if lt IE 9]>

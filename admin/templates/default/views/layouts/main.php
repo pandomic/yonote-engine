@@ -11,9 +11,8 @@ $template = Yii::app()->request->baseUrl.'/templates/'.Yii::app()->getTheme()->n
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="<?php echo $template; ?>/js/bootstrap.min.js"></script>
     
-    <title>Bootstrap 101 Template</title>
+    <title>Yonote ENGINE</title>
 
-    <link href="<?php echo $template; ?>/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo $template; ?>/css/bootstrap-theme.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
@@ -33,7 +32,7 @@ $template = Yii::app()->request->baseUrl.'/templates/'.Yii::app()->getTheme()->n
     </div>
 
     <div class="sidebar">
-    
+        
     </div>
     
     

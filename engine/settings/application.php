@@ -45,7 +45,7 @@ return array(
     // Components settigns
     'components' => array(
         'assetManager' => array(
-            'basePath' => ENGINE_PATH.'/assets'
+            'basePath' => THIS_PATH.'/assets'
         ),
         // PIDs
         'pids' => array(
