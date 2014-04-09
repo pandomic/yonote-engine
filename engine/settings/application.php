@@ -20,7 +20,7 @@ return array(
     'charset' => 'utf-8',
     // Set application base path
     'basePath' => ENGINE_PATH,
-    
+    // Setup default theme
     'theme' => 'default',
     
     // Import engine components
@@ -31,6 +31,7 @@ return array(
         'ext.*'
     ),
     
+    // Preload some application components
     'preload' => array(
         'mmanager',
         'wmanager',
@@ -38,16 +39,23 @@ return array(
         'pids'
     ),
     
+    // Application configuration
     'behaviors' => array(
         'ApplicationConfigBehavior'
     ),
     
     // Components settigns
     'components' => array(
+        // Database schema bilder
+        'schema' => array (
+            'class' => 'CApplicationSchema',
+            'dbComponentId' => 'db'
+        ),
+        // Asset manager
         'assetManager' => array(
             'basePath' => THIS_PATH.'/assets'
         ),
-        // PIDs
+        // Page identifiers
         'pids' => array(
             'class' => 'CApplicationPids',
             'tableName' => '{{pid}}',
@@ -81,6 +89,7 @@ return array(
             'cacheComponentId' => 'cache',
             'cacheTime' => 1000
         ),
+        // Widgets manager
         'wmanager' => array(
             'class' => 'CApplicationWidgets',
             'dbComponentId' => 'db',
@@ -88,7 +97,7 @@ return array(
             'cacheComponentId' => 'cache',
             'cacheTime' => 1000
         ),
-        // Headers settings
+        // Headers
         'headers' => array(
             'class' => 'CHeaders',
             'charset' => 'utf-8'
@@ -104,9 +113,11 @@ return array(
             'queryCacheID' => 'cache',
             'charset' => 'utf8'
         ),
+        // Theme manager
         'themeManager' => array(
             'basePath' => THIS_PATH.'/templates'
         ),
+        // Auth manager
         'authManager' => array(
             'class' => 'CDbAuthManager',
             'connectionID' => 'db',
@@ -115,6 +126,7 @@ return array(
             'itemTable' => '{{auth_item}}',
             'defaultRoles' => array('guest','authenticated')
         ),
+        // User object
         'user' => array(
             'class' => 'CApplicationUser',
             'loginUrl' => 'base/login',
