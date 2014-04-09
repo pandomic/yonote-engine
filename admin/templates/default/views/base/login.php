@@ -28,6 +28,7 @@ $bootstrapJS = Yii::app()->assetManager->publish(
     
     <link href="<?php echo $bootstrapCss; ?>" rel="stylesheet">
     <link href="<?php echo $template; ?>/stylesheet/css/theme.css" rel="stylesheet">
+    <link href="<?php echo $template; ?>/stylesheet/css/theme-extended.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>

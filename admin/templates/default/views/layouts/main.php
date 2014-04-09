@@ -30,6 +30,7 @@ $bootstrapJS = Yii::app()->assetManager->publish(
     
     <link href="<?php echo $bootstrapCss; ?>" rel="stylesheet">
     <link href="<?php echo $template; ?>/stylesheet/css/theme.css" rel="stylesheet">
+    <link href="<?php echo $template; ?>/stylesheet/css/theme-extended.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -95,13 +96,13 @@ $bootstrapJS = Yii::app()->assetManager->publish(
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle dropdown-profile" data-toggle="dropdown">
                                 <span>
-                                    <img src="<?php echo $template; ?>/images/user.jpg" >
+                                    <img class="img-rounded" src="<?php echo $template; ?>/images/user.jpg" >
                                     <span>Iwan Raven <span class="badge blue-badge">10</span> <b class="caret"></b></span>
                                 </span>
                             </a>
                             <ul class="dropdown-menu profile-box">
                                 <li class="avatar">
-                                    <img src="<?php echo $template; ?>/images/user.jpg">
+                                    <img class="img-circle img-thumbnail" src="<?php echo $template; ?>/images/user.jpg">
                                     <div class="text-center" >
                                         <h4>Iwan Raven</h4>
                                     </div>

@@ -1,13 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 3.5.1
+-- version 4.0.10
 -- http://www.phpmyadmin.net
 --
--- Хост: 127.0.0.1
--- Время создания: Апр 04 2014 г., 22:07
--- Версия сервера: 5.5.25
--- Версия PHP: 5.3.13
+-- Хост: 127.0.0.1:3306
+-- Время создания: Апр 09 2014 г., 22:20
+-- Версия сервера: 5.5.37-log
+-- Версия PHP: 5.3.28
 
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
 
 
@@ -90,11 +90,30 @@ INSERT INTO `yonote_auth_item_child` (`parent`, `child`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `yonote_extension`
+--
+
+CREATE TABLE IF NOT EXISTS `yonote_extension` (
+  `name` varchar(64) NOT NULL,
+  `description` text,
+  `author` varchar(64) DEFAULT NULL,
+  `email` varchar(64) DEFAULT NULL,
+  `website` varchar(128) DEFAULT NULL,
+  `copyright` varchar(128) DEFAULT NULL,
+  `licence` text,
+  `data` text,
+  PRIMARY KEY (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `yonote_module`
 --
 
 CREATE TABLE IF NOT EXISTS `yonote_module` (
   `modname` varchar(64) NOT NULL,
+  `extension` varchar(64) NOT NULL,
   `title` text NOT NULL,
   `description` text,
   `author` varchar(64) DEFAULT NULL,
@@ -103,7 +122,8 @@ CREATE TABLE IF NOT EXISTS `yonote_module` (
   `licence` varchar(128) DEFAULT NULL,
   `priority` int(11) DEFAULT '0',
   `installed` tinyint(1) DEFAULT '0',
-  PRIMARY KEY (`modname`)
+  PRIMARY KEY (`modname`,`extension`),
+  KEY `extension` (`extension`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -128,26 +148,25 @@ CREATE TABLE IF NOT EXISTS `yonote_pid` (
 --
 
 CREATE TABLE IF NOT EXISTS `yonote_setting` (
-  `paramid` int(11) NOT NULL AUTO_INCREMENT,
-  `category` varchar(100) DEFAULT NULL,
-  `name` varchar(100) DEFAULT NULL,
+  `category` varchar(100) NOT NULL DEFAULT '',
+  `name` varchar(100) NOT NULL DEFAULT '',
   `value` text,
-  `time` int(11) DEFAULT NULL,
+  `updateTime` int(11) DEFAULT NULL,
   `description` text,
-  PRIMARY KEY (`paramid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
+  PRIMARY KEY (`category`,`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Дамп данных таблицы `yonote_setting`
 --
 
-INSERT INTO `yonote_setting` (`paramid`, `category`, `name`, `value`, `time`, `description`) VALUES
-(1, 'system', 'urlFormat', 'path', 1125699849, 'Default URL format'),
-(2, 'website', 'template', 'default', 12345, 'Default website template'),
-(3, 'website', 'language', 'ru', 5699854, 'Default website language'),
-(4, 'admin', 'template', 'default', 6598, 'Default administrative template'),
-(5, 'admin', 'language', 'ru', 1125699850, 'Default administrative language'),
-(6, 'system', 'loginDuration', '604800', 1125699851, 'Login session duration (seconds)');
+INSERT INTO `yonote_setting` (`category`, `name`, `value`, `updateTime`, `description`) VALUES
+('admin', 'language', 'ru', 1125699850, 'Default administrative language'),
+('admin', 'template', 'default', 6598, 'Default administrative template'),
+('system', 'loginDuration', '604800', 1125699851, 'Login session duration (seconds)'),
+('system', 'urlFormat', 'path', 1125699849, 'Default URL format'),
+('website', 'language', 'ru', 5699854, 'Default website language'),
+('website', 'template', 'default', 12345, 'Default website template');
 
 -- --------------------------------------------------------
 
@@ -168,7 +187,7 @@ CREATE TABLE IF NOT EXISTS `yonote_user` (
 --
 
 INSERT INTO `yonote_user` (`username`, `password`, `token`, `email`) VALUES
-('admin', '$2a$13$PSXMTh49ffFDYT7AWNsdJOiEburFJhwF8yGvuSQG5c9xnZT75H.Re', '$2a$13$QZLP5vhGaCKdwlrb7GRlyn', 'email@email.com');
+('admin', '$2a$13$PSXMTh49ffFDYT7AWNsdJOiEburFJhwF8yGvuSQG5c9xnZT75H.Re', '$2a$13$9MM.Pf54yERu5NuEcpkGb1', 'email@email.com');
 
 -- --------------------------------------------------------
 
@@ -207,6 +226,12 @@ ALTER TABLE `yonote_auth_assignment`
 ALTER TABLE `yonote_auth_item_child`
   ADD CONSTRAINT `yonote_auth_item_child_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `yonote_auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `yonote_auth_item_child_ibfk_2` FOREIGN KEY (`child`) REFERENCES `yonote_auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `yonote_module`
+--
+ALTER TABLE `yonote_module`
+  ADD CONSTRAINT `yonote_module_ibfk_1` FOREIGN KEY (`extension`) REFERENCES `yonote_extension` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

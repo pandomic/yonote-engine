@@ -28,6 +28,7 @@ return array(
         'application.base.*',
         'application.components.*',
         'application.components.models.*',
+        'application.components.widgets.*',
         'ext.*'
     ),
     

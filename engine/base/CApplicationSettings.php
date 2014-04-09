@@ -13,7 +13,7 @@ class CApplicationSettings extends CApplicationComponent
                 
         $db = Yii::app()->getComponent($this->dbComponentId);
         $dependency = new CDbCacheDependency("
-            SELECT MAX(time) FROM {$this->tableName}
+            SELECT MAX(updateTime) FROM {$this->tableName}
         ");
 
         $db->cache($this->cacheTime,$dependency);
