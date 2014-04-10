@@ -21,7 +21,8 @@ class CApplicationWidgets extends CApplicationComponent
     private $_done = false;
     private $_widgetsTags = array();
     private $_widgets;
-    private $_currentPid = -1;
+    private $_currentRoute;
+    private $_widget = null;
     
     /**
      * Init application component
@@ -39,31 +40,13 @@ class CApplicationWidgets extends CApplicationComponent
             ->setFetchMode(PDO::FETCH_OBJ)
             ->select('*')
             ->from($this->tableName)
-            ->order('positionOrder DESC')
+            ->order('position DESC')
             ->queryAll();
-
-        parent::init();
-    }
-    
-    /**
-     * Set current page id
-     * @param int $pid page id
-     * @return object itself
-     */
-    public function setCurrentPid($pid)
-    {
-        $this->_currentPid = $pid;
-        return $this;
-    }
-    
-    /**
-     * Get widgets output
-     * @return mixed output
-     */
-    public function getWidgets()
-    {
-        if ($this->_done)
-            return $this->_widgetsTags;
+        
+        $this->_currentRoute = Yii::app()->createUrl(
+            Yii::app()->getController()->getRoute(),
+            $_GET
+        );
         
         if ($this->_widgets !== false)
             foreach ($this->_widgets as $widget)
@@ -71,45 +54,44 @@ class CApplicationWidgets extends CApplicationComponent
                 if ((bool) $widget->usePidsFlag)
                 {
                     $usePids = explode(',',$widget->usePids);
-                    if (in_array($this->_currentPid,$usePids))
-                        $this->_widgetsTags[$widget->positionName] .= 
-                        Yii::app()->controller->widget(
-                            $widget->path, 
-                            array_merge_recursive(
-                                array('id' => $widget->widgetname),
-                                unserialize($widget->params)
-                            ),
-                            true
-                        );
+                    if (in_array($this->_currentRoute,$usePids))
+                        $this->_widgetsTags[$widget->widgetname] = $widget;
                 }
                 else if ((bool) $widget->unusePidsFlag)
                 {
                     $unusePids = explode(',',$widget->unusePids);
-                    if (!in_array($this->_currentPid,$unusePids))
-                        $this->_widgetsTags[$widget->positionName] .= 
-                        Yii::app()->controller->widget(
-                            $widget->path, 
-                            array_merge_recursive(
-                                array('id' => $widget->widgetname),
-                                unserialize($widget->params)
-                            ),
-                            true
-                        );
+                    if (!in_array($this->_currentRoute,$unusePids))
+                        $this->_widgetsTags[$widget->widgetName] = $widget;
                 }
                 else
-                    $this->_widgetsTags[$widget->positionName] .= 
-                        Yii::app()->controller->widget(
-                            $widget->path, 
-                            array_merge_recursive(
-                                array('id' => $widget->widgetname),
-                                unserialize($widget->params)
-                            ),
-                            true
-                        );
+                    $this->_widgetsTags[$widget->widgetName] = $widget;
             }
+            
+        parent::init();
+    }
+    
+    public function widget($name,$captureOutput=false)
+    {
+        if (isset($this->_widgetsTags[$name]))
+        {
+            $this->_widget = Yii::app()->getController()->widget(
+                $this->_widgetsTags[$name]->classPath,
+                unserialize($this->_widgetsTags[$name]->params),
+                $captureOutput
+            );
+        }
         
-        $this->_done = true;
-        return $this->_widgetsTags;
+        return $this;
+    }
+    
+    public function endWidget()
+    {
+        if ($this->_widget !== null)
+        {
+            $this->_widget->endWidget();
+        }
+        
+        return $this;
     }
 }
 ?>

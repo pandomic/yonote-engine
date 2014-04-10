@@ -128,14 +128,14 @@ $bootstrapJS = Yii::app()->assetManager->publish(
         <ul class="nav navbar-collapse collapse sidebar-nav" id="accordion">
             <li class="active">
                 <span class="glow"></span>
-                <a href="#"><span class="glyphicon glyphicon-home"></span> Dashboard</a>
+                <a href="#"><span class="glyphicon glyphicon-home"></span> Рабочий стол</a>
             </li>
             <li>
                 <span class="glow"></span>
-                <a href="#" data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne" href="#"><span class="glyphicon glyphicon-asterisk"></span> Open</a>
+                <a href="#" data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne" href="#"><span class="glyphicon glyphicon-asterisk"></span> Система</a>
                 <ul class="nav collapse" id="collapseOne">
-                    <li><a href="#"><span class="glyphicon glyphicon-home"></span> 1</a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-home"></span> 2</a></li>
+                    <li><a href="/admin/extensions"><span class="glyphicon glyphicon-home"></span> Расширения</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-home"></span> Виджеты</a></li>
                 </ul>
             </li>
             <li>
@@ -154,7 +154,7 @@ $bootstrapJS = Yii::app()->assetManager->publish(
             <div class="row">
                 <div class="dashboard-header clearfix">
                     <div class="header pull-left">
-                        Dashboard
+                        <?php echo $this->pageTitle; ?>
                     </div>
                 </div>
             </div>
@@ -162,11 +162,7 @@ $bootstrapJS = Yii::app()->assetManager->publish(
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
-                            <ol class="breadcrumb">
-                                <li><a href="#"><span class="glyphicon glyphicon-home"></span> Dashboard</a></li>
-                                <li><a href="#">Library</a></li>
-                                <li class="active">Data</li>
-                            </ol>
+                            <?php echo $this->breadcrumbs; ?>
                         </div>
                     </div>
                     <?php echo $content; ?>

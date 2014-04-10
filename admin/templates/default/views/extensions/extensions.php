@@ -16,7 +16,7 @@ $bootstrapJS = Yii::app()->assetManager->publish(
 ?>
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading clearfix">
                 <button class="btn btn-primary btn-xs pull-right"><span class="glyphicon glyphicon-plus"></span> Добавить расширение</button>
@@ -75,15 +75,12 @@ $bootstrapJS = Yii::app()->assetManager->publish(
                         </tr>
                     </tbody>
                 </table>
-                <button type="button" class="btn btn-danger">Удалить выбранное</button>
+                <button type="button" class="btn btn-danger" onclick="$(this).confirmModal();" data-action="alert();">Удалить выбранное</button>
                 <button type="button" class="btn btn-default">Сбросить</button>
             </div>
         </div>
     </div>
-</div>
-
-<div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
         <div class="panel panel-default">
             <div class="panel-heading clearfix">
                 <h3 class="panel-title">Модули <span class="label label-primary">2</span></h3>
@@ -141,7 +138,7 @@ $bootstrapJS = Yii::app()->assetManager->publish(
                         <span class="sr-only">Выбрать действие</span>
                     </button>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Установить</a></li>
+                        <li><a href="#">Включить</a></li>
                         <li><a href="#">Отключить</a></li>
                     </ul>
                 </div>
@@ -151,7 +148,11 @@ $bootstrapJS = Yii::app()->assetManager->publish(
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+</div>
+
+<div class="row">
+    
+    <div class="col-md-7">
         <div class="panel panel-default">
             <div class="panel-heading clearfix">
                 <h3 class="panel-title">Виджеты <span class="label label-primary">2</span></h3>
@@ -163,7 +164,6 @@ $bootstrapJS = Yii::app()->assetManager->publish(
                             <th>#</th>
                             <th>Класс</th>
                             <th>Название</th>
-                            <th>Выделить</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -175,22 +175,13 @@ $bootstrapJS = Yii::app()->assetManager->publish(
                             <td>
                                 Виджет внутренних зависимостей
                             </td>
-                            <td>
-                                <div class="btn-group" data-toggle="buttons">
-                                    <label class="btn btn-default btn-sm">
-                                        <input type="checkbox" checked=""> <span class="glyphicon glyphicon-check"> Выделить
-                                    </label>
-                                </div>
-                            </td>
                         </tr>
                     </tbody>
                 </table>
-                <button type="button" class="btn btn-danger">Удалить выбранное</button>
-                <button type="button" class="btn btn-default">Сбросить</button>
             </div>
         </div>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-5">
         <div class="panel panel-default">
             <div class="panel-heading clearfix">
                 <h3 class="panel-title">Шаблоны <span class="label label-primary">2</span></h3>
@@ -225,18 +216,7 @@ $bootstrapJS = Yii::app()->assetManager->publish(
                     </tbody>
                 </table>
                 
-                <div class="btn-group">
-                    <button type="button" class="btn btn-primary">Выполнить</button>
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                        <span class="caret"></span>
-                        <span class="sr-only">Выбрать действие</span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Сохранить</a></li>
-                        <li><a href="#" onclick="$(this).confirmModal();" data-action="alert();">Удалить</a></li>
-                    </ul>
-                </div>
-
+                <button type="button" class="btn btn-primary">Сохранить</button>
                 <button type="button" class="btn btn-default">Сбросить</button>
             </div>
         </div>

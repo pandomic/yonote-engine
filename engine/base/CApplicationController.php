@@ -2,55 +2,55 @@
 class CApplicationController extends CController
 {
     /**
-     * @var array page widgets 
+     * Rendered breadcrumbs
+     * @var string 
      */
-    public $widgets;
-    /**
-     * @var int current page id
-     */
-    public $pid = -1;
+    public $breadcrumbs;
     
-    private $_done = false;
-    
+    private $_breadcrumbs = array();
+
+
     /**
-     * Get widgets on a specified position
-     * @param string $position widget position
+     * Get widget
+     * @param string $name widget name
      * @param boolean $captureOutput whether to capture the output of the widgets
-     * @return string 
+     * @return CApplicationWidgets widgets manager object
      */
-    public function widgetPos($position,$captureOutput=false)
+    public function widgetPos($name,$captureOutput=false)
     {
-        if (!$this->_done)
-        {
-            Yii::app()->wmanager->setCurrentPid($this->pid);
-            $this->widgets = Yii::app()->wmanager->getWidgets();
-        }
-        
-        $output = (isset($this->widgets[$position])) ? $this->widgets[$position] : NULL;
-        
-        if ($captureOutput)
-            return $output;
-        else
-            echo $output;
-        
+        return Yii::app()->wmanager->widget($name,$captureOutput);
     }
     
     /**
-     * Set current page id
-     * @param int $pid page id
+     * Add item to breadcrumbs
+     * @param string $title item title
+     * @param string $url item URL
+     * @return self-object
      */
-    public function setPid($pid)
+    public function addBreadcrumb($title,$url)
     {
-        $this->pid = $pid;
+        $this->_breadcrumbs[] = array(
+            'title' => $title,
+            'url' => $url
+        );
+        
+        return $this;
     }
     
     /**
-     * Get current page id
-     * @return int page id
+     * Setup breadcrumbs before rendrering
+     * @param string $view view to render
      */
-    public function getPid()
+    protected function beforeRender($view)
     {
-        return $this->pid;
+        $this->breadcrumbs = $this->widget('BreadcrumbsWidget',array(
+            'params' => array(
+                'route' => $this->getRoute(),
+                'links' => $this->_breadcrumbs
+            )
+        ),true);
+        
+        return parent::beforeRender($view);
     }
 }
 ?>

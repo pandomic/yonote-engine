@@ -35,9 +35,7 @@ return array(
     // Preload some application components
     'preload' => array(
         'mmanager',
-        'wmanager',
-        'settings',
-        'pids'
+        'settings'
     ),
     
     // Application configuration
@@ -55,14 +53,6 @@ return array(
         // Asset manager
         'assetManager' => array(
             'basePath' => THIS_PATH.'/assets'
-        ),
-        // Page identifiers
-        'pids' => array(
-            'class' => 'CApplicationPids',
-            'tableName' => '{{pid}}',
-            'cacheTime' => 1000,
-            'cacheComponentId' => 'cache',
-            'dbComponentId' => 'db'
         ),
         // Settings
         'settings' => array(

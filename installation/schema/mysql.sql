@@ -52,7 +52,7 @@ create table `{{widget}}`
    `widgetname`       varchar(64) not null,
    `extension`        varchar(64) not null,
    `type`             integer,
-   `classpath`        varchar(128) not null,
+   `classPath`        varchar(128) not null,
    `title`            varchar(128),
    `description`      text,
    `usePids`          text,
@@ -61,6 +61,7 @@ create table `{{widget}}`
    `unusePidsFlag`    boolean default 0,
    `params`           text,
    `updateTime`       integer,
+   `position`         integer default 0,
    primary key (`widgetname`),
    foreign key (`extension`) references `{{extension}}` (`extname`) on delete cascade on update cascade
 ) engine InnoDB;
