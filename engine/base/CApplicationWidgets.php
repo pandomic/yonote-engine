@@ -55,16 +55,16 @@ class CApplicationWidgets extends CApplicationComponent
                 {
                     $usePids = explode(',',$widget->usePids);
                     if (in_array($this->_currentRoute,$usePids))
-                        $this->_widgetsTags[$widget->widgetname] = $widget;
+                        $this->_widgetsTags[$widget->name] = $widget;
                 }
                 else if ((bool) $widget->unusePidsFlag)
                 {
                     $unusePids = explode(',',$widget->unusePids);
                     if (!in_array($this->_currentRoute,$unusePids))
-                        $this->_widgetsTags[$widget->widgetName] = $widget;
+                        $this->_widgetsTags[$widget->name] = $widget;
                 }
                 else
-                    $this->_widgetsTags[$widget->widgetName] = $widget;
+                    $this->_widgetsTags[$widget->name] = $widget;
             }
             
         parent::init();

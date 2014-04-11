@@ -45,6 +45,11 @@ return array(
     
     // Components settigns
     'components' => array(
+        'request' => array(
+            'csrfTokenName' => CSRF_TOKEN,
+            'enableCsrfValidation' => true,
+            'enableCookieValidation' => true
+        ),
         // Database schema bilder
         'schema' => array (
             'class' => 'CApplicationSchema',

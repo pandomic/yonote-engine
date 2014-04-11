@@ -1,5 +1,9 @@
-/* line 12, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\0000312}}
+.panel-heading .label {
+  padding: .1em .6em .1em;
+}
+.table.table-middle td {
+  vertical-align: middle;
+}
 .sidebar-divider-gradient {
   height: 1px;
   display: block;
@@ -9,8 +13,6 @@
   background-repeat: no-repeat;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff000000', endColorstr='#ff000000', GradientType=1);
 }
-/* line 20, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\0000320}}
 .sidebar-bg {
   width: 200px;
   position: fixed;
@@ -18,23 +20,17 @@
   height: 100%;
   background-color: #0b0e12;
 }
-/* line 28, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\0000328}}
 .sidebar {
   width: 200px;
   float: left;
   position: absolute;
 }
-/* line 34, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\0000334}}
 .sidebar .sidebar-nav {
   padding: 0;
   width: 100%;
   border-top: 0;
   background-color: #0b0e12;
 }
-/* line 42, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\0000342}}
 .sidebar .sidebar-nav:after {
   position: relative;
   height: 1px;
@@ -45,21 +41,15 @@
   background-repeat: no-repeat;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff000000', endColorstr='#ff000000', GradientType=1);
 }
-/* line 47, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\0000347}}
 .sidebar .sidebar-nav li a .glyphicon {
   margin-right: 10px;
 }
-/* line 51, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\0000351}}
 .sidebar .sidebar-nav li,
 .sidebar .sidebar-nav li a {
   color: #999999;
   -webkit-transition: color 0.3s;
   transition: color 0.3s;
 }
-/* line 54, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\0000354}}
 .sidebar .sidebar-nav li:hover,
 .sidebar .sidebar-nav li a:hover {
   color: #ffffff;
@@ -67,26 +57,18 @@
   -webkit-transition: color 0.3s;
   transition: color 0.3s;
 }
-/* line 59, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\0000359}}
 .sidebar .sidebar-nav li:focus,
 .sidebar .sidebar-nav li a:focus {
   background-color: transparent;
 }
-/* line 64, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\0000364}}
 .sidebar .sidebar-nav > li {
   position: relative;
   border-bottom: 1px solid #000000;
 }
-/* line 69, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\0000369}}
 .sidebar .sidebar-nav > li:hover,
 .sidebar .sidebar-nav > li a:hover {
   background-color: transparent;
 }
-/* line 73, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\0000373}}
 .sidebar .sidebar-nav > li:before,
 .sidebar .sidebar-nav > li li:before {
   height: 1px;
@@ -97,14 +79,10 @@
   background-repeat: no-repeat;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff000000', endColorstr='#ff000000', GradientType=1);
 }
-/* line 77, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\0000377}}
 .sidebar .sidebar-nav > li:after {
   height: 1px;
   background: #000000;
 }
-/* line 82, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\0000382}}
 .sidebar .sidebar-nav > li .glow {
   display: block;
   position: absolute;
@@ -116,16 +94,12 @@
   -webkit-transition: box-shadow 1s;
   transition: box-shadow 1s;
 }
-/* line 94, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\0000394}}
 .sidebar .sidebar-nav > li.active .glow {
   -webkit-box-shadow: 0 0 1px 2px #428bca inset;
   box-shadow: 0 0 1px 2px #428bca inset;
   -webkit-transition: box-shadow 1s;
   transition: box-shadow 1s;
 }
-/* line 99, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\0000399}}
 .sidebar .sidebar-nav > li.active .glow:after {
   display: block;
   position: absolute;
@@ -137,97 +111,65 @@
   background-repeat: repeat-x;
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#33428bca', endColorstr='#00000000', GradientType=1);
 }
-/* line 112, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\00003112}}
 .sidebar .sidebar-nav > li:hover .glow {
   -webkit-box-shadow: 0 0 1px 2px #428bca inset;
   box-shadow: 0 0 1px 2px #428bca inset;
   -webkit-transition: box-shadow 1s;
   transition: box-shadow 1s;
 }
-/* line 118, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\00003118}}
 .sidebar .sidebar-nav > li li {
   font-size: 11px;
 }
-/* line 120, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\00003120}}
 .sidebar .sidebar-nav > li li a {
   padding: 5px 20px;
 }
-/* line 134, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\00003134}}
 .badge.blue-badge {
   background: #428bca;
 }
-/* line 144, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\00003144}}
 .navbar .navbar-toggle {
   color: #999999;
 }
-/* line 148, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\00003148}}
 .navbar .navbar-toggle:hover {
   color: #ffffff;
 }
-/* line 151, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\00003151}}
 .navbar .navbar-toggle:active {
   color: #ffffff;
 }
-/* line 159, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\00003159}}
 .navbar .navbar-nav > li.active > a {
   background-color: #06090d;
   background-image: none;
   filter: none;
 }
-/* line 166, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\00003166}}
 .navbar .navbar-nav > li > a:hover,
 .navbar .navbar-nav > li > a:active,
 .navbar .navbar-nav > li > a:focus {
   background-color: #06090d;
 }
-/* line 172, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\00003172}}
 .navbar .navbar-nav .profile-box {
   min-width: 200px;
   margin: 0;
 }
-/* line 177, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\00003177}}
 .navbar .navbar-nav .profile-box .glyphicon {
   margin-right: 10px;
 }
-/* line 181, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\00003181}}
 .navbar .navbar-nav .profile-box > .avatar > img {
   display: block;
   width: 100px;
   height: 100px;
   margin: 10px auto 0 auto;
 }
-/* line 189, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\00003189}}
 .navbar .navbar-nav .dropdown-profile {
   padding: 9px 10px;
 }
-/* line 193, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\00003193}}
 .navbar .navbar-nav .dropdown-profile img {
   margin-right: 10px;
   width: 32px;
   height: 32px;
 }
-/* line 206, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\00003206}}
 .dashboard {
   position: relative;
   margin-left: 200px;
 }
-/* line 210, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\00003210}}
 .dashboard .dashboard-header {
   padding: 10px 15px;
   background-image: -webkit-linear-gradient(top, #f5f5f5 0%, #e8e8e8 100%);
@@ -237,13 +179,9 @@
   -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
 }
-/* line 216, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\00003216}}
 .dashboard .dashboard-header .header {
   font-size: 20px;
 }
-/* line 222, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\00003222}}
 .dashboard .dashboard-body .breadcrumb {
   margin: 20px 0 20px 0;
   background-image: -webkit-linear-gradient(top, #f5f5f5 0%, #e8e8e8 100%);
@@ -254,25 +192,17 @@
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
 }
 @media (max-width: 767px) {
-  /* line 237, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-  @media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\00003237}}
   .sidebar {
     width: auto;
     float: none;
     position: relative;
   }
-  /* line 242, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-  @media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\00003242}}
   .profile-box {
     margin: 200px;
   }
-  /* line 244, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-  @media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\00003244}}
   .profile-box h4 {
     color: #999999;
   }
-  /* line 248, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-  @media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\00003248}}
   .profile-navbar {
     margin-top: 20px;
     padding-top: 8px;
@@ -280,25 +210,17 @@
     -webkit-box-shadow: 0 -1px 0 0 rgba(255, 255, 255, 0.1);
     box-shadow: 0 -1px 0 0 rgba(255, 255, 255, 0.1);
   }
-  /* line 254, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-  @media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\00003254}}
   .dashboard {
     margin-left: 0;
   }
-  /* line 258, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-  @media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\00003258}}
   .dropdown li {
     margin: 5px 0;
     background-color: #0b0e12;
   }
-  /* line 262, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-  @media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\00003262}}
   .dropdown li.avatar {
     background-color: transparent;
   }
 }
-/* line 272, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\00003272}}
 html,
 body {
   height: 100%;
@@ -306,14 +228,10 @@ body {
   background-repeat: repeat;
   background-color: #f0f1f2;
 }
-/* line 279, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\00003279}}
 .page-center {
   display: table;
   height: 100%;
 }
-/* line 284, Z:\engine\admin\templates\default\stylesheet\less\theme-extended.less */
-@media -sass-debug-info{filename{font-family:file\:\/\/Z\:\/engine\/admin\/templates\/default\/stylesheet\/less\/theme-extended\.less}line{font-family:\00003284}}
 .page-center-body {
   height: 100%;
   display: table-cell;

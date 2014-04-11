@@ -5,7 +5,6 @@
 drop table if exists `{{extension}}`;
 drop table if exists `{{module}}`;
 drop table if exists `{{widget}}`;
-drop table if exists `{{widget_item}}`;
 drop table if exists `{{template}}`;
 drop table if exists `{{user}}`;
 drop table if exists `{{setting}}`;
@@ -16,7 +15,8 @@ drop table if exists `{{setting}}`;
 
 create table `{{extension}}`
 (
-   `extname`          varchar(64) not null,
+   `name`             varchar(64) not null,
+   `title`            varchar(128),
    `description`      text,
    `author`           varchar(64),
    `email`            varchar(64),
@@ -24,7 +24,8 @@ create table `{{extension}}`
    `copyright`        varchar(128),
    `licence`          text,
    `data`             text,
-   primary key (`extname`)
+   `updateTime`       integer default 0,
+   primary key (`name`)
 ) engine InnoDB;
 
 --
@@ -34,12 +35,14 @@ create table `{{extension}}`
 
 create table `{{module}}`
 (
-   `modname`          varchar(64) not null,
+   `name`             varchar(64) not null,
+   `title`            varchar(128),
    `extension`        varchar(64) not null,
    `priority`         integer default 0,
    `installed`        boolean default 0,
-   primary key (`modname`),
-   foreign key (`extension`) references `{{extension}}` (`extname`) on delete cascade on update cascade
+   `updateTime`       integer default 0,
+   primary key (`name`,`extension`),
+   foreign key (`extension`) references `{{extension}}` (`name`) on delete cascade on update cascade
 ) engine InnoDB;
 
 --
@@ -49,10 +52,10 @@ create table `{{module}}`
 
 create table `{{widget}}`
 (
-   `widgetname`       varchar(64) not null,
+   `name`             varchar(64) not null,
    `extension`        varchar(64) not null,
-   `type`             integer,
    `classPath`        varchar(128) not null,
+   `type`             integer,
    `title`            varchar(128),
    `description`      text,
    `usePids`          text,
@@ -62,8 +65,8 @@ create table `{{widget}}`
    `params`           text,
    `updateTime`       integer,
    `position`         integer default 0,
-   primary key (`widgetname`),
-   foreign key (`extension`) references `{{extension}}` (`extname`) on delete cascade on update cascade
+   primary key (`name`,`extension`,`classPath`),
+   foreign key (`extension`) references `{{extension}}` (`name`) on delete cascade on update cascade
 ) engine InnoDB;
 
 --
@@ -74,11 +77,11 @@ create table `{{widget}}`
 
 create table `{{template}}`
 (
-   `tplname`          varchar(64) not null,
+   `name`             varchar(64) not null,
    `extension`        varchar(64) not null,
-   `updateTime`       integer,
-   primary key (`tplname`),
-   foreign key (`extension`) references `{{extension}}` (`extname`) on delete cascade on update cascade
+   `updateTime`       integer default 0,
+   primary key (`name`,`extension`),
+   foreign key (`extension`) references `{{extension}}` (`name`) on delete cascade on update cascade
 ) engine InnoDB;
 
 --

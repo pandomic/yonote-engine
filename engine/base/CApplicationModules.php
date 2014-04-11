@@ -43,7 +43,7 @@ class CApplicationModules extends CApplicationComponent
         $results = $db->cache($this->cacheTime,$dependency)
             ->createCommand()
             ->setFetchMode(PDO::FETCH_OBJ)
-            ->select('modname')
+            ->select('name')
             ->from($this->tableName)
             ->order('priority DESC')
             ->queryAll();

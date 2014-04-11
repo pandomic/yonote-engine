@@ -128,14 +128,14 @@ $bootstrapJS = Yii::app()->assetManager->publish(
         <ul class="nav navbar-collapse collapse sidebar-nav" id="accordion">
             <li class="active">
                 <span class="glow"></span>
-                <a href="#"><span class="glyphicon glyphicon-home"></span> Рабочий стол</a>
+                <a href="/admin"><span class="glyphicon glyphicon-home"></span> Рабочий стол</a>
             </li>
             <li>
                 <span class="glow"></span>
-                <a href="#" data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne" href="#"><span class="glyphicon glyphicon-asterisk"></span> Система</a>
+                <a href="#" data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne" href="#"><span class="glyphicon glyphicon-cog"></span> Система</a>
                 <ul class="nav collapse" id="collapseOne">
-                    <li><a href="/admin/extensions"><span class="glyphicon glyphicon-home"></span> Расширения</a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-home"></span> Виджеты</a></li>
+                    <li><a href="/admin/extensions"><span class="glyphicon glyphicon-asterisk"></span> Расширения</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-th-large"></span> Виджеты</a></li>
                 </ul>
             </li>
             <li>

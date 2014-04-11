@@ -23,6 +23,8 @@ define('SETTINGS_PATH',ENGINE_PATH.DIRECTORY_SEPARATOR.'settings');
 defined('THIS_PATH') or define('THIS_PATH',ENGINE_PATH);
 // YOnote ENGINE modules path
 define('ENGINE_MODULES',ENGINE_PATH.DIRECTORY_SEPARATOR.'modules');
+// CSRF token name
+define('CSRF_TOKEN','YE_CSRF');
 
 // Database definitions
 require_once(SETTINGS_PATH.'/database.php');
