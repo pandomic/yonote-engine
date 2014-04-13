@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Апр 09 2014 г., 22:20
+-- Время создания: Апр 13 2014 г., 20:59
 -- Версия сервера: 5.5.37-log
 -- Версия PHP: 5.3.28
 
@@ -102,6 +102,8 @@ CREATE TABLE IF NOT EXISTS `yonote_extension` (
   `copyright` varchar(128) DEFAULT NULL,
   `licence` text,
   `data` text,
+  `title` varchar(128) DEFAULT NULL,
+  `updateTime` int(11) DEFAULT '0',
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -112,34 +114,15 @@ CREATE TABLE IF NOT EXISTS `yonote_extension` (
 --
 
 CREATE TABLE IF NOT EXISTS `yonote_module` (
-  `modname` varchar(64) NOT NULL,
+  `name` varchar(64) NOT NULL,
   `extension` varchar(64) NOT NULL,
-  `title` text NOT NULL,
-  `description` text,
-  `author` varchar(64) DEFAULT NULL,
-  `email` varchar(64) DEFAULT NULL,
-  `url` varchar(128) DEFAULT NULL,
-  `licence` varchar(128) DEFAULT NULL,
   `priority` int(11) DEFAULT '0',
   `installed` tinyint(1) DEFAULT '0',
-  PRIMARY KEY (`modname`,`extension`),
+  `title` varchar(128) DEFAULT NULL,
+  `updateTime` int(11) DEFAULT '0',
+  PRIMARY KEY (`name`,`extension`),
   KEY `extension` (`extension`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `yonote_pid`
---
-
-CREATE TABLE IF NOT EXISTS `yonote_pid` (
-  `pageid` int(11) NOT NULL AUTO_INCREMENT,
-  `route` text NOT NULL,
-  `time` int(11) DEFAULT '0',
-  `priority` int(11) DEFAULT '0',
-  `installed` tinyint(1) DEFAULT '0',
-  PRIMARY KEY (`pageid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -163,10 +146,27 @@ CREATE TABLE IF NOT EXISTS `yonote_setting` (
 INSERT INTO `yonote_setting` (`category`, `name`, `value`, `updateTime`, `description`) VALUES
 ('admin', 'language', 'ru', 1125699850, 'Default administrative language'),
 ('admin', 'template', 'default', 6598, 'Default administrative template'),
+('admin', 'timeZone', 'Europe/Kaliningrad', 1397170868, 'Admin default timezone'),
+('extensions', 'maxSize', '5242880', 1125699855, 'Maximum extension file size'),
 ('system', 'loginDuration', '604800', 1125699851, 'Login session duration (seconds)'),
 ('system', 'urlFormat', 'path', 1125699849, 'Default URL format'),
 ('website', 'language', 'ru', 5699854, 'Default website language'),
-('website', 'template', 'default', 12345, 'Default website template');
+('website', 'template', 'default', 12345, 'Default website template'),
+('website', 'timeZone', 'Europe/Kaliningrad', 1397170867, 'Website default time zone');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `yonote_template`
+--
+
+CREATE TABLE IF NOT EXISTS `yonote_template` (
+  `name` varchar(64) NOT NULL,
+  `extension` varchar(64) NOT NULL,
+  `updateTime` int(11) DEFAULT NULL,
+  PRIMARY KEY (`name`,`extension`),
+  KEY `extension` (`extension`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -187,7 +187,7 @@ CREATE TABLE IF NOT EXISTS `yonote_user` (
 --
 
 INSERT INTO `yonote_user` (`username`, `password`, `token`, `email`) VALUES
-('admin', '$2a$13$PSXMTh49ffFDYT7AWNsdJOiEburFJhwF8yGvuSQG5c9xnZT75H.Re', '$2a$13$9MM.Pf54yERu5NuEcpkGb1', 'email@email.com');
+('admin', '$2a$13$PSXMTh49ffFDYT7AWNsdJOiEburFJhwF8yGvuSQG5c9xnZT75H.Re', '$2a$13$6f11r9UsCyMRZujveFeINu', 'email@email.com');
 
 -- --------------------------------------------------------
 
@@ -196,18 +196,21 @@ INSERT INTO `yonote_user` (`username`, `password`, `token`, `email`) VALUES
 --
 
 CREATE TABLE IF NOT EXISTS `yonote_widget` (
-  `widgetname` varchar(64) NOT NULL,
-  `path` varchar(128) DEFAULT NULL,
+  `name` varchar(64) NOT NULL,
+  `extension` varchar(64) NOT NULL,
+  `classPath` varchar(128) NOT NULL,
+  `type` int(11) DEFAULT NULL,
+  `title` varchar(128) DEFAULT NULL,
   `description` text,
   `usePids` text,
   `usePidsFlag` tinyint(1) DEFAULT '0',
   `unusePids` text,
   `unusePidsFlag` tinyint(1) DEFAULT '0',
   `params` text,
-  `positionName` varchar(128) DEFAULT NULL,
-  `positionOrder` int(11) DEFAULT NULL,
   `updateTime` int(11) DEFAULT NULL,
-  PRIMARY KEY (`widgetname`)
+  `position` int(11) DEFAULT '0',
+  PRIMARY KEY (`name`,`extension`,`classPath`),
+  KEY `extension` (`extension`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -232,6 +235,18 @@ ALTER TABLE `yonote_auth_item_child`
 --
 ALTER TABLE `yonote_module`
   ADD CONSTRAINT `yonote_module_ibfk_1` FOREIGN KEY (`extension`) REFERENCES `yonote_extension` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `yonote_template`
+--
+ALTER TABLE `yonote_template`
+  ADD CONSTRAINT `yonote_template_ibfk_1` FOREIGN KEY (`extension`) REFERENCES `yonote_extension` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ограничения внешнего ключа таблицы `yonote_widget`
+--
+ALTER TABLE `yonote_widget`
+  ADD CONSTRAINT `yonote_widget_ibfk_1` FOREIGN KEY (`extension`) REFERENCES `yonote_extension` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

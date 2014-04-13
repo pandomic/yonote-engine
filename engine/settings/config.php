@@ -16,7 +16,9 @@ defined('YONOTE_ENGINE') or die('Hacking attempt!');
 // YOnote ENGINE version
 define('ENGINE_VERSION','1.0');
 // YOnote ENGINE system path
-define('ENGINE_PATH',dirname(__FILE__).DIRECTORY_SEPARATOR.'..');
+define('ENGINE_PATH',realpath(dirname(__FILE__).DIRECTORY_SEPARATOR.'..'));
+// Administrative path
+define('ADMIN_PATH',realpath(ENGINE_PATH.DIRECTORY_SEPARATOR.'..'.DIRECTORY_SEPARATOR.'admin'));
 // Settings path
 define('SETTINGS_PATH',ENGINE_PATH.DIRECTORY_SEPARATOR.'settings');
 // Current path

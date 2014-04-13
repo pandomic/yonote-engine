@@ -56,6 +56,7 @@ $bootstrapJS = Yii::app()->assetManager->publish(
                     <div class="panel-heading">Please login</div>
                     <div class="panel-body">
                         <form role="form" class="form-horizontal" method="POST">
+                            <input type="hidden" name="<?php echo Yii::app()->request->csrfTokenName ?>" value="<?php echo Yii::app()->request->getCsrfToken(); ?>">
                             <div class="form-group">
                                 <div class="col-md-12">
                                     <div class="input-group">

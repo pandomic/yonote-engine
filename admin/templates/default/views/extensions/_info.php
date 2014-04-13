@@ -5,7 +5,7 @@
 </div>
 <div class="modal-body">
     <p>
-        <dl class="dl-horizontal">
+        <dl class="dl-horizontal clearfix">
             <dt>Дата изменения:</dt>
             <dd><?php echo Yii::app()->dateFormatter->formatDateTime($model->updateTime); ?></dd>
             

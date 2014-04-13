@@ -21,11 +21,33 @@ $bootstrapJS = Yii::app()->assetManager->publish(
     </div>
 </div>
 
+<?php if (Yii::app()->user->hasFlash('success')): ?>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-success">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <?php echo Yii::app()->user->getFlash('success'); ?>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+
+<?php if (Yii::app()->user->hasFlash('warning')): ?>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-warning">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <?php echo Yii::app()->user->getFlash('warning'); ?>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+
 <div class="row">
     <div class="col-lg-6 col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading clearfix">
-                <button class="btn btn-primary btn-xs pull-right"><span class="glyphicon glyphicon-plus"></span> Добавить расширение</button>
+                <button data-toggle="modal" data-target="#ajaxModal" data-remote="<?php echo Yii::app()->createUrl('extensions/upload',array('ajax' => 'upload-required')); ?>" class="btn btn-primary btn-xs pull-right"><span class="glyphicon glyphicon-plus"></span> Добавить расширение</button>
                 <h3 class="panel-title">Расширения <span class="label label-primary"><?php echo count($extensions); ?></span></h3>
             </div>
             <div class="panel-body"> 
@@ -51,7 +73,7 @@ $bootstrapJS = Yii::app()->assetManager->publish(
 
                                     <tr>
                                         <td>
-                                            <a href="#" data-toggle="modal" data-target="#ajaxModal" data-remote="<?php echo Yii::app()->createUrl('extensions/info',array('e' => $extension->name)); ?>">
+                                            <a href="#" data-toggle="modal" data-target="#ajaxModal" data-remote="<?php echo Yii::app()->createUrl('extensions/info',array('e' => $extension->name,'ajax' => 'info-requred')); ?>">
                                                 <?php echo $extension->name; ?>
                                             </a>
                                         </td>
@@ -114,10 +136,10 @@ $bootstrapJS = Yii::app()->assetManager->publish(
                                     <?php echo $module->name; ?>
                                 </td>
                                 <td>
-                                    <?php echo Yii::t('extensions',$module->title); ?>
+                                    <?php echo $module->title; ?>
                                 </td>
                                 <td>
-                                    <a href="#" data-toggle="modal" data-target="#ajaxModal" data-remote="<?php echo Yii::app()->createUrl('extensions/info',array('e' => $module->extension)); ?>">
+                                    <a href="#" data-toggle="modal" data-target="#ajaxModal" data-remote="<?php echo Yii::app()->createUrl('extensions/info',array('e' => $module->extension,'ajax' => 'info-requred')); ?>">
                                         <?php echo $module->extension; ?>
                                     </a>
                                 </td>
@@ -200,7 +222,7 @@ $bootstrapJS = Yii::app()->assetManager->publish(
                                         <?php echo $widget->title; ?>
                                     </td>
                                     <td>
-                                        <a href="#" data-toggle="modal" data-target="#ajaxModal" data-remote="<?php echo Yii::app()->createUrl('extensions/info',array('e' => $widget->extension)); ?>">
+                                        <a href="#" data-toggle="modal" data-target="#ajaxModal" data-remote="<?php echo Yii::app()->createUrl('extensions/info',array('e' => $widget->extension,'ajax' => 'info-requred')); ?>">
                                             <?php echo $widget->extension; ?>
                                         </a>
                                     </td>
@@ -252,7 +274,7 @@ $bootstrapJS = Yii::app()->assetManager->publish(
                                     <?php echo $template->name; ?>
                                 </td>
                                 <td>
-                                    <a href="#" data-toggle="modal" data-target="#ajaxModal" data-remote="<?php echo Yii::app()->createUrl('extensions/info',array('e' => $template->extension)); ?>">
+                                    <a href="#" data-toggle="modal" data-target="#ajaxModal" data-remote="<?php echo Yii::app()->createUrl('extensions/info',array('e' => $template->extension,'ajax' => 'info-requred')); ?>">
                                         <?php echo $template->extension; ?>
                                     </a>
                                 </td>
