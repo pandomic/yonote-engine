@@ -62,7 +62,7 @@ class ExtensionsController extends CApplicationController
         {
             $model = $this->loadModel();
             
-            if ($model->deleteByPk($_POST['select']) == 0)
+            if ($model->removeExtensions($_POST['select']) == 0)
                 Yii::app()->user->setFlash('warning',Yii::t('extensions','Nothing has been removed!'));
             else
                 Yii::app()->user->setFlash('success',Yii::t('extensions','Selected extensions have been successfully removed.'));
@@ -84,6 +84,8 @@ class ExtensionsController extends CApplicationController
             {
                 if ($model->validate() && $model->loadExtension())
                     Yii::app()->user->setFlash('success',Yii::t('extensions','The extension has been installed.'));
+                else
+                    Yii::app()->user->setFlash('warning',Yii::t('extensions','Some error occurred while installing this extension.'));
                 echo CActiveForm::validate($model);
                 Yii::app()->end();
             }
@@ -92,7 +94,8 @@ class ExtensionsController extends CApplicationController
                 Yii::app()->user->setFlash('success',Yii::t('extensions','The extension has been installed.'));
                 $this->redirect($this->createUrl('extensions/index'));
             }
-                
+            else
+                Yii::app()->user->setFlash('warning',Yii::t('extensions','Some error occurred while installing this extension.'));
 
         }
 

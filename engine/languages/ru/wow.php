@@ -10,12 +10,11 @@ return array(
     'Parameter "name" not found!' => 'Параметр "name" не обнаружен',
     'Cannot create folder "{folder}"!' => 'Невозможно создать директорию "{folder}"',
     'Cannot copy file "{local}" to "{path}"!' => 'Невозможно переместить файл "{local}" в "[path}"',
-    'Extension was not installed!' => 'Расширение не было устанвлено!',
+    'Extension was not installed correctly.' => 'Расширение было устанвлено с ошибками.',
     'Cannot register module "{module}".' => 'Ошибка регистрации модуля {module}.',
     'The extension has been installed.' => 'Расширение установлено.',
     'Extension "{extension}" already exists!' => 'Расширение "{extension}" уже установлено!',
     'Nothing has been removed!' => 'Ничего не было удалено!',
-    'Selected extensions have been successfully removed.' => 'Выбранные расширения были успешно удалены.',
-    'Some error occurred while installing this extension.' => 'При установке расширения возникла ошибка.'
+    'Selected extensions have been successfully removed.' => 'Выбранные расширения были успешно удалены.'
 );
 ?>

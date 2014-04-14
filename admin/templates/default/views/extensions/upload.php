@@ -32,7 +32,8 @@
                     </div>
                     
                     <button type="submit" id="uploadSubmit" class="btn btn-primary">Отправить</button>
-                
+                    <button type="reset" class="btn btn-default">Сбросить</button>
+                    
                 <?php $this->endWidget(); ?>
                 
             </div>

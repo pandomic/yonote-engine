@@ -2,8 +2,12 @@
 class Extension extends CActiveRecord
 {
     public $extension;
-    public $select;
-
+    
+    private $_files = array();
+    private $_folders = array();
+    private $_operations = array();
+    private $_appends = array();
+    
     public function rules()
     {
         return array(
@@ -37,14 +41,18 @@ class Extension extends CActiveRecord
             $newName = uniqid();
             $archive = ENGINE_PATH."/runtime/{$newName}.zip";
             
-            $extension->saveAs($archive);
-
-            if (!file_exists("phar://{$archive}/info.php"))
+            if (!file_exists("phar://{$extension->tempName}/info.php"))
             {
-                unlink($archive);
                 $this->addError($attribute,Yii::t('extensions','Information file "info.php" not found!'));
                 return false;
             }
+            
+            $extension->saveAs($archive);
+            
+            $this->_appends = array();
+            $this->_folders = array();
+            $this->_files = array();
+            $this->_operations = array();
             
             $info = new CAttributeCollection();
             $conf = new CConfiguration("phar://{$archive}/info.php");
@@ -67,8 +75,6 @@ class Extension extends CActiveRecord
             }
             
             $status = true;
-            $dirs = array();
-            $files = array();
             
             // Create folders
             if (isset($info->folders))
@@ -86,7 +92,7 @@ class Extension extends CActiveRecord
                                 $status = false;
                             }
                             else
-                                $dirs[] = $folder;
+                                $this->_folders[] = $folder;
                     }
                 }
             
@@ -107,7 +113,7 @@ class Extension extends CActiveRecord
                                 $status = false;
                             }
                             else
-                                $files[] = $path;
+                                $this->_files[] = $path;
                         }
                     }
                 }
@@ -204,28 +210,120 @@ class Extension extends CActiveRecord
                         }
                     }
                     
+            // Register operations and tasks
+            if (isset($info->operations))
+                if (is_array($info->operations))
+                    foreach ($info->operations as $operation)
+                        if (Yii::app()->authManager->getAuthItem($operation[0]) === null)
+                        {
+                            Yii::app()->authManager->createOperation(
+                                $operation[0],
+                                $operation[1]
+                            );
+
+                            $this->_operations[] = $operation[0];
+
+                            if (is_array($operation[2]))
+                                foreach ($operation[2] as $task)
+                                {
+                                    $taskObj = Yii::app()->authManager->createTask(
+                                        $task[0],$task[1],$task[2]
+                                    );
+                                    $taskObj->addChild($operation[0]);
+                                }
+                        }
+                    
+            // Append files
+            if (isset($info->appends))
+                if (is_array($info->appends))
+                    foreach ($info->appends as $append)
+                    {
+                        $path = $this->_substPath($append[1]);
+                        if (file_exists("phar://{$archive}/{$append[0]}"))
+                            if (file_exists($path))
+                            {
+                                $file = file_get_contents("phar://{$archive}/{$append[0]}");
+                                
+                                $this->_appends[] = array(
+                                    $path,$file
+                                );
+                                
+                                if (isset($append[2]))
+                                {
+                                    $original = file_get_contents($path);
+                                    $pos = mb_strpos($original,$append[2]);
+                                    file_put_contents($path,substr_replace(
+                                        $original,$append[2].$file,$pos,mb_strlen($append[2])
+                                    ));
+                                }
+                                else
+                                {
+                                    file_put_contents($path,$file,FILE_APPEND);
+                                }
+                            }
+                    }
+                    
             // Remove archive
             unlink($archive);    
                 
             // Add error, if any error detected
             if (!$status)
             {
-                $this->addError($attribute,Yii::t('extensions','Extension was not installed correctly.',array(
-                    '{module}' => $modParams[3]
-                )));
+                self::model()->findByPk($info->name)->delete();
+                $this->_removeComponents();
+                $this->addError($attribute,Yii::t('extensions','Extension was not installed!'));
+                return false;
             }
             
-            /*$extensionModel->data = serialize(array(
-                'files' => $files,
-                'directories' => $dirs
-            ));*/
-            
-            
-            
+            $model = self::model()->findByPk($info->name);
+            $model->data = serialize(array(
+                'files' => $this->_files,
+                'folders' => $this->_folders,
+                'operations' => $this->_operations,
+                'appends' => $this->_appends
+            ));
+            $model->save();
+
             return true;
 
     }
     
+    public function removeExtensions($extension)
+    {
+        $c = 0;
+        $extensions = self::model()->findAllByPk($extension);
+        if (count($extensions) > 0)
+        {
+            foreach ($extensions as $extension)
+            {
+                $data = unserialize($extension->data);
+                $this->_appends = $data['appends'];
+                $this->_folders = $data['folders'];
+                $this->_files = $data['files'];
+                $this->_appends = $data['appends'];
+                $this->_removeComponents();
+                $extension->delete();
+                $c++;
+            }
+        }
+        return $c;
+    }
+    
+    private function _removeComponents()
+    {
+        $dirs = array_reverse($this->_folders);
+        foreach ($this->_files as $file)
+            unlink($file);
+        foreach ($dirs as $dir)
+            rmdir($dir);
+        foreach ($this->_appends as $append)
+            if (file_exists($append[0]))
+            {
+                $file = file_get_contents($append[0]);
+                file_put_contents($append[0],str_replace($append[1],'',$file));
+            }
+    }
+
     public function attributeLabels()
     {
         return array(
@@ -250,25 +348,6 @@ class Extension extends CActiveRecord
             'widgets' => array(self::HAS_MANY,'Widget','extension'),
             'templates' => array(self::HAS_MANY,'Template','extension'),
         );
-    }
-    
-    private function _removeDir($path)
-    {
-        if (file_exists($path))
-        {
-            if (is_dir($path))
-            {
-                $scan = scandir($path);
-                foreach ($scan as $file)
-                {
-                    if (is_dir($file))
-                        $this->_removeDir("{$path}/{$file}");
-                    else
-                        unlink("{$path}/{$file}");
-                }
-                rmdir($path);
-            }
-        }
     }
     
     private function _substPath($path)
