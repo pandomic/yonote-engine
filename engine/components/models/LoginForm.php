@@ -1,7 +1,7 @@
 <?php
 class LoginForm extends CFormModel
 {
-    public $username;
+    public $name;
     public $password;
     public $rememberMe = false;
     
@@ -10,7 +10,7 @@ class LoginForm extends CFormModel
     public function rules()
     {
         return array(
-            array('username,password','required','message' => 'wow','on' => 'login'),
+            array('name,password','required','message' => 'wow','on' => 'login'),
             array('rememberMe','boolean','on' => 'login'),
             array('password','authenticate','on' => 'login')
         );
@@ -20,18 +20,16 @@ class LoginForm extends CFormModel
     {
         return array(
             'rememberMe'=>'Remember me next time',
-            'username' => 'User name',
+            'name' => 'User name',
             'password' => 'User password'
         );
     }
     
     public function authenticate($attribute,$params)
     {
-        $this->_identity = new UserIdentity($this->username,$this->password);
+        $this->_identity = new UserIdentity($this->name,$this->password);
         if (!$this->_identity->authenticate())
-        {
             $this->addError('password',Yii::t('system','Invalid username or password!'));
-        }
             
     }
     
@@ -39,7 +37,7 @@ class LoginForm extends CFormModel
     {
         if ($this->_identity === null)
         {
-            $this->_identity = new UserIdentity($this->username,$this->password);
+            $this->_identity = new UserIdentity($this->name,$this->password);
             $this->_identity->authenticate();
         }
         if ($this->_identity->errorCode == UserIdentity::ERROR_NONE)

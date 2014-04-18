@@ -1,7 +1,26 @@
 .panel-heading .label {
   padding: .1em .6em .1em;
 }
-.table.table-middle td {
+.table {
+  margin: 0;
+}
+.table .asc {
+  background: url('../../images/up.gif') right center no-repeat;
+  padding-right: 10px;
+}
+.table .desc {
+  background: url('../../images/down.gif') right center no-repeat;
+  padding-right: 10px;
+}
+.table.table-bordered {
+  margin: 20px 0 20px 0;
+}
+.table.table-bordered tr th,
+.table.table-bordered tr th a {
+  font-weight: normal;
+}
+.table.table-middle td,
+.table.table-middle th {
   vertical-align: middle;
 }
 .sidebar-divider-gradient {

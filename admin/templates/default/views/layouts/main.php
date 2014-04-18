@@ -26,7 +26,7 @@ $bootstrapJS = Yii::app()->assetManager->publish(
     <script src="<?php echo $template; ?>/js/functions.js"></script>
     <script src="<?php echo $template; ?>/js/ui.js"></script>
     
-    <title>Bootstrap 101 Template</title>
+    <title><?php echo $this->pageTitle; ?></title>
     
     <link href="<?php echo $bootstrapCss; ?>" rel="stylesheet">
     <link href="<?php echo $template; ?>/stylesheet/css/theme.css" rel="stylesheet">
@@ -45,14 +45,14 @@ $bootstrapJS = Yii::app()->assetManager->publish(
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel">Подтвердите действие</h4>
+                    <h4 class="modal-title" id="myModalLabel"><?php echo Yii::t('system','Confirm your action'); ?></h4>
                 </div>
                 <div class="modal-body">
-                В результате произведения действия могут быть безвозвратно удалены или изменены некоторые данные. Вы уверены, что хотите продолжить?
+                    <?php echo Yii::t('system','With continued implementation of the selected action some data can be permanently deleted or changed. Are you sure you want to continue?'); ?>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                    <button type="button" class="btn btn-danger" id="confirm-modal-button">Продолжить</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo Yii::t('system','Cancel'); ?></button>
+                    <button type="button" class="btn btn-danger" id="confirm-modal-button"><?php echo Yii::t('system','Continue'); ?></button>
                 </div>
             </div>
         </div>
@@ -62,11 +62,11 @@ $bootstrapJS = Yii::app()->assetManager->publish(
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-nav">
-                    <span class="sr-only">Toggle sidebar</span>
+                    <span class="sr-only"><?php echo Yii::t('system','Toggle navigation element'); ?></span>
                     <span class="glyphicon glyphicon-th"></span>
                 </button>
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collection">
-                    <span class="sr-only">Toggle navigation</span>
+                    <span class="sr-only"><?php echo Yii::t('system','Toggle navigation element'); ?></span>
                     <span class="glyphicon glyphicon-th-list"></span>
                 </button>
                 <a class="navbar-brand logo-nav" href="#"><img style="margin:-3px 10px 0 0; height:20px;" src="<?php echo $template; ?>/images/logo.gif"/>YOnote ENGINE</a>
@@ -132,8 +132,17 @@ $bootstrapJS = Yii::app()->assetManager->publish(
             </li>
             <li>
                 <span class="glow"></span>
-                <a href="#" data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne" href="#"><span class="glyphicon glyphicon-cog"></span> Система</a>
+                <a href="#" data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne"><span class="glyphicon glyphicon-user"></span> Пользователи</a>
                 <ul class="nav collapse" id="collapseOne">
+                    <li><a href="<?php echo $this->createUrl('users/index'); ?>"><span class="glyphicon glyphicon-user"></span> Пользователи</a></li>
+                    <li><a href="<?php echo $this->createUrl('roles/index'); ?>"><span class="glyphicon glyphicon-lock"></span> Роли</a></li>
+                    <li><a href="#"><span class="glyphicon glyphicon-cog"></span> Настройки</a></li>
+                </ul>
+            </li>
+            <li>
+                <span class="glow"></span>
+                <a href="#" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo" href="#"><span class="glyphicon glyphicon-cog"></span> Система</a>
+                <ul class="nav collapse" id="collapseTwo">
                     <li><a href="/admin/extensions"><span class="glyphicon glyphicon-asterisk"></span> Расширения</a></li>
                     <li><a href="#"><span class="glyphicon glyphicon-th-large"></span> Виджеты</a></li>
                 </ul>

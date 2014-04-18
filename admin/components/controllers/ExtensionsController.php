@@ -1,10 +1,13 @@
 <?php
 class ExtensionsController extends CApplicationController
 {
-    private $_model=null;
+    private $_model = null;
     
     public function actionIndex()
     {
+        
+        $this->pageTitle = Yii::t('extensions','Extensions manager');
+        
         $this->addBreadcrumb(
                 'Расширения',
                 Yii::app()->createUrl($this->route)
@@ -56,6 +59,31 @@ class ExtensionsController extends CApplicationController
         }
     }
     
+    public function actionModstate()
+    {
+        if(Yii::app()->request->isPostRequest && isset($_POST['action']))
+        {
+            $updated = 0;
+            $status = false;
+            
+            $criteria = new CDbCriteria();
+            $criteria->addInCondition('name',$_POST['select']);
+            if ($_POST['action'] == 'enable')
+                $status = true;
+            $updated = Module::model()->updateAll(array(
+                'installed' => $status,
+                'updatetime' => time()
+            ),$criteria);
+            if (count($updated) == 0)
+                Yii::app()->user->setFlash('extensionsWarning','Nothing happends');
+            else
+                Yii::app()->user->setFlash('extensionsSuccess','Completed');
+            $this->redirect(array('index'));
+        }
+        else
+            throw new CHttpException(400,'Invalid request. Please do not repeat this request again.');
+    }
+
     public function actionDelete()
     {
         if(Yii::app()->request->isPostRequest)
@@ -63,9 +91,9 @@ class ExtensionsController extends CApplicationController
             $model = $this->loadModel();
             
             if ($model->removeExtensions($_POST['select']) == 0)
-                Yii::app()->user->setFlash('warning',Yii::t('extensions','Nothing has been removed!'));
+                Yii::app()->user->setFlash('extensionsWarning',Yii::t('extensions','Nothing has been removed!'));
             else
-                Yii::app()->user->setFlash('success',Yii::t('extensions','Selected extensions have been successfully removed.'));
+                Yii::app()->user->setFlash('extensionsSuccess',Yii::t('extensions','Selected extensions have been successfully removed.'));
             $this->redirect(array('index'));
         }
         else
@@ -83,19 +111,19 @@ class ExtensionsController extends CApplicationController
             if (isset($_POST['ajax']) && $_POST['ajax'] == 'extension-upload')
             {
                 if ($model->validate() && $model->loadExtension())
-                    Yii::app()->user->setFlash('success',Yii::t('extensions','The extension has been installed.'));
+                    Yii::app()->user->setFlash('extensionsSuccess',Yii::t('extensions','The extension has been installed.'));
                 else
-                    Yii::app()->user->setFlash('warning',Yii::t('extensions','Some error occurred while installing this extension.'));
+                    Yii::app()->user->setFlash('extensionsWarning',Yii::t('extensions','Some error occurred while installing this extension.'));
                 echo CActiveForm::validate($model);
                 Yii::app()->end();
             }
             
             if ($model->validate() && $model->loadExtension()){
-                Yii::app()->user->setFlash('success',Yii::t('extensions','The extension has been installed.'));
+                Yii::app()->user->setFlash('extensionsSuccess',Yii::t('extensions','The extension has been installed.'));
                 $this->redirect($this->createUrl('extensions/index'));
             }
             else
-                Yii::app()->user->setFlash('warning',Yii::t('extensions','Some error occurred while installing this extension.'));
+                Yii::app()->user->setFlash('extensionsWarning',Yii::t('extensions','Some error occurred while installing this extension.'));
 
         }
 

@@ -63,7 +63,7 @@ $bootstrapJS = Yii::app()->assetManager->publish(
                                         <span class="input-group-addon">
                                             <span class="glyphicon glyphicon-user"></span>
                                         </span>
-                                        <input type="text" autocomplete="off" class="form-control" placeholder="Username or login" name="login[username]">
+                                        <input type="text" autocomplete="off" class="form-control" placeholder="Username or login" name="login[name]">
                                     </div>
                                 </div>
                             </div>

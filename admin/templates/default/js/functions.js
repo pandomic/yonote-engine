@@ -6,6 +6,13 @@ $.fn.confirmModal = function(){
     });
 };
 
+$.fn.autoCheck = function(){
+    var closest = $(this).closest('table');
+    //$('tr td :checkbox',closest).slideToggle();
+    $('tr td :checkbox',closest).prop('checked',this.is(':checked'));
+    $('td',closest).parent().toggleClass("info",this.is(':checked'));
+}
+
 $.fn.uploadFile = function(params){
     
     /**

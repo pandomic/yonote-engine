@@ -37,21 +37,23 @@ class CApplicationModules extends CApplicationComponent
         $db = Yii::app()->getComponent($this->dbComponentId);
         
         $dependency = new CDbCacheDependency("
-            SELECT COUNT(installed) FROM {$this->tableName}
+            SELECT MAX(updatetime) FROM {$this->tableName}
         ");
         
         $results = $db->cache($this->cacheTime,$dependency)
             ->createCommand()
             ->setFetchMode(PDO::FETCH_OBJ)
-            ->select('name')
+            ->select('name,installed')
             ->from($this->tableName)
             ->order('priority DESC')
             ->queryAll();
         
         foreach ($results as $record){
-            $this->_modules[] = $record->modname;
+            if (file_exists("$this->modulesPath/{$record->name}"))
+                if ((bool) $record->installed)
+                    $this->_modules[] = $record->name;
         }
-        
+
         Yii::app()->setModules($this->_modules);
         
         parent::init();

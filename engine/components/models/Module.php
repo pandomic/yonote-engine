@@ -17,5 +17,10 @@ class Module extends CActiveRecord
             'extension' => array(self::BELONGS_TO,'Extension','extension')
         );
     }
+    
+    public function primaryKey() 
+    {
+        return 'name';
+    }
 }
 ?>

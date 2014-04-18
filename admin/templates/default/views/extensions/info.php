@@ -9,7 +9,7 @@
                 <p>
                     <dl class="dl-horizontal">
                         <dt>Дата изменения:</dt>
-                        <dd><?php echo Yii::app()->dateFormatter->formatDateTime($model->updateTime); ?></dd>
+                        <dd><?php echo Yii::app()->dateFormatter->formatDateTime($model->updatetime); ?></dd>
 
                         <dt>Расширение:</dt>
                         <dd><?php echo $model->name; ?></dd>

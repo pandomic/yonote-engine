@@ -85,4 +85,51 @@ interface IHeaders
      */
     public function charset($charset);
 }
+
+/**
+ * Image manipulation interface
+ * 
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @package application.base
+ * @since 1.0
+ */
+interface IImage
+{
+    /**
+     * Resize image
+     * @param int $w new image width
+     * @param int $h new image height
+     * @param bool $crop crop image
+     */
+    public function resize($w,$h,$crop);
+    /**
+     * Put a watermark to the given image
+     * @param string $path watermark path
+     * @param int $offsetH horizontal offset (percents)
+     * @param int $offsetV vertical offset (percents)
+     */
+    public function watermark($path,$offsetH,$offsetV);
+    /**
+     * Show processed image
+     * @param string $type output image mime-type
+     * @param int $quality image quality (from 0 to 100)
+     */
+    public function get($type,$quality);
+    /**
+     * Save processed image
+     * @param string $type output image mime-type
+     * @param string $path path to save (without image type)
+     * @param int $quality image quality (from 0 to 100)
+     */
+    public function save($type,$path,$quality);
+    /**
+     * Get image resource
+     * @return resource image resource
+     */
+    public function getResource();
+    /**
+     * Get image mime-type
+     */
+    public function mime();
+}
 ?>

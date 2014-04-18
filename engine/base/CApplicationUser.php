@@ -14,9 +14,9 @@ class CApplicationUser extends CWebUser implements IApplicationUser
         $db = Yii::app()->db;
         return $db->createCommand()
             ->setFetchMode(PDO::FETCH_OBJ)
-            ->select('username,password,token,email')
+            ->select('name,password,token,email')
             ->from($this->userTable)
-            ->where('username=:username OR email=:username',array(
+            ->where('name=:username OR email=:username',array(
                 ':username' => $username
             ))
             ->queryRow();
@@ -38,7 +38,7 @@ class CApplicationUser extends CWebUser implements IApplicationUser
                 ->setFetchMode(PDO::FETCH_OBJ)
                 ->select('token')
                 ->from($this->userTable)
-                ->where('username=:username or email=:username',array(
+                ->where('name=:username or email=:username',array(
                     ':username' => $id
                 ))
                 ->queryRow();

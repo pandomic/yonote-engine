@@ -14,12 +14,12 @@ class UserIdentity extends CUserIdentity
         else
         {
             $this->setState('token',$record->token);
-            $this->_id = $record->username;
+            $this->_id = $record->name;
             $this->errorCode = self::ERROR_NONE;
             
             Yii::app()->db->createCommand()->update('{{user}}',array(
                 'token' => CPasswordHelper::generateSalt()
-            ),'username=:username OR email=:username',array(
+            ),'name=:username OR email=:username',array(
                 ':username' => $this->username
             ));
 

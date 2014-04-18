@@ -46,6 +46,7 @@ class BaseController extends CApplicationController
             if($model->validate() && $model->login())
                 $this->redirect(Yii::app()->user->returnUrl);
         }
+
         // display the login form
         $this->renderPartial('login',array('model' => $model));
     }
@@ -63,6 +64,11 @@ class BaseController extends CApplicationController
     }
 
     public function actionIndex()
+    {
+        $this->render('test');
+    }
+    
+    public function actionTest()
     {
         $this->render('test');
     }

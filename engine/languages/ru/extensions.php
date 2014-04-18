@@ -1,5 +1,6 @@
 <?php
 return array(
+    'Extensions manager' => 'Менеджер расширений',
     'File is too large. The maximum filesize is {filesize} bytes.' => 'Файл слишком велик. Максимальный размер файла - {filesize} байт.',
     'Only one file can be selected.' => 'Только один файл может быть выбран.',
     'Only .zip archives allowed.' => 'Допускается загрузка только архивов в формате .zip',
@@ -16,6 +17,10 @@ return array(
     'Extension "{extension}" already exists!' => 'Расширение "{extension}" уже установлено!',
     'Nothing has been removed!' => 'Ничего не было удалено!',
     'Selected extensions have been successfully removed.' => 'Выбранные расширения были успешно удалены.',
-    'Some error occurred while installing this extension.' => 'При установке расширения возникла ошибка.'
+    'Some error occurred while installing this extension.' => 'При установке расширения возникла ошибка.',
+    'There are no modules here.' => 'Не обнаружено модулей.',
+    'There are no widgets here.' => 'Не обнаружено виджетов.',
+    'There are no templates here.' => 'Не обнаружено шаблонов.',
+    'There are no extensions here.' => 'Нет установленных расширений.'
 );
 ?>

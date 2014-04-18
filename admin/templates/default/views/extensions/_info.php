@@ -7,7 +7,7 @@
     <p>
         <dl class="dl-horizontal clearfix">
             <dt>Дата изменения:</dt>
-            <dd><?php echo Yii::app()->dateFormatter->formatDateTime($model->updateTime); ?></dd>
+            <dd><?php echo Yii::app()->dateFormatter->formatDateTime($model->updatetime); ?></dd>
             
             <dt>Расширение:</dt>
             <dd><?php echo $model->name; ?></dd>
@@ -26,40 +26,7 @@
             
             <dt>Описание:</dt>
             <dd><?php echo $model->description; ?></dd>
-            
-            <dt>Содержимое:</dt>
-            <dd>
-                
-                <ul>
-                    <?php
-                    if (is_array($data['folders'])):
-                        foreach ($data['folders'] as $folder): 
-                    ?>
-                    
-                        <li>
-                            <?php echo $folder; ?>
-                        </li>
-                        
-                    <?php
-                        endforeach;
-                    endif;
-                    ?>
-                    <?php
-                    if (is_array($data['files'])):
-                        foreach ($data['files'] as $file): 
-                    ?>
-                    
-                        <li>
-                            <?php echo $file; ?>
-                        </li>
-                        
-                    <?php
-                        endforeach;
-                    endif;
-                    ?>
-                </ul>
-                
-            </dd>
+
         </dl>
     </p>
 </div>

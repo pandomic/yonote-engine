@@ -21,23 +21,23 @@ $bootstrapJS = Yii::app()->assetManager->publish(
     </div>
 </div>
 
-<?php if (Yii::app()->user->hasFlash('success')): ?>
+<?php if (Yii::app()->user->hasFlash('extensionsSuccess')): ?>
     <div class="row">
         <div class="col-md-12">
             <div class="alert alert-success">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <?php echo Yii::app()->user->getFlash('success'); ?>
+                <?php echo Yii::app()->user->getFlash('extensionsSuccess'); ?>
             </div>
         </div>
     </div>
 <?php endif; ?>
 
-<?php if (Yii::app()->user->hasFlash('warning')): ?>
+<?php if (Yii::app()->user->hasFlash('extensionsWarning')): ?>
     <div class="row">
         <div class="col-md-12">
             <div class="alert alert-warning">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <?php echo Yii::app()->user->getFlash('warning'); ?>
+                <?php echo Yii::app()->user->getFlash('extensionsWarning'); ?>
             </div>
         </div>
     </div>
@@ -53,10 +53,11 @@ $bootstrapJS = Yii::app()->assetManager->publish(
             <div class="panel-body"> 
                 
                 <?php if (count($extensions) > 0): ?>
-                
-                    <form id="extensionsForm" method="POST" action="<?php echo Yii::app()->createUrl('extensions/delete') ?>">
-                        
-                        <input type="hidden" name="<?php echo Yii::app()->request->csrfTokenName ?>" value="<?php echo Yii::app()->request->getCsrfToken(); ?>">
+                    
+                    <?php echo CHtml::form(Yii::app()->createUrl('extensions/delete'),'POST',array(
+                        'role' => 'form',
+                        'id' => 'extensionsForm'
+                    )); ?>
                         
                         <table class="table table-striped table-hover table-middle table-responsive">
                             <thead>
@@ -64,7 +65,13 @@ $bootstrapJS = Yii::app()->assetManager->publish(
                                     <th>#</th>
                                     <th>Название</th>
                                     <th>Автор</th>
-                                    <th>Выделить</th>
+                                    <th>
+                                        <div class="btn-group" data-toggle="buttons">
+                                            <label class="btn btn-default ">
+                                                <input type="checkbox" onchange="$(this).autoCheck();"> Выделить
+                                            </label>
+                                        </div>
+                                    </th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -84,7 +91,11 @@ $bootstrapJS = Yii::app()->assetManager->publish(
                                             <?php echo $extension->author; ?>
                                         </td>
                                         <td>
-                                            <input type="checkbox" name="select[]" value="<?php echo $extension->name; ?>">
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="select[]" value="<?php echo $extension->name; ?>"> <?php echo Yii::t('system','Select'); ?>
+                                                </label>
+                                            </div>
                                         </td>
                                     </tr>
 
@@ -93,14 +104,14 @@ $bootstrapJS = Yii::app()->assetManager->publish(
                             </tbody>
                         </table>
                         
-                        <button type="button" class="btn btn-danger" onclick="$(this).confirmModal();" data-action="$('#extensionsForm').submit();">Удалить выбранное</button>
-                        <button type="reset" class="btn btn-default">Сбросить</button>
+                        <button type="button" class="btn btn-danger" onclick="$(this).confirmModal();" data-action="$('#extensionsForm').submit();"><?php echo Yii::t('system','Remove selected'); ?></button>
+                        <button type="reset" class="btn btn-default"><?php echo Yii::t('system','Reset'); ?></button>
                         
-                    </form>
+                    <?php echo CHtml::endForm(); ?>
                 <?php else: ?>
                     
                     <div class="alert alert-warning">
-                        Расширения не найдены. Загрузите новое расширение.
+                        <?php echo Yii::t('extensions','There are no extensions here.'); ?>
                     </div>
                     
                 <?php endif; ?>
@@ -111,76 +122,90 @@ $bootstrapJS = Yii::app()->assetManager->publish(
     <div class="col-lg-6 col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading clearfix">
-                <h3 class="panel-title">Модули <span class="label label-primary"><?php echo count($modules); ?></span></h3>
+                <h3 class="panel-title"><?php echo Yii::t('system','Modules'); ?> <span class="label label-primary"><?php echo count($modules); ?></span></h3>
             </div>
             <div class="panel-body">
                 
                 <?php if (count($modules) > 0): ?>
                 
-                <table class="table table-striped table-hover table-middle table-responsive">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Название</th>
-                            <th>Расширение</th>
-                            <th>Состояние</th>
-                            <th>Выделить</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                    <?php echo CHtml::form(Yii::app()->createUrl('extensions/modstate'),'POST',array(
+                        'role' => 'form'
+                    )); ?>
                         
-                        <?php foreach ($modules as $module): ?>
-                            
-                            <tr>
-                                <td>
-                                    <?php echo $module->name; ?>
-                                </td>
-                                <td>
-                                    <?php echo $module->title; ?>
-                                </td>
-                                <td>
-                                    <a href="#" data-toggle="modal" data-target="#ajaxModal" data-remote="<?php echo Yii::app()->createUrl('extensions/info',array('e' => $module->extension,'ajax' => 'info-requred')); ?>">
-                                        <?php echo $module->extension; ?>
-                                    </a>
-                                </td>
-                                <td>
-                                    <?php if ((bool) $module->installed): ?>
-                                        <span class="label label-success">Работает</span>
-                                    <?php else: ?>
-                                        <span class="label label-danger">Отключен</span>
-                                    <?php endif; ?>
-                                <td>
-                                    <div class="btn-group" data-toggle="buttons">
-                                        <label class="btn btn-default btn-sm">
-                                            <input type="checkbox"> <span class="glyphicon glyphicon-check"> Выделить
-                                        </label>
-                                    </div>
-                                </td>
-                            </tr>
-                            
-                        <?php endforeach; ?>
-                            
-                    </tbody>
-                </table>
-                
-                <div class="btn-group">
-                    <button type="button" class="btn btn-primary">Выполнить</button>
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                        <span class="caret"></span>
-                        <span class="sr-only">Выбрать действие</span>
-                    </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#">Включить</a></li>
-                        <li><a href="#">Отключить</a></li>
-                    </ul>
-                </div>
+                        <input type="hidden" id="modAction" name="action" value="enable">
+                        
+                        <table class="table table-striped table-hover table-middle table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th><?php echo Yii::t('system','Name'); ?></th>
+                                    <th><?php echo Yii::t('system','Extension'); ?></th>
+                                    <th><?php echo Yii::t('system','Status'); ?></th>
+                                    <th>
+                                        <div class="btn-group" data-toggle="buttons">
+                                            <label class="btn btn-default ">
+                                                <input type="checkbox" onchange="$(this).autoCheck();"> <?php echo Yii::t('system','Select'); ?>
+                                            </label>
+                                        </div>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
-                <button type="button" class="btn btn-default">Сбросить</button>
-                
+                                <?php foreach ($modules as $module): ?>
+
+                                    <tr>
+                                        <td>
+                                            <?php echo $module->name; ?>
+                                        </td>
+                                        <td>
+                                            <?php echo $module->title; ?>
+                                        </td>
+                                        <td>
+                                            <a href="#" data-toggle="modal" data-target="#ajaxModal" data-remote="<?php echo Yii::app()->createUrl('extensions/info',array('e' => $module->extension,'ajax' => 'info-requred')); ?>">
+                                                <?php echo $module->extension; ?>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <?php if ((bool) $module->installed): ?>
+                                                <span class="label label-success"><?php echo Yii::t('system','Enabled'); ?></span>
+                                            <?php else: ?>
+                                                <span class="label label-danger"><?php echo Yii::t('system','Disabled'); ?></span>
+                                            <?php endif; ?>
+                                        <td>
+                                            <div class="checkbox">
+                                                <label>
+                                                    <input type="checkbox" name="select[]" value="<?php echo $module->name; ?>"> <?php echo Yii::t('system','Select'); ?>
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                <?php endforeach; ?>
+
+                            </tbody>
+                        </table>
+
+                        <div class="btn-group">
+                            <button type="submit" class="btn btn-primary"><?php echo Yii::t('system','Perform the action'); ?></button>
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                <span class="caret"></span>
+                                <span class="sr-only"><?php echo Yii::t('system','Perform the action'); ?></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#" onclick="$('#modAction').attr('value','enable');"><?php echo Yii::t('system','Enable'); ?></a></li>
+                                <li><a href="#" onclick="$('#modAction').attr('value','disable');"><?php echo Yii::t('system','Disable'); ?></a></li>
+                            </ul>
+                        </div>
+
+                        <button type="reset" class="btn btn-default"><?php echo Yii::t('system','Reset'); ?></button>
+                    
+                    <?php echo CHtml::endForm(); ?>
+                        
                 <?php else: ?>
                     
                     <div class="alert alert-warning">
-                        Не обнаружено модулей в составе расширений.
+                        <?php echo Yii::t('extensions','There are no modules here.'); ?>
                     </div>
                 
                 <?php endif; ?>
@@ -195,7 +220,7 @@ $bootstrapJS = Yii::app()->assetManager->publish(
     <div class="col-lg-6 col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading clearfix">
-                <h3 class="panel-title">Виджеты <span class="label label-primary"><?php echo count($widgets); ?></span></h3>
+                <h3 class="panel-title"><?php echo Yii::t('system','Widgets'); ?> <span class="label label-primary"><?php echo count($widgets); ?></span></h3>
             </div>
             <div class="panel-body">
                 
@@ -205,9 +230,9 @@ $bootstrapJS = Yii::app()->assetManager->publish(
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Название</th>
-                                <th>Расширение</th>
-                                <th>Класс</th>
+                                <th><?php echo Yii::t('system','Name'); ?></th>
+                                <th><?php echo Yii::t('system','Extension'); ?></th>
+                                <th><?php echo Yii::t('system','Class'); ?></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -239,7 +264,7 @@ $bootstrapJS = Yii::app()->assetManager->publish(
                 <?php else: ?>
                 
                     <div class="alert alert-warning">
-                        Не обнаружено виджетов в составе расширений.
+                        <?php echo Yii::t('extensions','There are no widgets here.'); ?>
                     </div>
                 
                 <?php endif; ?>
@@ -250,19 +275,18 @@ $bootstrapJS = Yii::app()->assetManager->publish(
     <div class="col-lg-6 col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading clearfix">
-                <h3 class="panel-title">Шаблоны <span class="label label-primary"><?php echo count($templates); ?></span></h3>
+                <h3 class="panel-title"><?php echo Yii::t('system','Templates'); ?> <span class="label label-primary"><?php echo count($templates); ?></span></h3>
             </div>
             <div class="panel-body">        
                 
                 <?php if(count($templates) > 0): ?>
                 
-                <table class="table table-striped table-hover">
+                <table class="table table-striped table-hover table-middle">
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Расширение</th>
-                            <th>По умолчанию</th>
-                            <th>Выделить</th>
+                            <th><?php echo Yii::t('system','Extension'); ?></th>
+                            <th><?php echo Yii::t('system','By default'); ?></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -279,16 +303,9 @@ $bootstrapJS = Yii::app()->assetManager->publish(
                                     </a>
                                 </td>
                                 <td>
-                                    <div class="btn-group" data-toggle="buttons">
-                                        <label class="btn btn-default btn-sm">
-                                            <input type="radio" name="options" id="option1" data-toggle="button"><span class="glyphicon glyphicon-ok"> По умолчанию
-                                        </label>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="btn-group" data-toggle="buttons">
-                                        <label class="btn btn-default btn-sm">
-                                            <input type="checkbox" checked=""> <span class="glyphicon glyphicon-check"> Выделить
+                                    <div class="radio">
+                                        <label>
+                                            <input type="radio" name="default"> <?php echo Yii::t('system','By default'); ?>
                                         </label>
                                     </div>
                                 </td>
@@ -299,13 +316,13 @@ $bootstrapJS = Yii::app()->assetManager->publish(
                     </tbody>
                 </table>
                 
-                <button type="button" class="btn btn-primary">Сохранить</button>
-                <button type="button" class="btn btn-default">Сбросить</button>
+                <button type="button" class="btn btn-primary"><?php echo Yii::t('system','Save'); ?></button>
+                <button type="button" class="btn btn-default"><?php echo Yii::t('system','Reset'); ?></button>
                 
                 <?php else: ?>
                 
                     <div class="alert alert-warning">
-                        Не обнаружено шаблонов в составе расширений.
+                        <?php echo Yii::t('extensions','There are no templates here.'); ?>
                     </div>
                 
                 <?php endif; ?>

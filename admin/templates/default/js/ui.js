@@ -4,15 +4,9 @@ $(document).ready(function(){
         $(this).removeData('bs.modal');
     });
     
-    $('form').each(function(){
-        var form = $(this);
-        $(this).find('*[type="reset"]').click(function(){
-            form.find('.btn').removeClass('active');
-        });
+    $(":checkbox").change(function() {
+        $(this).closest("td").parent().toggleClass("info",this.checked);
     });
     
-    $('label.btn input[checked]').each(function(){
-        $(this).parent().addClass('active');
-    });
+    $('.pagination .hidden').remove();
 });
-

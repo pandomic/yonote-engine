@@ -79,7 +79,7 @@ return array(
         // Modules manager
         'mmanager' => array(
             'class' => 'CApplicationModules',
-            'modulesPath' => THIS_PATH.'/modules',
+            'modulesPath' => MODULES_PATH,
             'dbComponentId' => 'db',
             'tableName' => '{{module}}',
             'cacheComponentId' => 'cache',
@@ -125,7 +125,7 @@ return array(
         // User object
         'user' => array(
             'class' => 'CApplicationUser',
-            'loginUrl' => 'base/login',
+            'loginUrl' => array('base/login'),
             'returnUrl' => 'base/index',
             'dbComponentId' => 'db',
             'userTable' => '{{user}}'
