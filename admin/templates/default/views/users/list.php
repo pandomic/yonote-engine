@@ -46,7 +46,6 @@
                 
                 <?php echo CHtml::form(array('remove'),'POST',array(
                     'role' => 'form',
-                    'class' => 'form-inline',
                     'id' => 'usersForm'
                 )); ?>
                 
