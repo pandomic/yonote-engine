@@ -3,6 +3,23 @@ class rolesController extends CApplicationController
 {
     private $_topLevelAuth = null;
     
+    public function actionRemove()
+    {
+        if (Yii::app()->request->isPostRequest)
+        {
+            $c = 0;
+            if (isset($_POST['select']) && is_array($_POST['select']))
+                $c = AuthItem::model()->deleteByPk($_POST['select']);
+            if ($c == 0)
+                Yii::app()->user->setFlash('rolesWarning',Yii::t('users','warning.role.remove'));
+            else
+                Yii::app()->user->setFlash('rolesSuccess',Yii::t('users','success.role.remove'));
+            $this->redirect(array('index'));
+        }
+        else
+            throw new CHttpException(400,Yii::t('system','error.400.description'));
+    }
+
     public function actionIndex()
     {
         $this->pageTitle = Yii::t('users','page.roles.title');
@@ -50,7 +67,6 @@ class rolesController extends CApplicationController
     public function actionAdd()
     {
         $model = new AuthItem('add');
-        $allAuthItems = array();
         if (isset($_POST['AuthItem']))
         {
             $model->setAttributes($_POST['AuthItem']);
@@ -63,21 +79,40 @@ class rolesController extends CApplicationController
                 );
                 $this->redirect(array('index'));
             }
-                
         }
         $this->render('editor',array(
             'model' => $model,
-            'tree' => $this->_authTree(
-                $this->_modelParents(),
-                $allAuthItems
-            ),
-            'items' => $allAuthItems
+            'authTree' => AuthItem::model()->friendlyTree()
         ));
     }
     
     public function actionEdit()
     {
+        if (!isset($_GET['id']))
+            throw new CHttpException(400,Yii::t('system','error.400.description'));
         
+        $model = AuthItem::model()->findByPk($_GET['id']);
+        
+        if ($model === null)
+            throw new CHttpException(404,Yii::t('system','error.404.description'));
+
+        $model->setScenario('edit');
+        if (isset($_POST['AuthItem']))
+        {
+            $model->setAttributes($_POST['AuthItem']);
+            if ($model->save())
+            {
+                Yii::app()->user->setFlash(
+                    'rolesSuccess',
+                    Yii::t('users','success.role.edit')
+                );
+                $this->redirect(array('roles/edit','id' => $model->name));
+            }
+        }
+        $this->render('editor',array(
+            'model' => $model,
+            'authTree' => AuthItem::model()->friendlyTree()
+        ));
     }
     
     private function _modelParents()

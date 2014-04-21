@@ -136,7 +136,7 @@ $bootstrapJS = Yii::app()->assetManager->publish(
                 <ul class="nav collapse" id="collapseOne">
                     <li><a href="<?php echo $this->createUrl('users/index'); ?>"><span class="glyphicon glyphicon-user"></span> Пользователи</a></li>
                     <li><a href="<?php echo $this->createUrl('roles/index'); ?>"><span class="glyphicon glyphicon-lock"></span> Роли</a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-cog"></span> Настройки</a></li>
+                    <li><a href="<?php echo $this->createUrl('users/settings'); ?>"><span class="glyphicon glyphicon-cog"></span> Настройки</a></li>
                 </ul>
             </li>
             <li>

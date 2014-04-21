@@ -22,7 +22,7 @@ class User extends CActiveRecord
                 'message' => Yii::t('users','model.user.error.email')
             ),
             array(
-                'name','unique','on' =>'add','attributeName' => 'name',
+                'name','unique','attributeName' => 'name',
                 'message' => Yii::t('users','model.user.error.name.unique')
             ),
             array(
@@ -67,7 +67,9 @@ class User extends CActiveRecord
         );
     }
 
-    public function beforeSave(){
+    public function beforeSave()
+    {
+        
         if ($this->password != null)
             $this->password = CPasswordHelper::hashPassword($this->password);
         else if ($this->password == null && $this->getScenario() == 'edit')
@@ -76,7 +78,7 @@ class User extends CActiveRecord
             )->password;
         return parent::beforeSave();
     }
-    
+
     public function afterSave(){
         if ($this->getScenario() == 'add')
         {
@@ -93,14 +95,20 @@ class User extends CActiveRecord
         return parent::afterSave();
     }
     
+    public function beforeValidate()
+    {
+        if ($this->permissions != null)
+            $this->permissions = array_unique($this->permissions);
+        return parent::beforeValidate();
+    }
+
     public function permissionsRule($attribute,$params)
     {
         $foundCount = count(AuthItem::model()->findAllByPk($this->permissions));
-        if ($foundCount <= 0)
+        if ($foundCount <= 0 || !is_array($this->permissions))
             $this->addError($attribute,Yii::t('users','model.user.error.permissions'));
-        if (is_array($this->permissions))
-            if (count($this->permissions) != $foundCount)
-                $this->addError($attribute,Yii::t('users','model.user.error.permissions'));
+        if (count($this->permissions) != $foundCount)
+            $this->addError($attribute,Yii::t('users','model.user.error.permissions'));
     }
     
     public static function model($className=__CLASS__)

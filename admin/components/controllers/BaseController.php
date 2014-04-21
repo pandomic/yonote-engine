@@ -14,7 +14,7 @@ class BaseController extends CApplicationController
             array(
                 'allow',
                 'actions' => array('index'),
-                'roles' => array('adminAccess')
+                'roles' => array('authenticated')
             ),
             array(
                 'allow',
@@ -67,7 +67,7 @@ class BaseController extends CApplicationController
     {
         $this->render('test');
     }
-    
+
     public function actionTest()
     {
         $this->render('test');

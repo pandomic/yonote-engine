@@ -1,26 +1,11 @@
 <?php
-// A little bit of magic
-// Create new Recursive iterator
-$array_iterator = new RecursiveIteratorIterator(
-    new RecursiveArrayIterator($tree)
-);
-// Create dropdown items array
-$dropDownList = array();
-// Create dropdown selected items array
-$dropDownListSelected = array();
-// Available auth item types
-$types = array('Operation','Task','Role');
-// Build dropdown items
-foreach($array_iterator as $key => $value)
-{
-    $indent = str_repeat('&nbsp;',$array_iterator->getDepth()*3);
-    $dropDownList[$key] = $indent.'|- '.$value." ({$types[$items[$key]->type]})";
-}
-// Build dropdown selected items
+// Build permissions selected items
+$selected = array();
 if (isset($model->assignments))
 {
+    $selected = array();
     foreach ($model->assignments as $assignment)
-        $dropDownListSelected[$assignment->itemname] = array('selected' => true);
+        $selected[] = $assignment->itemname;
 }
 ?>
 
@@ -126,13 +111,13 @@ if (isset($model->assignments))
                             'class' => 'col-sm-2 control-label'
                         )); ?>
                         <div class="col-sm-10">
-                            <?php echo CHtml::activeDropDownList($model,'permissions',$dropDownList,array(
-                                'multiple' => true,
-                                'encode' => false,
-                                'class' => 'form-control',
-                                'options' => $dropDownListSelected,
-                                'id' => 'userPermissions'
-                            )); ?>
+                            
+                            <select class="form-control" multiple="true" name="User[permissions][]" size="<?php echo count($authTree); ?>">
+                                <?php foreach($authTree as $arr): list($k,$v) = each($arr); ?>
+                                    <option <?php if (in_array($k,$selected)) echo 'selected="true"'; ?> value="<?php echo $k; ?>"><?php echo $v; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                            
                             <?php echo CHtml::error($model,'permissions',array(
                                 'class' => 'help-block text-danger'
                             )); ?>

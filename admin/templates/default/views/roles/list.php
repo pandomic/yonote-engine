@@ -1,20 +1,20 @@
-<?php if (Yii::app()->user->hasFlash('usersSuccess')): ?>
+<?php if (Yii::app()->user->hasFlash('rolesSuccess')): ?>
     <div class="row">
         <div class="col-md-12">
             <div class="alert alert-success">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <?php echo Yii::app()->user->getFlash('usersSuccess'); ?>
+                <?php echo Yii::app()->user->getFlash('rolesSuccess'); ?>
             </div>
         </div>
     </div>
 <?php endif; ?>
 
-<?php if (Yii::app()->user->hasFlash('usersWarning')): ?>
+<?php if (Yii::app()->user->hasFlash('rolesWarning')): ?>
     <div class="row">
         <div class="col-md-12">
-            <div class="alert alert-warning">
+            <div class="alert alert-success">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <?php echo Yii::app()->user->getFlash('usersWarning'); ?>
+                <?php echo Yii::app()->user->getFlash('rolesWarning'); ?>
             </div>
         </div>
     </div>
@@ -66,7 +66,7 @@
                                     <td>
                                         <div class="checkbox">
                                             <label>
-                                                <input type="checkbox" name="select[]" value="<?php echo $user->name; ?>"> <?php echo Yii::t('system','app.select'); ?>
+                                                <input type="checkbox" name="select[]" value="<?php echo $model->name; ?>"> <?php echo Yii::t('system','app.select'); ?>
                                             </label>
                                         </div>
                                     </td>

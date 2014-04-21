@@ -2,12 +2,39 @@
 class UsersController extends CApplicationController
 {
     
-    private $_topLevelAuth = null;
     private $_usersListModel = null;
     private $_usersListPages;
     private $_usersListSort;
     private $_userEditModel = null;
     
+    public function actionSettings()
+    {
+        $this->pageTitle = Yii::t('users','page.settings.title');
+        
+        $this->addBreadcrumb(
+            Yii::t('users','page.settings.title'),
+            $this->createUrl($this->route)
+        );
+        
+        $model = new UsersSettings();
+        if (isset($_POST['UsersSettings']))
+        {
+            $model->setAttributes($_POST['UsersSettings']);
+            if ($model->save())
+            {
+                Yii::app()->user->setFlash(
+                    'usersSettingsSuccess',
+                    Yii::t('users','success.settings.update')
+                );
+                $this->refresh();
+            }
+        }
+        $this->render('settings',array(
+            'model' => $model
+        ));
+    }
+
+
     public function actionProfile()
     {
         $this->pageTitle = Yii::t('users','page.profile.title');
@@ -71,18 +98,14 @@ class UsersController extends CApplicationController
                     'usersSuccess',
                     Yii::t('users','success.user.edit')
                 );
-                $this->refresh();
+                $this->redirect(array('edit','id' => $_POST['User']['name']));
             }
                 
         }
         
         $this->render('editor',array(
             'model' => $model,
-            'tree' => $this->_authTree(
-                $this->_modelParents(),
-                $allAuthItems
-            ),
-            'items' => $allAuthItems
+            'authTree' => AuthItem::model()->friendlyTree()
         ));
         
     }
@@ -95,9 +118,9 @@ class UsersController extends CApplicationController
             if (isset($_POST['select']) && is_array($_POST['select']))
                 $c = User::model()->deleteByPk($_POST['select']);
             if ($c == 0)
-                Yii::app()->user->setFlash('usersWarning','Nothing selected!');
+                Yii::app()->user->setFlash('usersWarning',Yii::t('users','warning.user.remove'));
             else
-                Yii::app()->user->setFlash('usersSuccess','Selected items was removed.');
+                Yii::app()->user->setFlash('usersSuccess',Yii::t('users','success.user.remove'));
             $this->redirect(array('index'));
         }
         else
@@ -135,11 +158,7 @@ class UsersController extends CApplicationController
             
         $this->render('editor',array(
             'model' => $model,
-            'tree' => $this->_authTree(
-                $this->_modelParents(),
-                $allAuthItems
-            ),
-            'items' => $allAuthItems
+            'authTree' => AuthItem::model()->friendlyTree()
         ));
     }
 
@@ -244,40 +263,6 @@ class UsersController extends CApplicationController
         
         return $this->_usersListModel;
         
-    }
-
-    private function _modelParents()
-    {
-        if ($this->_topLevelAuth === null)
-        {
-            $authItems = AuthItem::model()->with('children','parents')->findAll();
-            $this->_topLevelAuth = array();
-
-            if (count($authItems) > 0)
-                foreach ($authItems as $record)
-                    if ($record->type == 2 && count($record->parents) == 0)
-                        $this->_topLevelAuth[] = $record;
-        }
-        return $this->_topLevelAuth;
-    }
-    
-    private function _authTree($parents,&$allAuthItems)
-    {
-        $tree = array();
-        if (count($parents) > 0)
-            foreach($parents as $parent)
-            {
-                $tree[$parent->name] = $parent->description;
-                $allAuthItems[$parent->name] = $parent;
-                if (count($parent->children) > 0)
-                    $tree[] = $this->_authTree($parent->children,$allAuthItems);
-                else if (count($parent->children) == 1)
-                {
-                    $tree[] = $parent->children[0]->description;
-                    $allAuthItems[$parent->children[0]->name] = $parent->children[0];
-                }
-            }
-        return $tree;
     }
 }
 ?>

@@ -1,26 +1,11 @@
 <?php
-// A little bit of magic
-// Create new Recursive iterator
-$array_iterator = new RecursiveIteratorIterator(
-    new RecursiveArrayIterator($tree)
-);
-// Create dropdown items array
-$dropDownList = array();
-// Create dropdown selected items array
-$dropDownListSelected = array();
-// Available auth item types
-$types = array('Operation','Task','Role');
-// Build dropdown items
-foreach($array_iterator as $key => $value)
+// Build permissions selected items
+$selected = array();
+if (isset($model->parentrelations))
 {
-    $indent = str_repeat('&nbsp;',$array_iterator->getDepth()*3);
-    $dropDownList[$key] = $indent.'|- '.$value." ({$types[$items[$key]->type]})";
-}
-// Build dropdown selected items
-if (isset($model->assignments))
-{
-    foreach ($model->assignments as $assignment)
-        $dropDownListSelected[$assignment->itemname] = array('selected' => true);
+    $selected = array();
+    foreach ($model->parentrelations as $parent)
+        $selected[] = $parent->parent;
 }
 ?>
 
@@ -79,20 +64,18 @@ if (isset($model->assignments))
                             )); ?>
                         </div>
                     </div>
-                    <div class="form-group <?php if ($model->hasErrors('permissions')) echo('has-error'); ?>">
-                        <?php echo CHtml::activeLabel($model,'permissions',array(
+                    <div class="form-group <?php if ($model->hasErrors('parents')) echo('has-error'); ?>">
+                        <?php echo CHtml::activeLabel($model,'parents',array(
                             'for' => 'rolePermissions',
                             'class' => 'col-sm-2 control-label'
                         )); ?>
                         <div class="col-sm-10">
-                            <?php echo CHtml::activeDropDownList($model,'permissions',$dropDownList,array(
-                                'multiple' => true,
-                                'encode' => false,
-                                'class' => 'form-control',
-                                'options' => $dropDownListSelected,
-                                'id' => 'rolePermissions'
-                            )); ?>
-                            <?php echo CHtml::error($model,'permissions',array(
+                            <select class="form-control" multiple="true" name="AuthItem[parents][]" size="<?php echo count($authTree); ?>">
+                                <?php foreach($authTree as $arr): list($k,$v) = each($arr); ?>
+                                    <option <?php if (in_array($k,$selected)) echo 'selected="true"'; ?> value="<?php echo $k; ?>"><?php echo $v; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                            <?php echo CHtml::error($model,'parents',array(
                                 'class' => 'help-block text-danger'
                             )); ?>
                         </div>

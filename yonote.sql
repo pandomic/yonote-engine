@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Апр 18 2014 г., 20:35
+-- Время создания: Апр 21 2014 г., 18:48
 -- Версия сервера: 5.5.37-log
 -- Версия PHP: 5.3.28
 
@@ -40,9 +40,7 @@ CREATE TABLE IF NOT EXISTS `yonote_auth_assignment` (
 --
 
 INSERT INTO `yonote_auth_assignment` (`itemname`, `userid`, `bizrule`, `data`) VALUES
-('administrator', 'admin', NULL, 'N;'),
-('authenticated', 'newuser', NULL, 'N;'),
-('guest', 'alone', NULL, 'N;');
+('subtaskone', 'alonex', NULL, 'N;');
 
 -- --------------------------------------------------------
 
@@ -67,7 +65,7 @@ INSERT INTO `yonote_auth_item` (`name`, `type`, `description`, `bizrule`, `data`
 ('adminAccess', 0, 'Administrative access', NULL, 'N;'),
 ('administrator', 2, 'Administrator', NULL, 'N;'),
 ('authenticated', 2, 'Authenticated', 'return !Yii::app()->user->getIsGuest();', 'N;'),
-('first', 0, 'My first operation', NULL, 'N;'),
+('first', 0, 'My first operation is cool', NULL, 'N;'),
 ('guest', 2, 'Guest', 'return Yii::app()->user->getIsGuest();', 'N;'),
 ('second', 0, 'The second operation', NULL, 'N;'),
 ('subtaskone', 1, 'first subtask', 'true', 'N;'),
@@ -92,9 +90,9 @@ CREATE TABLE IF NOT EXISTS `yonote_auth_item_child` (
 
 INSERT INTO `yonote_auth_item_child` (`parent`, `child`) VALUES
 ('administrator', 'adminAccess'),
-('authenticated', 'administrator'),
-('subtaskone', 'first'),
-('subtasktwo', 'first');
+('adminAccess', 'subtaskone'),
+('guest', 'subtaskone'),
+('subtaskone', 'subtasktwo');
 
 -- --------------------------------------------------------
 
@@ -211,6 +209,10 @@ INSERT INTO `yonote_setting` (`category`, `name`, `value`, `updateTime`, `descri
 ('user', 'profile.photo.size.max', '819200', 65652154, 'User photo max size'),
 ('user', 'profile.photo.width.max', '1000', 545452, 'User photo max width'),
 ('user', 'profile.photo.width.min', '300', 542154, 'User photo min width'),
+('user', 'role.description.length.max', '50', 56598, 'Role description max length'),
+('user', 'role.description.length.min', '2', 65659, 'Role description min length'),
+('user', 'role.name.length.max', '50', 565975, 'Role system name max length'),
+('user', 'role.name.length.min', '2', 65486, 'Role system name min length'),
 ('website', 'language', 'ru', 5699854, 'Default website language'),
 ('website', 'template', 'default', 12345, 'Default website template'),
 ('website', 'timeZone', 'Europe/Kaliningrad', 1397170867, 'Website default time zone');
@@ -259,8 +261,8 @@ CREATE TABLE IF NOT EXISTS `yonote_user` (
 --
 
 INSERT INTO `yonote_user` (`name`, `password`, `token`, `email`, `activated`, `verified`, `subscribed`) VALUES
-('admin', '$2a$13$dKmIZvU4j0ZBuJ/NNTITJ.fZc1i4Qlyng90zbccfemEDJ1iOujSRO', '$2a$13$sU/0TMouNg6hhxbmW22FHk', 'email@email.com', 0, 0, 0),
-('alone', '$2a$13$/CPcryuCXUw8AHiryj0YR.UNdRQ0X5j9DuL8/vK/BIU66YaV6S22S', NULL, 'fsd@dgh.df', 1, 1, 1),
+('admin', '$2a$13$dKmIZvU4j0ZBuJ/NNTITJ.fZc1i4Qlyng90zbccfemEDJ1iOujSRO', '$2a$13$8z6rMV5hf2PtcNCRttRa7v', 'email@email.com', 0, 0, 0),
+('alonex', '', NULL, 'fsd@dgh.df', 1, 1, 1),
 ('newuser', '$2a$13$Xj25wAX9RwRO7JUK/rCsze7aLAfmXUuE5qKu/Vz21ryp3Y9HBcvme', NULL, 'fsd@dgh.df', 1, 1, 0),
 ('nikita', '$2a$13$J4Gk.kkH9YAGwp8RNkaD5.DKtTF.Bz7M0jJG2ha70GreKCwmlUSnG', NULL, 'email@mail.com', 0, 0, 0);
 
