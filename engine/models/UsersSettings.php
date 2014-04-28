@@ -1,31 +1,109 @@
 <?php
+/**
+ * UsersSettings class file.
+ *
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @link http://yonote.org
+ * @copyright 2014 Vlad Gramuzov
+ * @license http://yonote.org/license.html
+ */
+
+/**
+ * This model class allows to manage users configuration.
+ * 
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @since 1.0
+ */
 class UsersSettings extends CFormModel
 {
+    /**
+     * @var integer user name minimum length.
+     */
     public $nameLengthMin;
+    /**
+     * @var integer user name maximum length.
+     */
     public $nameLengthMax;
+    /**
+     * @var integer user password minimum length.
+     */
     public $passwordLengthMin;
+    /**
+     * @var integer user password maximum length.
+     */
     public $passwordLengthMax;
+    /**
+     * @var integer user additional profile fields minimum length.
+     */
     public $fieldsLengthMin;
+    /**
+     * @var integer user additional profile fields maximum length.
+     */
     public $fieldsLengthMax;
+    /**
+     * @var integer user photo minimum height.
+     */
     public $photoHeightMin;
+    /**
+     * @var integer user photo maximum height.
+     */
     public $photoHeightMax;
+    /**
+     * @var integer user photo quality.
+     */
     public $photoQuality;
+    /**
+     * @var boolean resize user photo.
+     */
     public $photoResizeEnabled;
+    /**
+     * @var integer resize height.
+     */
     public $photoResizeHeight;
+    /**
+     * @var integer resize width.
+     */
     public $photoResizeWidth;
+    /**
+     * @var integer photo maximum size.
+     */
     public $photoSizeMax;
+    /**
+     * @var integer photo minimum width.
+     */
     public $photoWidthMin;
+    /**
+     * @var integer photo maximum width.
+     */
     public $photoWidthMax;
+    /**
+     * @var integer role description minimum length.
+     */
     public $roleDescriptionLengthMin;
+    /**
+     * @var integer role description maximum length.
+     */
     public $roleDescriptionLengthMax;
+    /**
+     * @var integer role name minimum length.
+     */
     public $roleNameLengthMin;
+    /**
+     * @var integer role name maximum length.
+     */
     public $roleNameLengthMax;
+    /**
+     * @var integer show users per page.
+     */
     public $usersPageSize;
     
     private $_settings = array();
     private $_relations = array();
-    private $_names = array();
-
+    
+    /**
+     * Validation rules.
+     * @return array validation rules.
+     */
     public function rules()
     {
         return array(
@@ -54,31 +132,45 @@ class UsersSettings extends CFormModel
         );
     }
     
+    /**
+     * Save pm configuration.
+     * @return boolean save is successfull.
+     */
     public function save()
     {
         if (!$this->validate())
             return false;
         foreach ($this->_relations as $k => $v)
         {
-            $model = Setting::model()->find('name=:name',array(':name' => $k));
+            $model = Setting::model()->find('name=:name AND category=:cat',array(
+                ':name' => $k,
+                ':cat' => 'user'
+            ));
             if ($model !== null)
             {
                 $model->setAttribute('value',$this->{$v});
                 $model->save();
             }
-                
         }
         return true;
     }
     
+    /**
+     * Attribute labels.
+     * @return array attribute labels.
+     */
     public function attributeLabels()
     {
         $labels = array();
         foreach ($this->_relations as $k => $v)
-            $labels[$v] = $this->_settings[$k]->description;
+            $labels[$v] = Yii::t('users',$this->_settings[$k]->description);
         return $labels;
     }
-
+    
+    /**
+     * Load settings parameters to show.
+     * @return void.
+     */
     public function init()
     {
         $this->_relations = array(

@@ -7,6 +7,33 @@ class PagesController extends CApplicationController
     private $_pagesListPages;
     private $_pagesListSort;
     
+    public function actionSettings()
+    {
+        $this->pageTitle = Yii::t('PagesModule.settings','page.settings.title');
+        
+        $this->addBreadcrumb(
+            Yii::t('PagesModule.settings','page.settings.title'),
+            $this->createUrl($this->getRoute())
+        );
+        
+        $model = new PagesSettings();
+        if (isset($_POST['PagesSettings']))
+        {
+            $model->setAttributes($_POST['PagesSettings']);
+            if ($model->save())
+            {
+                Yii::app()->user->setFlash(
+                    'pagesSettingsSuccess',
+                    Yii::t('PagesModule.settings','success.settings.update')
+                );
+                $this->refresh();
+            }
+        }
+        $this->render('settings',array(
+            'model' => $model
+        ));
+    }
+    
     public function actionEdit()
     {
         $this->pageTitle = Yii::t('PagesModule.pages','page.edit.title');

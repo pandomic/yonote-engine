@@ -35,13 +35,14 @@ foreach ($models as $model)
        <div class="list-group">
            <a href="<?php echo $this->createUrl('index'); ?>" class="list-group-item active"><?php echo Yii::t('pm','label.inbox'); ?> <?php if ($unread > 0): ?><label class="label label-default"><?php echo $unread; ?></label><?php endif; ?></a>
           <a href="<?php echo $this->createUrl('outbox'); ?>" class="list-group-item"><?php echo Yii::t('pm','label.outbox'); ?> <?php if ($outbox > 0): ?><label class="label label-default"><?php echo $outbox; ?></label><?php endif; ?></a>
-          <a href="<?php echo $this->createUrl('add'); ?>" class="list-group-item"><?php echo Yii::t('pm','label.add'); ?></a>
+          <a href="<?php echo $this->createUrl('new'); ?>" class="list-group-item"><?php echo Yii::t('pm','label.add'); ?></a>
+          <a href="<?php echo $this->createUrl('settings'); ?>" class="list-group-item"><?php echo Yii::t('pm','page.settings.title'); ?></a>
       </div>
     </div>
     <div class="col-md-10">
         <div class="panel panel-default">
             <div class="panel-heading clearfix">
-                <a href="<?php echo $this->createUrl('add'); ?>" class="btn btn-primary btn-xs pull-right"><span class="glyphicon glyphicon-plus"></span> <?php echo Yii::t('pm','label.add'); ?></a>
+                <a href="<?php echo $this->createUrl('new'); ?>" class="btn btn-primary btn-xs pull-right"><span class="glyphicon glyphicon-plus"></span> <?php echo Yii::t('pm','label.add'); ?></a>
                 <h3 class="panel-title"><?php echo Yii::t('pm','label.inbox.list'); ?></h3> <span class="label label-primary"><?php echo count($models); ?></span>
             </div>
             <div class="panel-body">
@@ -91,7 +92,7 @@ foreach ($models as $model)
                                         <a href="<?php echo $this->createUrl('read',array('id' => $model->id)); ?>"><?php echo $model->title; ?></a> <?php if ((boolean) !$model->read): ?><span class="label label-danger">new</span><?php endif; ?>
                                     </td>
                                     <td>
-                                        <a href="<?php echo $this->createUrl('add',array('to' => $model->senderid)); ?>"><?php echo $model->senderid; ?></a>
+                                        <a href="<?php echo $this->createUrl('new',array('to' => $model->senderid)); ?>"><?php echo $model->senderid; ?></a>
                                     </td>
                                     <td>
                                         <?php echo Yii::app()->dateFormatter->formatDateTime($model->updatetime); ?>

@@ -1,6 +1,6 @@
 <?php
 return array(
-    
+    'model.module.file' => 'File to upload',
     'model.module.name' => 'Name',
     'model.module.title' => 'Title',
     'model.module.description' => 'Description',
@@ -10,7 +10,7 @@ return array(
     'model.module.copyright' => 'Copyright',
     'model.module.position' => 'Position',
     'model.module.status' => 'Status',
-    'model.module.licence' => 'Licence',
+    'model.module.license' => 'License',
     'model.module.updatetime' => 'Last update',
     'model.module.version' => 'Version',
     'model.module.error.file.large' => 'File is too large! Maximum file size is {filesize} bytes.',

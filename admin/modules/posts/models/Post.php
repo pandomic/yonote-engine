@@ -16,6 +16,7 @@ class Post extends CActiveRecord
     public function rules()
     {
         return array(
+            array('short,full','filter','filter' => array($obj = new CHtmlPurifier(),'purify')),
             array(
                 'alias,title,short,full','required',
                 'message' => Yii::t('PostsModule.posts','model.post.error.required')

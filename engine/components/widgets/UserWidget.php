@@ -1,4 +1,21 @@
 <?php
+/**
+ * UserWidget class file.
+ *
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @link http://yonote.org
+ * @copyright 2014 Vlad Gramuzov
+ * @license http://yonote.org/licence.html
+ */
+
+/**
+ * Allows to access to different user information and user model.
+ * init() method returns UserWidget self-instance, so you can access
+ * widget methods inside of beginWidget() and endWidget() methods.
+ * 
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @since 1.0
+ */
 class UserWidget extends CWidget
 {
     private $_messages = null;
@@ -7,8 +24,11 @@ class UserWidget extends CWidget
     private $_inbox = null;
     private $_outbox = null;
     private $_unread = null;
-    private $_photo = null;
     
+    /**
+     * Start widget.
+     * @return UserWidget instance itself.
+     */
     public function init()
     {
         $this->_model = User::model()->with('profile','pm')->findByPk(Yii::app()->user->getId());
@@ -17,6 +37,10 @@ class UserWidget extends CWidget
         return $this;
     }
     
+    /**
+     * Get inbox messages count.
+     * @return integer messages count.
+     */
     public function getInboxCount()
     {
         if ($this->_inbox !== null)
@@ -28,6 +52,10 @@ class UserWidget extends CWidget
         return $this->_inbox;
     }
     
+    /**
+     * Get outbox messages count.
+     * @return integer messages count.
+     */
     public function getOutboxCount()
     {
         if ($this->_outbox !== null)
@@ -39,6 +67,10 @@ class UserWidget extends CWidget
         return $this->_outbox;
     }
     
+    /**
+     * Get unread messages count.
+     * @return integer messages count.
+     */
     public function getUnreadCount()
     {
         if ($this->_unread !== null)
@@ -50,16 +82,28 @@ class UserWidget extends CWidget
         return $this->_unread;
     }
     
+    /**
+     * Get user profile active record model.
+     * @return Profile user profile.
+     */
     public function getProfile()
     {
         return $this->_profile;
     }
     
-    public function getuser()
+    /**
+     * Get user active record model.
+     * @return User user model.
+     */
+    public function getUser()
     {
         return $this->_model;
     }
     
+    /**
+     * Get user photo path.
+     * @return string|boolean user photo or false, if not found.
+     */
     public function getPhoto()
     {
         return $this->_profile->getPhoto();

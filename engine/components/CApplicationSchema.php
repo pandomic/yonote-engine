@@ -46,8 +46,12 @@ class CApplicationSchema extends CApplicationComponent
         if (count($this->_schema) > 0)
             foreach ($this->_schema as $queryString)
             {
-                $db = Yii::app()->getComponent($this->dbComponentId);
-                $db->createCommand($queryString)->execute();
+                $queryString = trim($queryString);
+                if ($queryString != null)
+                {
+                    $db = Yii::app()->getComponent($this->dbComponentId);
+                    $db->createCommand($queryString)->execute();
+                }
             }
         return $this;
     }

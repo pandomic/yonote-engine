@@ -1,16 +1,54 @@
 <?php
+/**
+ * User class file.
+ *
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @link http://yonote.org
+ * @copyright 2014 Vlad Gramuzov
+ * @license http://yonote.org/license.html
+ */
+
+/**
+ * User model class.
+ * 
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @since 1.0
+ */
 class User extends CActiveRecord
 {
-    
+    /**
+     * @var string user name.
+     */
     public $name;
+    /**
+     * @var string user email.
+     */
     public $email;
+    /**
+     * @var string user password.
+     */
     public $password;
+    /**
+     * @var boolean user is activated.
+     */
     public $activated;
+    /**
+     * @var boolean users email is verified.
+     */
     public $verified;
+    /**
+     * @var boolean user is subscribed for newsletters.
+     */
     public $subscribed;
+    /**
+     * @var string user permissions.
+     */
     public $permissions;
-    public $updatetime;
-
+    
+    /**
+     * Validation rules.
+     * @return array validation rules.
+     */
     public function rules()
     {
         return array(
@@ -56,6 +94,10 @@ class User extends CActiveRecord
         );
     }
     
+    /**
+     * Attribute labels.
+     * @return array attribute labels.
+     */
     public function attributeLabels(){
         return array(
             'name' => Yii::t('users','model.user.name'),
@@ -67,7 +109,11 @@ class User extends CActiveRecord
             'permissions' => Yii::t('users','model.user.permissions')
         );
     }
-
+    
+    /**
+     * Action, that will be called before model saving.
+     * @return boolean parent beforeSave() status.
+     */
     public function beforeSave()
     {
         $this->updatetime = time();
@@ -79,7 +125,11 @@ class User extends CActiveRecord
             )->password;
         return parent::beforeSave();
     }
-
+    
+    /**
+     * Action, that will be called after model saving.
+     * @return boolean parent afterSave() status.
+     */
     public function afterSave(){
         if ($this->getScenario() == 'add')
         {
@@ -96,13 +146,23 @@ class User extends CActiveRecord
         return parent::afterSave();
     }
     
+    /**
+     * Action, that will be called before model will be validated.
+     * @return boolean parent beforeValidate() status.
+     */
     public function beforeValidate()
     {
         if ($this->permissions != null)
             $this->permissions = array_unique($this->permissions);
         return parent::beforeValidate();
     }
-
+    
+    /**
+     * Validation rule.
+     * Check auth items existence.
+     * @param string $attribute attribute name.
+     * @param array $params additional params.
+     */
     public function permissionsRule($attribute,$params)
     {
         $foundCount = count(AuthItem::model()->findAllByPk($this->permissions));
@@ -112,15 +172,33 @@ class User extends CActiveRecord
             $this->addError($attribute,Yii::t('users','model.user.error.permissions'));
     }
     
+    /**
+     * Return static model of User.
+     * @param string $className current class name.
+     * @return User object.
+     */
     public static function model($className=__CLASS__)
     {
         return parent::model($className);
     }
     
+    /**
+     * Model database table name.
+     * @return string table name.
+     */
     public function tableName(){
         return '{{user}}';
     }
     
+    /**
+     * Model relations.
+     * Relations:
+     *     assignments - auth items assignments;
+     *     items - current user auth items;
+     *     profile - user profile;
+     *     pm - user personal messages.
+     * @return array relations.
+     */
     public function relations(){
         return array(
             'assignments' => array(self::HAS_MANY,'AuthAssignment','userid'),

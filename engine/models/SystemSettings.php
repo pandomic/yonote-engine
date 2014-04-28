@@ -1,14 +1,57 @@
 <?php
+/**
+ * SystemSettings class file.
+ *
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @link http://yonote.org
+ * @copyright 2014 Vlad Gramuzov
+ * @license http://yonote.org/license.html
+ */
+
+/**
+ * This model class allows to manage system configuration.
+ * 
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @since 1.0
+ */
 class SystemSettings extends CFormModel
 {
+    /**
+     * @var string administrative panel language
+     */
     public $adminLanguage;
+    /**
+     * @var string administrative panel template
+     */
     public $adminTemplate;
+    /**
+     * @var string website language
+     */
     public $websiteLanguage;
+    /**
+     * @var string website template
+     */
     public $websiteTemplate;
+    /**
+     * @var string administrative panel php-timezone
+     */
     public $adminTimezone;
+    /**
+     * @var string website php-timezone
+     */
     public $websiteTimezone;
+    /**
+     * @var string system URL format
+     */
     public $systemUrlFormat;
+    /**
+     * @var string user login duration
+     */
     public $systemLoginDuration;
+    /**
+     * @var string maximum module file size
+     */
+    public $moduleMaxSize;
     
     private $_settings = array();
     private $_relations = array();
@@ -17,6 +60,10 @@ class SystemSettings extends CFormModel
         'backend' => null
     );
     
+    /**
+     * Attach some behaviors.
+     * @return array behaviors.
+     */
     public function behaviors()
     {
         return array(
@@ -28,18 +75,23 @@ class SystemSettings extends CFormModel
             )
         );
     }
-
+    
+    /**
+     * Validation rules.
+     * @return array validation rules.
+     */
     public function rules()
     {
         return array(
             array(
-                'adminTimezone,websiteTimezone,websiteLanguage,websiteTemplate,adminTimezone,websiteTimezone,systemUrlFormat,systemLoginDuration',
+                'adminTimezone,websiteTimezone,websiteLanguage,websiteTemplate,adminTimezone,websiteTimezone,systemUrlFormat,systemLoginDuration,moduleMaxSize',
                 'required',
                 'message' => Yii::t('settings','model.systemsettings.error.required')
             ),
             array(
-                'systemLoginDuration','numerical','min' => 1,
-                'tooSmall' => Yii::t('settings','model.systemsettings.error.small')
+                'systemLoginDuration,moduleMaxSize','numerical','min' => 1,
+                'tooSmall' => Yii::t('settings','model.systemsettings.error.small'),
+                'message' => Yii::t('settings','model.systemsettings.error.integer')
             ),
             array(
                 'systemUrlFormat','in','range' => array('path','get'),
@@ -52,6 +104,12 @@ class SystemSettings extends CFormModel
         );
     }
     
+    /**
+     * Validation rule.
+     * Check if given language exists.
+     * @param string $attribute attribute name.
+     * @param array $params additional params.
+     */
     public function languageRule($attribute,$params)
     {
         $languages = array_keys($this->getLanguages());
@@ -59,6 +117,12 @@ class SystemSettings extends CFormModel
             $this->addError($attribute,Yii::t('settings','model.systemsettings.error.language'));
     }
     
+    /**
+     * Validation rule.
+     * Check if given timezone exists.
+     * @param string $attribute attribute name.
+     * @param array $params additional params.
+     */
     public function timezoneRule($attribute,$params)
     {
         $timezones = array_keys($this->getTimezones());
@@ -66,29 +130,45 @@ class SystemSettings extends CFormModel
             $this->addError($attribute,Yii::t('settings','model.systemsettings.error.timezone'));
     }
     
+    /**
+     * Validation rule.
+     * Check if given template exists.
+     * @param string $attribute attribute name.
+     * @param array $params additional params.
+     */
     public function templateRule($attribute,$params)
     {
         if (!in_array($this->{$attribute},$this->getTemplates($params['area'])))
             $this->addError($attribute,Yii::t('settings','model.systemsettings.error.template'));
     }
-
+    
+    /**
+     * Save pm configuration.
+     * @return boolean save is successfull.
+     */
     public function save()
     {
         if (!$this->validate())
             return false;
         foreach ($this->_relations as $k => $v)
         {
-            $model = Setting::model()->find('name=:name',array(':name' => $k));
+            $model = Setting::model()->find('name=:name AND category=:cat',array(
+                ':name' => $k,
+                ':cat' => 'system'
+            ));
             if ($model !== null)
             {
                 $model->setAttribute('value',$this->{$v});
                 $model->save();
             }
-                
         }
         return true;
     }
     
+    /**
+     * Get allowed URL formats.
+     * @return array URL formats.
+     */
     public function getUrlFormats()
     {
         return array(
@@ -97,6 +177,11 @@ class SystemSettings extends CFormModel
         );
     }
     
+    /**
+     * Return templates list for specified area (frontend or backend).
+     * @param string $area area (frontend or backend).
+     * @return array templates list.
+     */
     public function getTemplates($area)
     {
         if ($this->_templates[$area] !== null)
@@ -115,6 +200,10 @@ class SystemSettings extends CFormModel
         return $this->_templates[$area];
     }
     
+    /**
+     * Attribute labels.
+     * @return array attribute labels.
+     */
     public function attributeLabels()
     {
         $labels = array();
@@ -122,7 +211,11 @@ class SystemSettings extends CFormModel
             $labels[$v] = Yii::t('settings',$this->_settings[$k]->description);
         return $labels;
     }
-
+    
+    /**
+     * Load settings parameters to show.
+     * @return void.
+     */
     public function init()
     {
         $this->_relations = array(
@@ -133,7 +226,8 @@ class SystemSettings extends CFormModel
             'admin.time.zone' => 'adminTimezone',
             'website.time.zone' => 'websiteTimezone',
             'url.format' => 'systemUrlFormat',
-            'login.duration' => 'systemLoginDuration'
+            'login.duration' => 'systemLoginDuration',
+            'module.size.max' => 'moduleMaxSize'
         );
         
         $criteria = new CDbCriteria();

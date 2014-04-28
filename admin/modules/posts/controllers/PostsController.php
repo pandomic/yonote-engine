@@ -7,6 +7,33 @@ class PostsController extends CApplicationController
     private $_postsListPages;
     private $_postsListSort;
     
+    public function actionSettings()
+    {
+        $this->pageTitle = Yii::t('PostsModule.settings','page.settings.title');
+        
+        $this->addBreadcrumb(
+            Yii::t('PostsModule.settings','page.settings.title'),
+            $this->createUrl($this->getRoute())
+        );
+        
+        $model = new PostsSettings();
+        if (isset($_POST['PostsSettings']))
+        {
+            $model->setAttributes($_POST['PostsSettings']);
+            if ($model->save())
+            {
+                Yii::app()->user->setFlash(
+                    'postsSettingsSuccess',
+                    Yii::t('PostsModule.settings','success.settings.update')
+                );
+                $this->refresh();
+            }
+        }
+        $this->render('settings',array(
+            'model' => $model
+        ));
+    }
+    
     public function actionAdd()
     {
         $this->pageTitle = Yii::t('PostsModule.posts','page.add.title');

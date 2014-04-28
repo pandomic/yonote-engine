@@ -28,6 +28,7 @@
           <a href="<?php echo $this->createUrl('posts/index'); ?>" class="list-group-item active"><?php echo Yii::t('PostsModule.posts','page.posts.title'); ?></a>
           <a href="<?php echo $this->createUrl('hashtags/index'); ?>" class="list-group-item"><?php echo Yii::t('PostsModule.hashtags','page.hashtags.title'); ?></a>
           <a href="<?php echo $this->createUrl('posts/add'); ?>" class="list-group-item"><?php echo Yii::t('PostsModule.posts','page.add.title'); ?></a>
+          <a href="<?php echo $this->createUrl('posts/settings'); ?>" class="list-group-item"><?php echo Yii::t('PostsModule.settings','page.settings.title'); ?></a>
       </div>
     </div>
     <div class="col-md-10">

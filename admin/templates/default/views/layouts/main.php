@@ -51,14 +51,14 @@ $bootstrapJS = Yii::app()->assetManager->publish(
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel"><?php echo Yii::t('system','Confirm your action'); ?></h4>
+                    <h4 class="modal-title" id="myModalLabel"><?php echo Yii::t('system','message.confirm.title'); ?></h4>
                 </div>
                 <div class="modal-body">
-                    <?php echo Yii::t('system','With continued implementation of the selected action some data can be permanently deleted or changed. Are you sure you want to continue?'); ?>
+                    <?php echo Yii::t('system','message.confirm.text'); ?>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo Yii::t('system','Cancel'); ?></button>
-                    <button type="button" class="btn btn-danger" id="confirm-modal-button"><?php echo Yii::t('system','Continue'); ?></button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo Yii::t('system','app.cancel'); ?></button>
+                    <button type="button" class="btn btn-danger" id="confirm-modal-button"><?php echo Yii::t('system','app.continue'); ?></button>
                 </div>
             </div>
         </div>
@@ -68,34 +68,34 @@ $bootstrapJS = Yii::app()->assetManager->publish(
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-nav">
-                    <span class="sr-only"><?php echo Yii::t('system','Toggle navigation element'); ?></span>
+                    <span class="sr-only"><?php echo Yii::t('system','message.toggle.navigation'); ?></span>
                     <span class="glyphicon glyphicon-th"></span>
                 </button>
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collection">
-                    <span class="sr-only"><?php echo Yii::t('system','Toggle navigation element'); ?></span>
+                    <span class="sr-only"><?php echo Yii::t('system','message.toggle.navigation'); ?></span>
                     <span class="glyphicon glyphicon-th-list"></span>
                 </button>
-                <a class="navbar-brand logo-nav" href="#"><img style="margin:-3px 10px 0 0; height:20px;" src="<?php echo $template; ?>/images/logo.gif"/>YOnote ENGINE</a>
+                <a class="navbar-brand logo-nav" href="<?php echo $this->createUrl('/base'); ?>"><img style="margin:-3px 10px 0 0; height:20px;" src="<?php echo $template; ?>/images/logo.gif"/>YOnote ENGINE</a>
             </div>
             <div class="collapse navbar-collapse navbar-collection">
                 <ul class="nav navbar-nav navbar-left">
-                    <li class="active"><a href="#">Dashboard</a></li>
+                    <li <?php if ($this->getId() == 'base') : ?>class="active"<?php endif; ?>><a href="<?php echo $this->createUrl('/base'); ?>"><?php echo Yii::t('dashboard','main'); ?></a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">YOnote <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo Yii::t('dashboard','yonote'); ?> <b class="caret"></b></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Licence</a></li>
-                            <li><a href="#">Documentation</a></li>
-                            <li><a href="#">Tutorials</a></li>
+                            <li><a href="#"><?php echo Yii::t('dashboard','yonote.licence'); ?></a></li>
+                            <li><a href="#"><?php echo Yii::t('dashboard','yonote.docs'); ?></a></li>
+                            <li><a href="#"><?php echo Yii::t('dashboard','yonote.tutorials'); ?></a></li>
                             <li class="divider"></li>
-                            <li><a href="#">Extensions</a></li>
+                            <li><a href="#"><?php echo Yii::t('dashboard','yonote.extensions'); ?></a></li>
                             <li class="divider"></li>
-                            <li><a href="#">View YOnote on GitHub</a></li>
+                            <li><a href="#"><?php echo Yii::t('dashboard','yonote.github'); ?></a></li>
                         </ul>
                     </li>
-                    <li><a href="#">Contacts</a></li>
+                    <li><a href="#"><?php echo Yii::t('dashboard','yonote.contacts'); ?></a></li>
                 </ul>
                 <div class="navbar-right">
-                    <a href="/" target="_blank" class="btn btn-primary navbar-btn btn-xl hidden-sm hidden-xs">View web site</a>
+                    <a href="/" target="_blank" class="btn btn-primary navbar-btn btn-xl hidden-sm hidden-xs"><?php echo Yii::t('dashboard','website'); ?></a>
                 </div>
                 <?php $w = $this->beginWidget('UserWidget'); ?>
                     <div class="navbar-right">
@@ -115,53 +115,49 @@ $bootstrapJS = Yii::app()->assetManager->publish(
                                         </div>
                                     </li>
                                     <li class="divider"></li>
-                                    <li><a href="<?php echo $this->createUrl('/users/profile',array('id' => $w->getUser()->name)); ?>"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
-                                    <li><a href="<?php echo $this->createUrl('/users/edit',array('id' => $w->getUser()->name)); ?>"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
-                                    <li><a href="<?php echo $this->createUrl('/pm'); ?>"><span class="glyphicon glyphicon-envelope"></span><?php if ($w->getUnreadCount() > 0): ?><span class="badge pull-right blue-badge"><?php echo $w->getUnreadCount(); ?></span><?php endif; ?>Messages</a></li>
-                                    <li><a href="<?php echo $this->createUrl('/base/logout'); ?>"><span class="glyphicon glyphicon-off"></span>Logout</a></li>
+                                    <li><a href="<?php echo $this->createUrl('/users/profile',array('id' => $w->getUser()->name)); ?>"><span class="glyphicon glyphicon-user"></span> <?php echo Yii::t('dashboard','user.profile'); ?></a></li>
+                                    <li><a href="<?php echo $this->createUrl('/users/edit',array('id' => $w->getUser()->name)); ?>"><span class="glyphicon glyphicon-cog"></span> <?php echo Yii::t('dashboard','user.settings'); ?></a></li>
+                                    <li><a href="<?php echo $this->createUrl('/pm'); ?>"><span class="glyphicon glyphicon-envelope"></span><?php if ($w->getUnreadCount() > 0): ?><span class="badge pull-right blue-badge"><?php echo $w->getUnreadCount(); ?></span><?php endif; ?> <?php echo Yii::t('dashboard','user.messages'); ?></a></li>
+                                    <li><a href="<?php echo $this->createUrl('/base/logout'); ?>"><span class="glyphicon glyphicon-off"></span> <?php echo Yii::t('dashboard','user.logout'); ?></a></li>
                                 </ul>
                             </li>
                         </ul>
                     </div>
                 <?php $this->endWidget(); ?>
-                
-                
             </div>
         </div>
     </div>
     <div class="sidebar-bg hidden-xs"></div>
-    
     <div class="sidebar">
         <ul class="nav navbar-collapse collapse sidebar-nav" id="accordion">
-            <li class="active">
+            <li <?php if ($this->getId() == 'base') : ?>class="active"<?php endif; ?>>
                 <span class="glow"></span>
-                <a href="/admin"><span class="glyphicon glyphicon-home"></span> Рабочий стол</a>
+                <a href="<?php echo $this->createUrl('/base'); ?>"><span class="glyphicon glyphicon-home"></span> <?php echo Yii::t('dashboard','main'); ?></a>
             </li>
-            <li>
+            <li <?php if ($this->getId() == 'pm') : ?>class="active"<?php endif; ?>>
                 <span class="glow"></span>
-                <a href="<?php echo $this->createUrl('/pm'); ?>"><span class="glyphicon glyphicon-envelope"></span> Сообщения</a>
+                <a href="<?php echo $this->createUrl('/pm'); ?>"><span class="glyphicon glyphicon-envelope"></span> <?php echo Yii::t('dashboard','messages'); ?></a>
             </li>
-            <li>
+            <li <?php if ($this->getId() == 'users' || $this->getId() == 'roles') : ?>class="active"<?php endif; ?>>
                 <span class="glow"></span>
-                <a href="#" data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne"><span class="glyphicon glyphicon-user"></span> Пользователи</a>
+                <a href="#" data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne"><span class="glyphicon glyphicon-user"></span> <?php echo Yii::t('dashboard','users'); ?></a>
                 <ul class="nav collapse" id="collapseOne">
-                    <li><a href="<?php echo $this->createUrl('/users/index'); ?>"><span class="glyphicon glyphicon-user"></span> Пользователи</a></li>
-                    <li><a href="<?php echo $this->createUrl('/roles/index'); ?>"><span class="glyphicon glyphicon-lock"></span> Роли</a></li>
-                    <li><a href="<?php echo $this->createUrl('/users/settings'); ?>"><span class="glyphicon glyphicon-cog"></span> Настройки</a></li>
+                    <li><a href="<?php echo $this->createUrl('/users/index'); ?>"><span class="glyphicon glyphicon-user"></span> <?php echo Yii::t('dashboard','users'); ?></a></li>
+                    <li><a href="<?php echo $this->createUrl('/roles/index'); ?>"><span class="glyphicon glyphicon-lock"></span> <?php echo Yii::t('dashboard','users.roles'); ?></a></li>
+                    <li><a href="<?php echo $this->createUrl('/users/settings'); ?>"><span class="glyphicon glyphicon-cog"></span> <?php echo Yii::t('dashboard','users.settings'); ?></a></li>
                 </ul>
             </li>
-            <li>
+            <li <?php if ($this->getId() == 'modules' || $this->getId() == 'settings') : ?>class="active"<?php endif; ?>>
                 <span class="glow"></span>
-                <a href="#" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo" href="#"><span class="glyphicon glyphicon-cog"></span> Система</a>
+                <a href="#" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo" href="#"><span class="glyphicon glyphicon-cog"></span> <?php echo Yii::t('dashboard','system'); ?></a>
                 <ul class="nav collapse" id="collapseTwo">
-                    <li><a href="<?php echo $this->createUrl('/modules'); ?>"><span class="glyphicon glyphicon-th-large"></span> Модули</a></li>
-                    <li><a href="<?php echo $this->createUrl('/settings'); ?>"><span class="glyphicon glyphicon-cog"></span> Настройки</a></li>
+                    <li><a href="<?php echo $this->createUrl('/modules'); ?>"><span class="glyphicon glyphicon-th-large"></span> <?php echo Yii::t('dashboard','system.modules'); ?></a></li>
+                    <li><a href="<?php echo $this->createUrl('/settings'); ?>"><span class="glyphicon glyphicon-cog"></span> <?php echo Yii::t('dashboard','system.settings'); ?></a></li>
                 </ul>
             </li>
         </ul>
         <?php $this->widget('admin.modules.loadmeter.components.widgets.LoadMeterWidget'); ?>
     </div>
-    
     <div class="dashboard">
         <div class="container-fluid">
             <div class="row">
@@ -184,7 +180,5 @@ $bootstrapJS = Yii::app()->assetManager->publish(
             </div>
         </div>
     </div>
-    
-    
   </body>
 </html>

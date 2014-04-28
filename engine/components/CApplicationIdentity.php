@@ -26,7 +26,7 @@ class CApplicationIdentity extends CUserIdentity
      */
     public function authenticate(){
         if (!Yii::app()->user instanceof IApplicationUser)
-            throw new CException(Yii::t('system','User access class must be implemented from IApplicationUser interface.'));
+            throw new CException(Yii::t('system','message.invalid.user.interface'));
         $record = Yii::app()->user->find($this->username);
         if ($record === false)
             $this->errorCode = self::ERROR_USERNAME_INVALID;

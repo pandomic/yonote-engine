@@ -1,23 +1,30 @@
 <?php
+/**
+ * Module class file.
+ *
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @link http://yonote.org
+ * @copyright 2014 Vlad Gramuzov
+ * @license http://yonote.org/license.html
+ */
+
+/**
+ * Manage modules model.
+ * 
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @since 1.0
+ */
 class Module extends CActiveRecord
 {
-    
+    /**
+     * @var string module file 
+     */
     public $file;
-    public $name;
-    public $title;
-    public $author;
-    public $description;
-    public $email;
-    public $website;
-    public $copyright;
-    public $licence;
-    public $installed;
-    public $updatetime;
-    public $position;
-    public $version;
-    public $max;
-    public $min;
-
+    
+    /**
+     * Validation rules.
+     * @return array validation rules.
+     */
     public function rules()
     {
         return array(
@@ -29,7 +36,7 @@ class Module extends CActiveRecord
                 'maxSize' => Yii::app()->settings->get('modules','size.max'),
                 'types' => array('zip'),
                 'tooLarge' => Yii::t('modules','model.module.error.file.large',array(
-                    '{filesize}' => Yii::app()->settings->get('modules','size.max')
+                    '{filesize}' => Yii::app()->settings->get('system','module.size.max')
                 )),
                 'tooMany' => Yii::t('modules','model.module.error.file.many'),
                 'wrongType' => Yii::t('modules','model.module.error.file.type'),
@@ -37,17 +44,31 @@ class Module extends CActiveRecord
             )
         );
     }
-
+    
+    /**
+     * Return static model of Module.
+     * @param string $className current class name.
+     * @return Module object.
+     */
     public static function model($className=__CLASS__)
     {
         return parent::model($className);
     }
- 
+    
+    /**
+     * Model database table name.
+     * @return string table name.
+     */
     public function tableName()
     {
         return '{{module}}';
     }
     
+    /**
+     * Action, that will be executed before model will be saved.
+     * Upload and process module archive.
+     * @return boolean parent beforeSave() status.
+     */
     public function beforeSave()
     {
         $this->updatetime = time();
@@ -106,8 +127,8 @@ class Module extends CActiveRecord
                 $this->website = $info->website;
             if (isset($info->copyright))
                 $this->copyright = $info->copyright;
-            if (isset($info->licence))
-                $this->licence = $info->licence;
+            if (isset($info->license))
+                $this->license = $info->license;
             if (isset($info->version))
                 $this->version = $info->version;
 
@@ -149,6 +170,11 @@ class Module extends CActiveRecord
         return parent::beforeSave();
     }
     
+    /**
+     * Action, that will be executed before model will be removed.
+     * Remove module components.
+     * @return boolean parent beforeDelete() status.
+     */
     public function beforeDelete()
     {
         if ($this->name != null)
@@ -157,6 +183,17 @@ class Module extends CActiveRecord
             CFileHelper::removeDirectory(ENGINE_PATH.'/modules/'.$this->name);
         }
         return parent::beforeDelete();
+    }
+    
+    /**
+     * Attribute labels.
+     * @return array attribute labels.
+     */
+    public function attributeLabels()
+    {
+        return array(
+            'file' => Yii::t('modules','model.module.file')
+        );
     }
 
 }

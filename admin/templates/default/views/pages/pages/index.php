@@ -21,7 +21,13 @@
 <?php endif; ?>
 
 <div class="row">
-    <div class="col-md-12">
+    <div class="col-md-2">
+       <div class="list-group">
+          <a href="<?php echo $this->createUrl('pages/index'); ?>" class="list-group-item active"><?php echo Yii::t('PagesModule.pages','page.pages.title'); ?></a>
+          <a href="<?php echo $this->createUrl('pages/settings'); ?>" class="list-group-item"><?php echo Yii::t('PagesModule.settings','page.settings.title'); ?></a>
+      </div>
+    </div>
+    <div class="col-md-10">
         <div class="panel panel-default">
             <div class="panel-heading table-middle clearfix">
                 <a class="btn btn-primary btn-xs pull-right" href="<?php echo $this->createUrl('add'); ?>"><span class="glyphicon glyphicon-plus"></span> <?php echo Yii::t('PagesModule.pages','button.page.add'); ?></a>

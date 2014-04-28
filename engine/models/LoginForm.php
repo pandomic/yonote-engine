@@ -1,21 +1,53 @@
 <?php
+/**
+ * LoginForm class file.
+ *
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @link http://yonote.org
+ * @copyright 2014 Vlad Gramuzov
+ * @license http://yonote.org/license.html
+ */
+
+/**
+ * LoginForm model is used to process login requests.
+ * 
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @since 1.0
+ */
 class LoginForm extends CFormModel
 {
+    /**
+     * @var string user name.
+     */
     public $name;
+    /**
+     * @var string user password.
+     */
     public $password;
+    /**
+     * @var boolean remember user.
+     */
     public $rememberMe = false;
     
     private $_identity = null;
     
+    /**
+     * Validation rules.
+     * @return array validation rules.
+     */
     public function rules()
     {
         return array(
             array('name,password','required','message' => 'wow','on' => 'login'),
             array('rememberMe','boolean','on' => 'login'),
-            array('password','authenticate','on' => 'login')
+            array('password','authenticateRule','on' => 'login')
         );
     }
     
+    /**
+     * Attribute labels.
+     * @return array attribute labels.
+     */
     public function attributeLabels()
     {
         return array(
@@ -25,7 +57,14 @@ class LoginForm extends CFormModel
         );
     }
     
-    public function authenticate($attribute,$params)
+    /**
+     * Validation rule.
+     * Check user password.
+     * @param string $attribute attribute name.
+     * @param array $params additional params.
+     * @return void.
+     */
+    public function authenticateRule($attribute,$params)
     {
         $this->_identity = new CApplicationIdentity($this->name,$this->password);
         if (!$this->_identity->authenticate())
@@ -33,6 +72,10 @@ class LoginForm extends CFormModel
             
     }
     
+    /**
+     * Login process.
+     * @return boolean user successfully logged.
+     */
     public function login()
     {
         if ($this->_identity === null)

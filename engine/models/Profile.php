@@ -1,15 +1,54 @@
 <?php
+/**
+ * Profile class file.
+ *
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @link http://yonote.org
+ * @copyright 2014 Vlad Gramuzov
+ * @license http://yonote.org/license.html
+ */
+
+/**
+ * Profile model class.
+ * 
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @since 1.0
+ */
 class Profile extends CActiveRecord
 {
+    /**
+     * @var string user id.
+     */
     public $userid;
+    /**
+     * @var string user photo.
+     */
     public $photo;
+    /**
+     * @var string user name.
+     */
     public $name;
+    /**
+     * @var string user country.
+     */
     public $country;
+    /**
+     * @var string user city.
+     */
     public $city;
+    /**
+     * @var string user language.
+     */
     public $language;
+    /**
+     * @var boolean remove photo.
+     */
     public $removePhoto;
-    public $updatetime;
     
+    /**
+     * Attach some behaviors.
+     * @return array behaviors.
+     */
     public function behaviors()
     {
         return array(
@@ -33,7 +72,11 @@ class Profile extends CActiveRecord
             )
         );
     }
-
+    
+    /**
+     * Validation rules.
+     * @return array validation rules.
+     */
     public function rules(){
 
         return array(
@@ -64,6 +107,12 @@ class Profile extends CActiveRecord
         );
     }
     
+    /**
+     * Validation rule.
+     * Check language.
+     * @param string $attribute attribute name.
+     * @param array $params additional params.
+     */
     public function languageRule($attribute,$params)
     {
         if ($this->getAttribute($attribute) != null)
@@ -71,6 +120,11 @@ class Profile extends CActiveRecord
                 $this->addError($attribute,Yii::t('users','model.profile.error.language'));
     }
     
+    /**
+     * Action, that will be executed before model will be saved.
+     * Upload and process module archive.
+     * @return boolean parent beforeSave() status.
+     */
     public function beforeSave()
     {
         $this->updatetime = time();
@@ -111,7 +165,11 @@ class Profile extends CActiveRecord
 
         return parent::beforeSave();
     }
-
+    
+    /**
+     * Attribute labels.
+     * @return array attribute labels.
+     */
     public function attributeLabels()
     {
         return array(
@@ -123,17 +181,30 @@ class Profile extends CActiveRecord
             'removePhoto' => Yii::t('users','model.profile.removephoto'),
         );
     }
-
+    
+    /**
+     * Return static model of Profile.
+     * @param string $className current class name.
+     * @return Profile object.
+     */
     public static function model($className=__CLASS__)
     {
         return parent::model($className);
     }
-
+    
+    /**
+     * Model database table name.
+     * @return string table name.
+     */
     public function tableName()
     {
         return '{{profile}}';
     }
     
+    /**
+     * Return user photo path.
+     * @return string|boolean user photo path or false, is photo not found.
+     */
     public function getPhoto()
     {
         $return = false;

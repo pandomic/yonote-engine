@@ -47,7 +47,8 @@ tinymce.init({
        <div class="list-group">
            <a href="<?php echo $this->createUrl('index'); ?>" class="list-group-item"><?php echo Yii::t('pm','label.inbox'); ?></a>
           <a href="<?php echo $this->createUrl('outbox'); ?>" class="list-group-item"><?php echo Yii::t('pm','label.outbox'); ?></a>
-          <a href="<?php echo $this->createUrl('add'); ?>" class="list-group-item active"><?php echo Yii::t('pm','label.add'); ?></a>
+          <a href="<?php echo $this->createUrl('new'); ?>" class="list-group-item active"><?php echo Yii::t('pm','label.add'); ?></a>
+          <a href="<?php echo $this->createUrl('settings'); ?>" class="list-group-item"><?php echo Yii::t('pm','page.settings.title'); ?></a>
       </div>
     </div>
     <div class="col-md-10">

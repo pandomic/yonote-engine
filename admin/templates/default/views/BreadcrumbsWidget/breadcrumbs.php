@@ -1,5 +1,5 @@
 <ol class="breadcrumb">
-    <li><a href="/admin/base"><span class="glyphicon glyphicon-home"></span> Рабочий стол</a></li>
+    <li><a href="<?php echo $this->controller->createUrl('/base'); ?>"><span class="glyphicon glyphicon-home"></span> <?php echo Yii::t('dashboard','main'); ?></a></li>
     <?php
     $active = array_pop($links);
     foreach($links as $link):

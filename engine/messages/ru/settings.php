@@ -2,6 +2,8 @@
 return array(
     'model.systemsettings.error.required' => 'Please, fill all necessary fields!',
     'model.systemsettings.error.small' => 'Entered value is too small.',
+    'model.systemsettings.error.big' => 'Entered value is too big.',
+    'model.systemsettings.error.integer' => 'Entered value should be an integer!',
     'model.systemsettings.error.url.format' => 'Invalid URL format!',
     'model.systemsettings.error.language' => 'Undefined language',
     'model.systemsettings.error.timezone' => 'Undefined timezone',
@@ -14,6 +16,7 @@ return array(
     'description.website.language' => 'Default website language',
     'description.website.template' => 'Default website template',
     'description.website.time.zone' => 'Website default time zone',
+    'description.module.size.max' => 'Maximum module file size',
     'label.url.format.path' => 'Path format',
     'label.url.format.get' => 'Get format',
     'success.settings.update' => 'Settings have been successfully updated.',

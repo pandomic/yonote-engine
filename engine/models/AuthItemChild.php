@@ -1,16 +1,46 @@
 <?php
+/**
+ * AuthItemChild class file.
+ *
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @link http://yonote.org
+ * @copyright 2014 Vlad Gramuzov
+ * @license http://yonote.org/license.html
+ */
+
+/**
+ * This class is representation of auth items relations.
+ * It is used by other models to build auth items relations.
+ * It can be also used to build full auth items tree.
+ * 
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @since 1.0
+ */
 class AuthItemChild extends CActiveRecord
 {
+    /**
+     * Return static model of AuthItemChild.
+     * @param string $className current class name.
+     * @return AuthItemChild object.
+     */
     public static function model($className=__CLASS__)
     {
         return parent::model($className);
     }
- 
+    
+    /**
+     * Model database table name.
+     * @return string table name.
+     */
     public function tableName()
     {
         return '{{auth_item_child}}';
     }
     
+    /**
+     * Build full auth items tree.
+     * @return array auth items tree.
+     */
     public function tree()
     {
         // Load relations
@@ -41,7 +71,6 @@ class AuthItemChild extends CActiveRecord
                     $parents[$relation->parent][] = $relation->child;
             }
         }
-
         return $parents;
     }
 }

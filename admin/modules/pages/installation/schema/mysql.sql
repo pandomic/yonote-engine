@@ -14,5 +14,6 @@ create table `{{mod_page}}`
    `title`                varchar(128) not null,
    `content`              text,
    `language`             varchar(32),
+   `updatetime`           integer,
    primary key (`alias`)
 ) engine InnoDB;

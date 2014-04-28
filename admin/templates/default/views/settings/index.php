@@ -152,6 +152,21 @@
                                     )); ?>
                                 </div>
                             </div>
+                            <div class="form-group <?php if ($model->hasErrors('moduleMaxSize')) echo 'has-error'; ?>">
+                                <?php echo CHtml::activeLabel($model,'moduleMaxSize',array(
+                                    'for' => 'moduleMaxSize',
+                                    'class' => 'col-md-2 control-label'
+                                )); ?>
+                                <div class="col-md-10">
+                                    <?php echo CHtml::activeNumberField($model,'moduleMaxSize',array(
+                                        'class' => 'form-control',
+                                        'id' => 'moduleMaxSize'
+                                    )); ?>
+                                    <?php echo CHtml::error($model,'moduleMaxSize',array(
+                                        'class' => 'help-block text-danger'
+                                    )); ?>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

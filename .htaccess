@@ -1,5 +1,11 @@
-#YONOTE ENGINE 4 HTACCESS
-#DO NOT CHANGE ANY VALUES
+#
+# YOnote ENGINE .htaccess file
+#
+# @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+# @link http://yonote.org
+# @copyright 2014 Vlad Gramuzov
+# @license http://yonote.org/license.html
+#
 
 Options +FollowSymLinks
 IndexIgnore */*
@@ -7,11 +13,5 @@ RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 
-###########################
-#  STANDART ENGINE RULES  #
-###########################
-
+# Rewrite index file
 RewriteRule . index.php
-
-
-#END[MODULE:NEWS]

@@ -19,6 +19,7 @@ class Page extends CActiveRecord
     public function rules()
     {
         return array(
+            array('content','filter','filter' => array($obj = new CHtmlPurifier(),'purify')),
             array(
                 'alias,title','required',
                 'message' => Yii::t('PagesModule.pages','model.page.error.required')
@@ -82,6 +83,12 @@ class Page extends CActiveRecord
             if (!in_array($this->language,array_keys($this->getLanguages())))
                 $this->addError ($attribute,Yii::t('PagesModule.pages','model.page.error.language'));
         }
+    }
+    
+    public function beforeSave()
+    {
+        $this->updatetime = time();
+        return parent::beforeSave();
     }
 }
 ?>

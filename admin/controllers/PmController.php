@@ -1,6 +1,34 @@
 <?php
 class PmController extends CApplicationController
 {
+    
+    public function actionSettings()
+    {
+        $this->pageTitle = Yii::t('pm','page.settings.title');
+        
+        $this->addBreadcrumb(
+            Yii::t('pm','page.settings.title'),
+            $this->createUrl($this->getRoute())
+        );
+        
+        $model = new PmSettings();
+        if (isset($_POST['PmSettings']))
+        {
+            $model->setAttributes($_POST['PmSettings']);
+            if ($model->save())
+            {
+                Yii::app()->user->setFlash(
+                    'pmSettingsSuccess',
+                    Yii::t('pm','success.settings.update')
+                );
+                $this->refresh();
+            }
+        }
+        $this->render('settings',array(
+            'model' => $model
+        ));
+    }
+    
     public function actionIndex()
     {
         $this->pageTitle = Yii::t('pm','page.pm.title');
@@ -76,7 +104,7 @@ class PmController extends CApplicationController
         ));
     }
     
-    public function actionAdd()
+    public function actionNew()
     {
         $this->pageTitle = Yii::t('pm','page.add.title');
         $this->addBreadcrumb(
@@ -122,11 +150,11 @@ class PmController extends CApplicationController
                 $owner->setSenderId(Yii::app()->user->getId());
                 $owner->outbox();
                 $owner->save();
-                
+                Yii::app()->user->setFlash('pmSuccess',Yii::t('pm','success.messages.sent'));
                 $this->redirect(array('index'));
             }
         }
-        $this->render('add',array(
+        $this->render('new',array(
             'model' => $model
         ));
     }

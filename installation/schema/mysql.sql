@@ -1,13 +1,51 @@
 --
+-- YOnote ENGINE database schema file
+--
+-- @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+-- @link http://yonote.org
+-- @copyright 2014 Vlad Gramuzov
+-- @license http://yonote.org/license.html
+--
+
+--
 -- Drop tables, if exists
 --
 
+drop table if exists `{{auth_item}}`;
+drop table if exists `{{auth_item_child}}`;
 drop table if exists `{{auth_assignment}}`;
-drop table if exists `{{extension}}`;
 drop table if exists `{{module}}`;
 drop table if exists `{{user}}`;
 drop table if exists `{{profile}}`;
 drop table if exists `{{setting}}`;
+drop table if exists `{{pm}}`;
+
+--
+-- Auth items table
+--
+
+create table `{{auth_item}}`
+(
+   `name`                 varchar(64) not null,
+   `type`                 integer not null,
+   `description`          text,
+   `bizrule`              text,
+   `data`                 text,
+   primary key (`name`)
+) engine InnoDB;
+
+--
+-- Auth items relations table
+--
+
+create table `{{auth_item_child}}`
+(
+   `parent`               varchar(64) not null,
+   `child`                varchar(64) not null,
+   primary key (`parent`,`child`),
+   foreign key (`parent`) references `{{auth_item}}` (`name`) on delete cascade on update cascade,
+   foreign key (`child`) references `{{auth_item}}` (`name`) on delete cascade on update cascade
+) engine InnoDB;
 
 --
 -- Auth assigments table
@@ -25,8 +63,7 @@ create table `{{auth_assignment}}`
 ) engine InnoDB;
 
 --
--- Modules table (many-to-one)
--- Module is a part of extension
+-- Modules table
 --
 
 create table `{{module}}`
@@ -38,7 +75,7 @@ create table `{{module}}`
    `email`            varchar(64),
    `website`          varchar(128),
    `copyright`        varchar(128),
-   `licence`          text,
+   `license`          text,
    `position`         integer default 0,
    `installed`        boolean default 0,
    `version`          varchar(64),
@@ -95,7 +132,7 @@ create table `{{profile}}`
    `language`         varchar(32),
    `country`          varchar(128),
    `city`             varchar(128),
-   `updatetime`       int,
+   `updatetime`       integer,
    primary key (`userid`),
    foreign key (`userid`) references `{{user}}` (`name`) on delete cascade on update cascade
 ) engine InnoDB;

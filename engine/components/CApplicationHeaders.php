@@ -96,7 +96,7 @@ class CApplicationHeaders extends CApplicationComponent implements IHeaders
             break;
         
             default :
-                throw new CException(Yii::t('system','Invalid "Content-type" flag'));;
+                throw new CException(Yii::t('system','message.invalid.contenttype'));
             break;
         }
         
@@ -289,7 +289,7 @@ class CApplicationHeaders extends CApplicationComponent implements IHeaders
             break;
         
             default :
-                throw new CException(Yii::t('system','Status code "{status}" is undefined',array(
+                throw new CException(Yii::t('system','message.invalid.statuscode',array(
                     '{status}' => $status
                 )));
             break;

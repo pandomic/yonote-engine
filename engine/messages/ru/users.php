@@ -95,6 +95,26 @@ return array(
     'placeholder.profile.country' => 'User country',
     'placeholder.profile.city' => 'User city',
     'placeholder.role.name' => 'Role system name',
-    'placeholder.role.description' => 'Role description'
+    'placeholder.role.description' => 'Role description',
+    'description.name.length.max' => 'Username max len',
+    'description.name.length.min' => 'Username min length',
+    'description.password.length.max' => 'User password max length',
+    'description.password.length.min' => 'User password min length',
+    'description.profile.fields.length.max' => 'User profile fields max length',
+    'description.profile.fields.length.min' => 'User profile fields min length',
+    'description.profile.photo.height.max' => 'User photo max height',
+    'description.profile.photo.height.min' => 'User photo min height',
+    'description.profile.photo.quality' => 'User photo quality',
+    'description.profile.photo.resize.enabled' => 'Resize user photos',
+    'description.profile.photo.resize.height' => 'User profile resize height',
+    'description.profile.photo.resize.width' => 'User photo resize width',
+    'description.profile.photo.size.max' => 'User photo max size',
+    'description.profile.photo.width.max' => 'User photo max width',
+    'description.profile.photo.width.min' => 'User photo min width',
+    'description.role.description.length.max' => 'Role description max length',
+    'description.role.description.length.min' => 'Role description min length',
+    'description.role.name.length.max' => 'Role system name max length',
+    'description.role.name.length.min' => 'Role system name min length',
+    'description.users.page.size' => 'Users list page size'
 );
 ?>
