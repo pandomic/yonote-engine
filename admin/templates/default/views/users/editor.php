@@ -24,13 +24,11 @@ if (isset($model->assignments))
     <div class="col-md-12">
         <div class="panel panel-default">
 
-            <div class="panel-body"> 
-                    
-                <?php echo CHtml::form('','POST',array(
-                    'role' => 'form',
-                    'class' => 'form-horizontal'
-                )); ?>
-
+            <?php echo CHtml::form('','POST',array(
+                'role' => 'form',
+                'class' => 'form-horizontal'
+            )); ?>
+                <div class="panel-body"> 
                     <div class="form-group <?php if ($model->hasErrors('name')) echo('has-error'); ?>">
                         <?php echo CHtml::activeLabel($model,'name',array(
                             'for' => 'userName',
@@ -46,7 +44,7 @@ if (isset($model->assignments))
                             <?php echo CHtml::error($model,'name',array(
                                 'class' => 'help-block text-danger'
                             )); ?>
-                            
+
                         </div>
                     </div>
                     <div class="form-group <?php if ($model->hasErrors('email')) echo('has-error'); ?>">
@@ -104,32 +102,32 @@ if (isset($model->assignments))
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="form-group <?php if ($model->hasErrors('permissions')) echo('has-error'); ?>">
                         <?php echo CHtml::activeLabel($model,'permissions',array(
                             'for' => 'userPermissions',
                             'class' => 'col-sm-2 control-label'
                         )); ?>
                         <div class="col-sm-10">
-                            
+
                             <select class="form-control" multiple="true" name="User[permissions][]" size="<?php echo count($authTree); ?>">
                                 <?php foreach($authTree as $arr): list($k,$v) = each($arr); ?>
                                     <option <?php if (in_array($k,$selected)) echo 'selected="true"'; ?> value="<?php echo $k; ?>"><?php echo $v; ?></option>
                                 <?php endforeach; ?>
                             </select>
-                            
+
                             <?php echo CHtml::error($model,'permissions',array(
                                 'class' => 'help-block text-danger'
                             )); ?>
                         </div>
                     </div>
-                    
+                </div>
+                <div class="panel-footer">
                     <button type="submit" class="btn btn-primary"><?php echo Yii::t('system','app.save'); ?></button>
                     <button type="reset" class="btn btn-default"><?php echo Yii::t('system','app.reset'); ?></button>
-                
-                <?php echo CHtml::endForm(); ?>
-                
-            </div>
+                </div>
+            <?php echo CHtml::endForm(); ?>
+            
         </div>
     </div>
 </div>

@@ -1,4 +1,4 @@
-<?php /* @var $this Controller */ ?>
+<?php /* @var $this CApplicationController */ ?>
 <?php $this->beginContent('//layouts/main'); ?>
 <div class="span-19">
 	<div id="content">

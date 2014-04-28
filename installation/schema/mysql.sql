@@ -5,8 +5,6 @@
 drop table if exists `{{auth_assignment}}`;
 drop table if exists `{{extension}}`;
 drop table if exists `{{module}}`;
-drop table if exists `{{widget}}`;
-drop table if exists `{{template}}`;
 drop table if exists `{{user}}`;
 drop table if exists `{{profile}}`;
 drop table if exists `{{setting}}`;
@@ -27,10 +25,11 @@ create table `{{auth_assignment}}`
 ) engine InnoDB;
 
 --
--- Extensions table
+-- Modules table (many-to-one)
+-- Module is a part of extension
 --
 
-create table `{{extension}}`
+create table `{{module}}`
 (
    `name`             varchar(64) not null,
    `title`            varchar(128),
@@ -40,65 +39,11 @@ create table `{{extension}}`
    `website`          varchar(128),
    `copyright`        varchar(128),
    `licence`          text,
-   `data`             text,
+   `position`         integer default 0,
+   `installed`        boolean default 0,
+   `version`          varchar(64),
    `updateTime`       integer default 0,
    primary key (`name`)
-) engine InnoDB;
-
---
--- Modules table (many-to-one)
--- Module is a part of extension
---
-
-create table `{{module}}`
-(
-   `name`             varchar(64) not null,
-   `title`            varchar(128),
-   `extension`        varchar(64) not null,
-   `priority`         integer default 0,
-   `installed`        boolean default 0,
-   `updateTime`       integer default 0,
-   primary key (`name`,`extension`),
-   foreign key (`extension`) references `{{extension}}` (`name`) on delete cascade on update cascade
-) engine InnoDB;
-
---
--- Base widgets table (many-to-one)
--- Widget is a part if extension
---
-
-create table `{{widget}}`
-(
-   `name`             varchar(64) not null,
-   `extension`        varchar(64) not null,
-   `classPath`        varchar(128) not null,
-   `type`             integer,
-   `title`            varchar(128),
-   `description`      text,
-   `usePids`          text,
-   `usePidsFlag`      boolean default 0,
-   `unusePids`        text,
-   `unusePidsFlag`    boolean default 0,
-   `params`           text,
-   `updateTime`       integer,
-   `position`         integer default 0,
-   primary key (`name`,`extension`,`classPath`),
-   foreign key (`extension`) references `{{extension}}` (`name`) on delete cascade on update cascade
-) engine InnoDB;
-
---
--- Templates table (many-to-one)
--- Provides general reference to extension
--- Template is a part of extension
---
-
-create table `{{template}}`
-(
-   `name`             varchar(64) not null,
-   `extension`        varchar(64) not null,
-   `updateTime`       integer default 0,
-   primary key (`name`,`extension`),
-   foreign key (`extension`) references `{{extension}}` (`name`) on delete cascade on update cascade
 ) engine InnoDB;
 
 --
@@ -114,7 +59,28 @@ create table `{{user}}`
    `activated`        boolean default 0,
    `verified`         boolean default 0,
    `subscribed`       boolean default 0,
+   `updatetime`       integer,
    primary key (`username`)
+) engine InnoDB;
+
+--
+-- Base user information
+--
+
+create table `{{pm}}`
+(
+   `id`               integer auto_increment,
+   `title`            varchar(128),
+   `message`          text,
+   `ownerid`          varchar(64) not null,
+   `senderid`       varchar(64) not null,
+   `inbox`            boolean default 0,
+   `outbox`           boolean default 0,
+   `read`             boolean default 0,
+   `updatetime`       integer,
+   primary key (`id`),
+   foreign key (`ownerid`) references `{{user}}` (`name`) on delete cascade on update cascade,
+   foreign key (`senderid`) references `{{user}}` (`name`)
 ) engine InnoDB;
 
 --
@@ -129,6 +95,7 @@ create table `{{profile}}`
    `language`         varchar(32),
    `country`          varchar(128),
    `city`             varchar(128),
+   `updatetime`       int,
    primary key (`userid`),
    foreign key (`userid`) references `{{user}}` (`name`) on delete cascade on update cascade
 ) engine InnoDB;

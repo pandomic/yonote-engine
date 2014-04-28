@@ -5,6 +5,10 @@ $template = Yii::app()->request->baseUrl.'/templates/'.Yii::app()->getTheme()->n
 $jQueryJS = Yii::app()->assetManager->publish(
     Yii::getPathOfAlias('application.vendors.jquery').'/jquery.js'
 );
+// Easypie .js path
+$easypieJS = Yii::app()->assetManager->publish(
+    Yii::getPathOfAlias('application.vendors.easypie').'/easypie.js'
+);
 // Bootstrap .css asset path
 $bootstrapCss = Yii::app()->assetManager->publish(
     Yii::getPathOfAlias('application.vendors.bootstrap.css').'/bootstrap.css'
@@ -22,15 +26,18 @@ $bootstrapJS = Yii::app()->assetManager->publish(
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
     <script src="<?php echo $jQueryJS; ?>"></script>
+    <script src="<?php echo $easypieJS; ?>"></script>
     <script src="<?php echo $bootstrapJS; ?>"></script>
     <script src="<?php echo $template; ?>/js/functions.js"></script>
     <script src="<?php echo $template; ?>/js/ui.js"></script>
     
     <title><?php echo $this->pageTitle; ?></title>
     
+    <link rel="shortcut icon" href="<?php echo $template; ?>/images/logo.gif">
     <link href="<?php echo $bootstrapCss; ?>" rel="stylesheet">
     <link href="<?php echo $template; ?>/stylesheet/css/theme.css" rel="stylesheet">
     <link href="<?php echo $template; ?>/stylesheet/css/theme-extended.css" rel="stylesheet">
+    <link href="<?php echo $template; ?>/stylesheet/css/loadmeter.css" rel="stylesheet">
 
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -39,7 +46,6 @@ $bootstrapJS = Yii::app()->assetManager->publish(
 
   </head>
   <body>
-      
     <div class="modal fade" id="confirm-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -89,34 +95,35 @@ $bootstrapJS = Yii::app()->assetManager->publish(
                     <li><a href="#">Contacts</a></li>
                 </ul>
                 <div class="navbar-right">
-                    <button type="button" class="btn btn-primary navbar-btn btn-xl hidden-sm hidden-xs">View web site</button>
+                    <a href="/" target="_blank" class="btn btn-primary navbar-btn btn-xl hidden-sm hidden-xs">View web site</a>
                 </div>
-                <div class="navbar-right">
-                    <ul class="nav navbar-nav navbar-left profile-navbar">
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle dropdown-profile" data-toggle="dropdown">
-                                <span>
-                                    <img class="img-rounded" src="<?php echo $template; ?>/images/user.jpg" >
-                                    <span>Iwan Raven <span class="badge blue-badge">10</span> <b class="caret"></b></span>
-                                </span>
-                            </a>
-                            <ul class="dropdown-menu profile-box">
-                                <li class="avatar">
-                                    <img class="img-circle img-thumbnail" src="<?php echo $template; ?>/images/user.jpg">
-                                    <div class="text-center" >
-                                        <h4>Iwan Raven</h4>
-                                    </div>
-                                </li>
-                                <li class="divider"></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-cog"></span>Settings</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-envelope"></span><span class="badge pull-right blue-badge">10</span>Messages</a></li>
-                                <li><a href="#"><span class="glyphicon glyphicon-off"></span>Logout</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-                
+                <?php $w = $this->beginWidget('UserWidget'); ?>
+                    <div class="navbar-right">
+                        <ul class="nav navbar-nav navbar-left profile-navbar">
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle dropdown-profile" data-toggle="dropdown">
+                                    <span>
+                                        <img class="img-rounded" src="<?php if ($w->getPhoto() !== false): echo '/'.$w->getPhoto(); else: echo $template; ?>/images/user.jpg<?php endif; ?>">
+                                        <span><?php if ($w->getProfile()->name != null) echo $w->getProfile()->name; else echo $w->getUser()->name; ?> <?php if ($w->getUnreadCount() > 0): ?><span class="badge blue-badge"><?php echo $w->getUnreadCount(); ?></span><?php endif; ?> <b class="caret"></b></span>
+                                    </span>
+                                </a>
+                                <ul class="dropdown-menu profile-box">
+                                    <li class="avatar">
+                                        <img class="img-circle img-thumbnail" src="<?php if ($w->getPhoto() !== false): echo '/'.$w->getPhoto(); else: echo $template; ?>/images/user.jpg<?php endif; ?>">
+                                        <div class="text-center" >
+                                            <h4><?php if ($w->getProfile()->name != null) echo $w->getProfile()->name; else echo $w->getUser()->name; ?></h4>
+                                        </div>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li><a href="<?php echo $this->createUrl('/users/profile',array('id' => $w->getUser()->name)); ?>"><span class="glyphicon glyphicon-user"></span> Profile</a></li>
+                                    <li><a href="<?php echo $this->createUrl('/users/edit',array('id' => $w->getUser()->name)); ?>"><span class="glyphicon glyphicon-cog"></span> Settings</a></li>
+                                    <li><a href="<?php echo $this->createUrl('/pm'); ?>"><span class="glyphicon glyphicon-envelope"></span><?php if ($w->getUnreadCount() > 0): ?><span class="badge pull-right blue-badge"><?php echo $w->getUnreadCount(); ?></span><?php endif; ?>Messages</a></li>
+                                    <li><a href="<?php echo $this->createUrl('/base/logout'); ?>"><span class="glyphicon glyphicon-off"></span>Logout</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                <?php $this->endWidget(); ?>
                 
                 
             </div>
@@ -132,30 +139,27 @@ $bootstrapJS = Yii::app()->assetManager->publish(
             </li>
             <li>
                 <span class="glow"></span>
+                <a href="<?php echo $this->createUrl('/pm'); ?>"><span class="glyphicon glyphicon-envelope"></span> Сообщения</a>
+            </li>
+            <li>
+                <span class="glow"></span>
                 <a href="#" data-toggle="collapse" data-parent="#accordion" data-target="#collapseOne"><span class="glyphicon glyphicon-user"></span> Пользователи</a>
                 <ul class="nav collapse" id="collapseOne">
-                    <li><a href="<?php echo $this->createUrl('users/index'); ?>"><span class="glyphicon glyphicon-user"></span> Пользователи</a></li>
-                    <li><a href="<?php echo $this->createUrl('roles/index'); ?>"><span class="glyphicon glyphicon-lock"></span> Роли</a></li>
-                    <li><a href="<?php echo $this->createUrl('users/settings'); ?>"><span class="glyphicon glyphicon-cog"></span> Настройки</a></li>
+                    <li><a href="<?php echo $this->createUrl('/users/index'); ?>"><span class="glyphicon glyphicon-user"></span> Пользователи</a></li>
+                    <li><a href="<?php echo $this->createUrl('/roles/index'); ?>"><span class="glyphicon glyphicon-lock"></span> Роли</a></li>
+                    <li><a href="<?php echo $this->createUrl('/users/settings'); ?>"><span class="glyphicon glyphicon-cog"></span> Настройки</a></li>
                 </ul>
             </li>
             <li>
                 <span class="glow"></span>
                 <a href="#" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo" href="#"><span class="glyphicon glyphicon-cog"></span> Система</a>
                 <ul class="nav collapse" id="collapseTwo">
-                    <li><a href="/admin/extensions"><span class="glyphicon glyphicon-asterisk"></span> Расширения</a></li>
-                    <li><a href="#"><span class="glyphicon glyphicon-th-large"></span> Виджеты</a></li>
-                </ul>
-            </li>
-            <li>
-                <span class="glow"></span>
-                <a href="#" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo" href="#collapseTwo"><span class="glyphicon glyphicon-file"></span> OPen</a>
-                <ul class="nav collapse" id="collapseTwo">
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
+                    <li><a href="<?php echo $this->createUrl('/modules'); ?>"><span class="glyphicon glyphicon-th-large"></span> Модули</a></li>
+                    <li><a href="<?php echo $this->createUrl('/settings'); ?>"><span class="glyphicon glyphicon-cog"></span> Настройки</a></li>
                 </ul>
             </li>
         </ul>
+        <?php $this->widget('admin.modules.loadmeter.components.widgets.LoadMeterWidget'); ?>
     </div>
     
     <div class="dashboard">

@@ -16,15 +16,12 @@ define('YONOTE_ENGINE',true);
  * Application type constant, used for application parts division
  */
 define('ENGINE_APPTYPE','base');
-/**
- * Enable Yii debug mode (should be removed in production)
- */
-define('YII_DEBUG',true);
 
-// Load Yii framework
-require_once('framework/yii.php');
 // Load configuration
 require_once('engine/settings/config.php');
+// Load Yii framework
+require_once('framework/yii.php');
+
 // Create new application instance
 Yii::createWebApplication(SETTINGS_PATH.'/application.php');
 // Run application

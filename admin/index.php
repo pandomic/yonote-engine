@@ -8,39 +8,26 @@
  * @license http://
  */
 
-// Define access constant
-defined('YONOTE_ENGINE') or define('YONOTE_ENGINE',true);
-// Define current path constant
-defined('THIS_PATH') or define('THIS_PATH',dirname(__FILE__));
-
-defined('YII_DEBUG') or define('YII_DEBUG',true);
-
+/**
+ * Access control constant, used for unauthorized access prevention
+ */
+define('YONOTE_ENGINE',true);
+/**
+ * Current application path, needed for some components
+ */
+define('THIS_PATH',dirname(__FILE__));
+/**
+ * Application type constant, used for application parts division
+ */
 define('ENGINE_APPTYPE','admin');
 
-// Load Yii framework
-require_once('../framework/yii.php');
 // Load configuration
 require_once('../engine/settings/config.php');
+// Load Yii framework
+require_once('../framework/yii.php');
 
 // Create new application instance
 Yii::createWebApplication(SETTINGS_PATH.'/application.php');
-
-/*$auth=Yii::app()->authManager;
-
-$auth->createOperation('admminAccess','Administrative access');
-
-$role = $auth->createRole('administrator','Administrator',$bizRule);
-$role->addChild('admminAccess');
-
-$bizRule = 'return Yii::app()->user->getIsGuest();';
-$auth->createRole('guest','Guest',$bizRule);
-
-$bizRule = 'return !Yii::app()->user->getIsGuest();';
-$role = $auth->createRole('authenticated','Authenticated',$bizRule);
-$role->addChild('administrator');
-
-$auth->assign('administrator','admin');*/
- 
 // Run application
 Yii::app()->run();
 ?>

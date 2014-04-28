@@ -1,8 +1,18 @@
-.panel-heading .label {
-  padding: .1em .6em .1em;
+.mce-edit-area blockquote {
+  border: 1px solid red;
+}
+.panel-heading .panel-title {
+  display: inline-block;
+  vertical-align: middle;
+}
+.list-group-item.active a {
+  color: #ffffff;
 }
 .table {
   margin: 0;
+}
+.table-separated {
+  border-top: 1px solid #dddddd;
 }
 .table .asc {
   background: url('../../images/up.gif') right center no-repeat;
@@ -11,13 +21,6 @@
 .table .desc {
   background: url('../../images/down.gif') right center no-repeat;
   padding-right: 10px;
-}
-.table.table-bordered {
-  margin: 20px 0 20px 0;
-}
-.table.table-bordered tr th,
-.table.table-bordered tr th a {
-  font-weight: normal;
 }
 .table.table-middle td,
 .table.table-middle th {

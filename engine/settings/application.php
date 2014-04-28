@@ -25,10 +25,10 @@ return array(
     
     // Import engine components
     'import' => array(
-        'application.base.*',
         'application.components.*',
-        'application.components.models.*',
         'application.components.widgets.*',
+        'application.components.behaviors.*',
+        'application.models.*',
         'ext.*'
     ),
     
@@ -40,7 +40,7 @@ return array(
     
     // Application configuration
     'behaviors' => array(
-        'ApplicationConfigBehavior'
+        'ConfigBehavior'
     ),
     
     // Components settigns
@@ -72,10 +72,6 @@ return array(
             'class' => 'CFileCache',
             'cachePath' => ENGINE_PATH.'/cache'
         ),
-        // Messages settings
-        'messages' => array(
-            'basePath' => ENGINE_PATH.'/languages'
-        ),
         // Modules manager
         'mmanager' => array(
             'class' => 'CApplicationModules',
@@ -85,17 +81,9 @@ return array(
             'cacheComponentId' => 'cache',
             'cacheTime' => 1000
         ),
-        // Widgets manager
-        'wmanager' => array(
-            'class' => 'CApplicationWidgets',
-            'dbComponentId' => 'db',
-            'tableName' => '{{widget}}',
-            'cacheComponentId' => 'cache',
-            'cacheTime' => 1000
-        ),
         // Headers
         'headers' => array(
-            'class' => 'CHeaders',
+            'class' => 'CApplicationHeaders',
             'charset' => 'utf-8'
         ),
         // Database settings
@@ -126,16 +114,16 @@ return array(
         'user' => array(
             'class' => 'CApplicationUser',
             'loginUrl' => array('base/login'),
-            'returnUrl' => 'base/index',
+            'returnUrl' => array('base/index'),
             'dbComponentId' => 'db',
             'userTable' => '{{user}}'
         )
     ),
     
     // Application controllers path
-    'controllerPath' => THIS_PATH.'/components/controllers',
+    'controllerPath' => THIS_PATH.'/controllers',
     // Engine modules path
-    'modulePath' => THIS_PATH.'/modules',
+    'modulePath' => MODULES_PATH,
     // Extensions path
     'extensionPath' => ENGINE_PATH.'/extensions',
     // Default controller

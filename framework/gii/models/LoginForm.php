@@ -22,7 +22,7 @@ class LoginForm extends CFormModel
 	 */
 	public function authenticate($attribute,$params)
 	{
-		$this->_identity=new UserIdentity('yiier',$this->password);
+		$this->_identity=new CApplicationIdentity('yiier',$this->password);
 		if(!$this->_identity->authenticate())
 			$this->addError('password','Incorrect password.');
 	}
@@ -35,10 +35,10 @@ class LoginForm extends CFormModel
 	{
 		if($this->_identity===null)
 		{
-			$this->_identity=new UserIdentity('yiier',$this->password);
+			$this->_identity=new CApplicationIdentity('yiier',$this->password);
 			$this->_identity->authenticate();
 		}
-		if($this->_identity->errorCode===UserIdentity::ERROR_NONE)
+		if($this->_identity->errorCode===CApplicationIdentity::ERROR_NONE)
 		{
 			Yii::app()->user->login($this->_identity);
 			return true;

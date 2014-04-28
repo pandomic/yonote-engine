@@ -1,6 +1,6 @@
 <?php
 
-class UserIdentity extends CUserIdentity
+class CApplicationIdentity extends CUserIdentity
 {
 	/**
 	 * Authenticates a user.

@@ -11,6 +11,11 @@
 // Check access level
 defined('YONOTE_ENGINE') or die('Hacking attempt!');
 
+/**
+ * Enable Yii debug mode (should be removed in production)
+ */
+define('YII_DEBUG',true);
+
 # System definitions
 
 // YOnote ENGINE version
@@ -24,7 +29,7 @@ define('SETTINGS_PATH',ENGINE_PATH.DIRECTORY_SEPARATOR.'settings');
 // Current path
 defined('THIS_PATH') or define('THIS_PATH',ENGINE_PATH);
 // YOnote ENGINE modules path
-define('MODULES_PATH',ENGINE_PATH.DIRECTORY_SEPARATOR.'modules');
+define('MODULES_PATH',THIS_PATH.DIRECTORY_SEPARATOR.'modules');
 // Uploads path
 define('UPLOADS_PATH',ENGINE_PATH.'/uploads');
 define('UPLOADS_PATH_URI','engine/uploads');
@@ -34,5 +39,5 @@ define('CSRF_TOKEN','YE_CSRF');
 // Database definitions
 require_once(SETTINGS_PATH.'/database.php');
 // Load base engine interfaces
-require_once(ENGINE_PATH.'/base/interfaces.php');
+require_once(ENGINE_PATH.'/components/interfaces.php');
 ?>

@@ -5,11 +5,27 @@
 @import "variables.less";
 @import "mixins.less";
 
+.mce-edit-area blockquote {
+    border: 1px solid red;
+}
+
 .panel-heading {
-    .label {
-        padding: .1em .6em .1em;
+    
+    .panel-title {
+        display: inline-block;
+        vertical-align: middle;
     }
 }
+
+.list-group-item {
+    &.active {
+        a {
+            color: @component-active-color;
+        }
+    }
+}
+
+
 
 //
 // Tables
@@ -17,7 +33,9 @@
 
 .table {
     margin: 0;
-
+    &-separated {
+        border-top: 1px solid @table-border-color;
+    }
     .asc {
         background: url('../../images/up.gif') right center no-repeat;
 	padding-right: 10px;
@@ -26,21 +44,6 @@
         background: url('../../images/down.gif') right center no-repeat;
 	padding-right: 10px;
     }
-    &.table-bordered {
-        margin: 20px 0 20px 0;
-        //border: 1px dotted darken(@panel-default-heading-bg, 30%);
-    }
-    &.table-bordered tr th {
-        &,a {
-            font-weight: normal;
-            //color: @text-color;
-        }
-        //#gradient > .vertical(@panel-default-heading-bg; darken(@panel-default-heading-bg, 5%));
-    }
-    &.table-bordered tr th, &.table-bordered tr td {
-        //border: 1px dotted darken(@panel-default-heading-bg, 30%);
-    }
-    
     &.table-middle td,&.table-middle th {
         vertical-align: middle;
     }

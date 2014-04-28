@@ -24,13 +24,12 @@ if (isset($model->parentrelations))
     <div class="col-md-12">
         <div class="panel panel-default">
 
-            <div class="panel-body"> 
-                    
-                <?php echo CHtml::form('','POST',array(
-                    'role' => 'form',
-                    'class' => 'form-horizontal'
-                )); ?>
-
+            <?php echo CHtml::form('','POST',array(
+                'role' => 'form',
+                'class' => 'form-horizontal'
+            )); ?>
+            
+                <div class="panel-body"> 
                     <div class="form-group <?php if ($model->hasErrors('name')) echo('has-error'); ?>">
                         <?php echo CHtml::activeLabel($model,'name',array(
                             'for' => 'roleName',
@@ -45,7 +44,7 @@ if (isset($model->parentrelations))
                             <?php echo CHtml::error($model,'name',array(
                                 'class' => 'help-block text-danger'
                             )); ?>
-                            
+
                         </div>
                     </div>
                     <div class="form-group <?php if ($model->hasErrors('description')) echo('has-error'); ?>">
@@ -80,13 +79,13 @@ if (isset($model->parentrelations))
                             )); ?>
                         </div>
                     </div>
-                    
+                </div>
+                <div class="panel-footer">
                     <button type="submit" class="btn btn-primary"><?php echo Yii::t('system','app.save'); ?></button>
                     <button type="reset" class="btn btn-default"><?php echo Yii::t('system','app.reset'); ?></button>
-                
-                <?php echo CHtml::endForm(); ?>
-                
-            </div>
+                </div>
+            <?php echo CHtml::endForm(); ?>
+            
         </div>
     </div>
 </div>
