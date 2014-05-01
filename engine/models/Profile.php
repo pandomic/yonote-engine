@@ -60,15 +60,15 @@ class Profile extends CActiveRecord
                 'fileField' => 'photo',
                 'savePath' => UPLOADS_PATH.'/photos',
                 'checkSides' => true,
-                'minWidth' => (int) Yii::app()->settings->get('user','profile.photo.width.min'),
-                'minHeight' => (int) Yii::app()->settings->get('user','profile.photo.height.min'),
-                'maxWidth' => (int) Yii::app()->settings->get('user','profile.photo.width.max'),
-                'maxHeight' => (int) Yii::app()->settings->get('user','profile.photo.height.max'),
-                'resizeImage' => Yii::app()->settings->get('user','profile.photo.resize.enabled',true),
+                'minWidth' => (int) Yii::app()->settings->get('users','profile.photo.width.min'),
+                'minHeight' => (int) Yii::app()->settings->get('users','profile.photo.height.min'),
+                'maxWidth' => (int) Yii::app()->settings->get('users','profile.photo.width.max'),
+                'maxHeight' => (int) Yii::app()->settings->get('users','profile.photo.height.max'),
+                'resizeImage' => Yii::app()->settings->get('users','profile.photo.resize.enabled',true),
                 'cropOnResize' => true,
-                'resizeWidth' => (int) Yii::app()->settings->get('user','profile.photo.resize.width'),
-                'resizeHeight' => (int) Yii::app()->settings->get('user','profile.photo.resize.height'),
-                'quality' => (int) Yii::app()->settings->get('user','profile.photo.quality')
+                'resizeWidth' => (int) Yii::app()->settings->get('users','profile.photo.resize.width'),
+                'resizeHeight' => (int) Yii::app()->settings->get('users','profile.photo.resize.height'),
+                'quality' => (int) Yii::app()->settings->get('users','profile.photo.quality')
             )
         );
     }
@@ -87,7 +87,7 @@ class Profile extends CActiveRecord
             ),
             array(
                 'photo','file','types' => 'jpg,jpeg,gif,png','allowEmpty' => true,
-                'maxSize' => Yii::app()->settings->get('user','profile.photo.size.max'),
+                'maxSize' => Yii::app()->settings->get('users','profile.photo.size.max'),
                 'tooLarge' => Yii::t('users','model.profile.error.photo.size.large'),
                 'tooMany' => Yii::t('users','model.profile.error.photo.many'),
                 'wrongType' => Yii::t('users','model.profile.error.photo.type')
@@ -98,8 +98,8 @@ class Profile extends CActiveRecord
             ),
             array (
                 'name,country,city','length',
-                'min' => Yii::app()->settings->get('user','profile.fields.length.min'),
-                'max' => Yii::app()->settings->get('user','profile.fields.length.max'),
+                'min' => Yii::app()->settings->get('users','profile.fields.length.min'),
+                'max' => Yii::app()->settings->get('users','profile.fields.length.max'),
                 'tooLong' => Yii::t('users','model.profile.error.fields.length.long'),
                 'tooShort' => Yii::t('users','model.profile.error.fields.length.short')
             ),
@@ -134,10 +134,10 @@ class Profile extends CActiveRecord
         if ($image === false && $this->getImageError() != ImageBehavior::ERROR_FILE_EMPTY){
             $status = $this->getImageError();
 
-            $minWidth = Yii::app()->settings->get('user','profile.photo.width.min');
-            $maxWidth = Yii::app()->settings->get('user','profile.photo.width.max');
-            $minHeight = Yii::app()->settings->get('user','profile.photo.height.min');
-            $maxHeight = Yii::app()->settings->get('user','profile.photo.height.max');
+            $minWidth = Yii::app()->settings->get('users','profile.photo.width.min');
+            $maxWidth = Yii::app()->settings->get('users','profile.photo.width.max');
+            $minHeight = Yii::app()->settings->get('users','profile.photo.height.min');
+            $maxHeight = Yii::app()->settings->get('users','profile.photo.height.max');
 
             if ($status == ImageBehavior::ERROR_SIDES_BIG)
                 $this->addError('photo',Yii::t('users','model.profile.error.photo.sides.large',array(

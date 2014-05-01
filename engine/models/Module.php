@@ -20,6 +20,14 @@ class Module extends CActiveRecord
      * @var string module file 
      */
     public $file;
+    /**
+     * @var integer max position
+     */
+    public $max;
+    /**
+     * @var integer min position
+     */
+    public $min;
     
     /**
      * Validation rules.

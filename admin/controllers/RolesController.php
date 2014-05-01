@@ -1,6 +1,26 @@
 <?php
-class rolesController extends CApplicationController
-{    
+/**
+ * RolesController class file.
+ *
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @link http://yonote.org
+ * @copyright 2014 Vlad Gramuzov
+ * @license http://yonote.org/license.html
+ */
+
+/**
+ * Roles manager controller, used in administrative panel.
+ * 
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @since 1.0
+ */
+class RolesController extends CApplicationController
+{
+    /**
+     * Remove selected auth items.
+     * @return void.
+     * @throws CHttpException if request type is not POST.
+     */
     public function actionRemove()
     {
         if (Yii::app()->request->isPostRequest)
@@ -20,7 +40,11 @@ class rolesController extends CApplicationController
         else
             throw new CHttpException(400,Yii::t('system','error.400.description'));
     }
-
+    
+    /**
+     * Display auth items.
+     * @return void.
+     */
     public function actionIndex()
     {
         $this->pageTitle = Yii::t('users','page.roles.title');
@@ -65,6 +89,10 @@ class rolesController extends CApplicationController
         ));
     }
     
+    /**
+     * Add role.
+     * @return void.
+     */
     public function actionAdd()
     {
         $this->pageTitle = Yii::t('users','page.addrole.title');
@@ -95,7 +123,11 @@ class rolesController extends CApplicationController
         ));
     }
     
-    public function actionEdit()
+    /**
+     * Edit auth item.
+     * @throws CHttpException if auth item not found or invalid request given.
+     */
+    public function actionEdit($id)
     {
         $this->pageTitle = Yii::t('users','page.editrole.title');
         $this->addBreadcrumb(
@@ -105,10 +137,8 @@ class rolesController extends CApplicationController
             Yii::t('users','page.editrole.title'),
             Yii::app()->createUrl($this->getRoute())
         );
-        if (!isset($_GET['id']))
-            throw new CHttpException(400,Yii::t('system','error.400.description'));
         
-        $model = AuthItem::model()->findByPk($_GET['id']);
+        $model = AuthItem::model()->findByPk($id);
         
         if ($model === null)
             throw new CHttpException(404,Yii::t('system','error.404.description'));

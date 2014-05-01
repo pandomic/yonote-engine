@@ -1,13 +1,92 @@
 <?php
+/**
+ * ModulesController class file.
+ *
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @link http://yonote.org
+ * @copyright 2014 Vlad Gramuzov
+ * @license http://yonote.org/license.html
+ */
+
+/**
+ * Modules management controller, used in administrative panel.
+ * 
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @since 1.0
+ */
 class ModulesController extends CApplicationController
 {
     
     private $_modulesListModel = null;
     private $_moduleEditModel = null;
     
-    public function actionUp()
+    /**
+     * Controller filters.
+     * @return array filters.
+     */
+    public function filters()
     {
-        $record = $this->loadModuleEditModel();
+        return array(
+            'accessControl'
+        );
+    }
+    
+    /**
+     * Controller access rules.
+     * @return array access rules.
+     */
+    public function accessRules()
+    {
+        return array(
+            array(
+                'allow',
+                'actions' => array('index'),
+                'roles' => array('admin.modules.index')
+            ),
+            array(
+                'allow',
+                'actions' => array('up'),
+                'roles' => array('admin.modules.up')
+            ),
+            array(
+                'allow',
+                'actions' => array('down'),
+                'roles' => array('admin.modules.down')
+            ),
+            array(
+                'allow',
+                'actions' => array('status'),
+                'roles' => array('admin.modules.status')
+            ),
+            array(
+                'allow',
+                'actions' => array('info'),
+                'roles' => array('admin.modules.info')
+            ),
+            array(
+                'allow',
+                'actions' => array('add'),
+                'roles' => array('admin.modules.add')
+            ),
+            array(
+                'allow',
+                'actions' => array('remove'),
+                'roles' => array('admin.modules.remove')
+            ),
+            array(
+                'deny',
+                'users' => array('*')
+            )
+        );
+    }
+    
+    /**
+     * Move module up.
+     * @return void.
+     */
+    public function actionUp($id)
+    {
+        $record = $this->loadModuleEditModel($id);
         $aboveRecords = Module::model()->findAll('position > :position',array(
             ':position' => $record->position
         ));
@@ -28,9 +107,13 @@ class ModulesController extends CApplicationController
         $this->redirect(array('index'));
     }
     
-    public function actionDown()
+    /**
+     * Move module down.
+     * @return void.
+     */
+    public function actionDown($id)
     {
-        $record = $this->loadModuleEditModel();
+        $record = $this->loadModuleEditModel($id);
         $belowRecords = Module::model()->findAll('position < :position',array(
             ':position' => $record->position
         ));
@@ -51,9 +134,13 @@ class ModulesController extends CApplicationController
         $this->redirect(array('index'));
     }
     
-    public function actionStatus()
+    /**
+     * Togle module status (enabled|disabled).
+     * @return void.
+     */
+    public function actionStatus($id)
     {
-        $record = $this->loadModuleEditModel();
+        $record = $this->loadModuleEditModel($id);
         if ((boolean) $record->installed)
             $record->installed = false;
         else
@@ -63,7 +150,11 @@ class ModulesController extends CApplicationController
         $this->redirect(array('index'));
     }
     
-    public function actionInfo()
+    /**
+     * Show module info.
+     * @return void.
+     */
+    public function actionInfo($id)
     {
         $this->pageTitle = Yii::t('modules','page.info.title');
         $this->addBreadcrumb(
@@ -74,10 +165,14 @@ class ModulesController extends CApplicationController
             Yii::app()->createUrl($this->getRoute())
         );
         $this->render('info',array(
-            'model' => $this->loadModuleEditModel()
+            'model' => $this->loadModuleEditModel($id)
         ));
     }
     
+    /**
+     * Select and upload new module.
+     * @return void.
+     */
     public function actionAdd()
     {
         $this->pageTitle = Yii::t('modules','page.add.title');
@@ -103,14 +198,22 @@ class ModulesController extends CApplicationController
         ));
     }
     
-    public function actionRemove()
+    /**
+     * Remove module.
+     * @return void.
+     */
+    public function actionRemove($id)
     {
-        $record = $this->loadModuleEditModel();
+        $record = $this->loadModuleEditModel($id);
         $record->delete();
         Yii::app()->user->setFlash('modulesSuccess',Yii::t('modules','success.module.remove'));
         $this->redirect(array('index'));
     }
     
+    /**
+     * Show modules manager index.
+     * @return void.
+     */
     public function actionIndex()
     {
         $this->pageTitle = Yii::t('modules','page.modules.title');
@@ -123,6 +226,10 @@ class ModulesController extends CApplicationController
         ));
     }
     
+    /**
+     * Load modules models with specified conditions.
+     * @return array of models.
+     */
     public function loadModulesListModel()
     {
         if ($this->_modulesListModel === null)
@@ -140,38 +247,20 @@ class ModulesController extends CApplicationController
         return $this->_modulesListModel;
     }
     
-    public function loadModuleEditModel()
+    /**
+     * 
+     * @return type
+     * @throws CHttpException if module not found or invalid request given.
+     */
+    public function loadModuleEditModel($id)
     {
         if ($this->_moduleEditModel === null)
         {
-            if (isset($_GET['id']))
-            {
-                $this->_moduleEditModel = Module::model()->findByPk($_GET['id']);
-                if ($this->_moduleEditModel === null)
-                    throw new CHttpException(404,Yii::t('system','error.404.description'));
-            }
-            else
-                throw new CHttpException(400,Yii::t('system','error.400.description'));
+            $this->_moduleEditModel = Module::model()->findByPk($id);
+            if ($this->_moduleEditModel === null)
+                throw new CHttpException(404,Yii::t('system','error.404.description'));
         }
         return $this->_moduleEditModel;
-    }
-    
-    public function updatePositions()
-    {
-        $criteria = new CDbCriteria();
-        $criteria->select = 'MIN(position) as min';
-        $minRecord = Module::model()->find($criteria);
-        if ($minRecord->min > 0)
-        {
-            $records = Module::model()->findAll('position >= :position',array(
-                ':position' => $minRecord->min
-            ));
-            foreach ($records as $record)
-            {
-                $record->position -= (int) $minRecord->min;
-                $record->save();
-            }
-        }
     }
 }
 ?>

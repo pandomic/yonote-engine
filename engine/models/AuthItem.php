@@ -32,6 +32,10 @@ class AuthItem extends CActiveRecord
      */
     public $parents;
     /**
+     * @var array children elements.
+     */
+    public $children;
+    /**
      * @var type item type.
      */
     public $type;
@@ -74,9 +78,9 @@ class AuthItem extends CActiveRecord
                 'tooShort' => Yii::t('users','model.authitem.error.description.short'),
                 'tooLong' => Yii::t('users','model.authitem.error.description.long')
             ),
-            array('parents','parentsRule'),
-            array('parents','detectLoopRule','on' => 'edit'),
-            array('parents','detectSelfRule','on' => 'edit'),
+            array('parents,children','filter','filter' => array($this,'uniqueFilter')),
+            array('parents,children','itemsRule'),
+            array('parents,children','detectSelfRule','on' => 'edit'),
             array('parents','onlyRoleRule','on' => 'edit,add')
         );
     }
@@ -89,7 +93,8 @@ class AuthItem extends CActiveRecord
         return array(
             'name' => Yii::t('users','model.authitem.name'),
             'description' => Yii::t('users','model.authitem.description'),
-            'parents' => Yii::t('users','model.authitem.parent')
+            'parents' => Yii::t('users','model.authitem.parents'),
+            'children' => Yii::t('users','model.authitem.children')
         );
     }
     
@@ -104,37 +109,48 @@ class AuthItem extends CActiveRecord
         return parent::beforeValidate();
     }
     
+    public function uniqueFilter($attribute)
+    {
+        if (is_array($attribute))
+            return array_unique($attribute);
+    }
+
     /**
      * Validation rule.
-     * Validate parent items existence.
+     * Validate auth items existence.
      * @param string $attribute attribute name.
      * @param array $params additional params.
      */
-    public function parentsRule($attribute,$params)
+    public function itemsRule($attribute,$params)
     {
-        if ($this->parents !== null)
+        if ($this->{$attribute} !== null)
         {
-            $foundCount = count(self::model()->findAllByPk($this->parents));
-            if ($foundCount <= 0 || !is_array($this->parents))
-                $this->addError($attribute,Yii::t('users','model.authitem.error.parent.undefined'));
-            if (count($this->parents) != $foundCount)
-                $this->addError($attribute,Yii::t('users','model.authitem.error.parent.undefined'));
+            $foundCount = count(self::model()->findAllByPk($this->{$attribute}));
+            if ($foundCount <= 0 || !is_array($this->{$attribute}))
+                $this->addError($attribute,Yii::t('users','model.authitem.error.item.undefined'));
+            if (count($this->{$attribute}) != $foundCount)
+                $this->addError($attribute,Yii::t('users','model.authitem.error.item.undefined'));
         }
     }
     
     /**
      * Validation rule.
      * Detect loop in items relations.
+     * 
+     * This rule was removed from validation rules and moved to
+     * {@link beforeSave()} method, because loop detection should be applied
+     * only after all old items relations will be removed.
+     * 
      * @param string $attribute attribute name.
      * @param array $params additional params.
      */
     public function detectLoopRule($attribute,$params)
     {
-        if ($this->parents !== null)
-            foreach ($this->parents as $parent)
-                if ($this->_detectLoop($parent,$this->name))
+        if ($this->{$attribute} !== null)
+            foreach ($this->{$attribute} as $item)
+                if ($this->_detectLoop($item,$this->name))
                 {
-                    $this->addError($attribute,Yii::t('users','model.authitem.error.parent.loop'));
+                    $this->addError($attribute,Yii::t('users','model.authitem.error.item.loop'));
                     break;
                 }
     }
@@ -147,11 +163,11 @@ class AuthItem extends CActiveRecord
      */
     public function detectSelfRule($attribute,$params)
     {
-        if ($this->parents !== null)
-            foreach ($this->parents as $parent)
-                if ($parent == $this->name)
+        if ($this->{$attribute} !== null)
+            foreach ($this->{$attribute} as $item)
+                if ($item == $this->name)
                 {
-                    $this->addError($attribute,Yii::t('users','model.authitem.error.parent.self'));
+                    $this->addError($attribute,Yii::t('users','model.authitem.error.item.self'));
                     break;
                 }
     }
@@ -164,29 +180,37 @@ class AuthItem extends CActiveRecord
      */
     public function onlyRoleRule($attribute,$params)
     {
-        if ($this->parents !== null)
+        if ($this->{$attribute} !== null)
         {
             $allItems = $this->getAuthItemsUnique();
-            foreach ($this->parents as $parent)
-                if ($allItems[$parent]->type != 2)
-                    $this->addError($attribute,Yii::t('users','model.authitem.error.parent.role'));
+            foreach ($this->{$attribute} as $item)
+                if ($allItems[$item]->type != 2)
+                    $this->addError($attribute,Yii::t('users','model.authitem.error.item.role'));
         }
         
     }
     
     /**
-     * Action, that will be called after model saving.
-     * @return boolean parent afterSave() status.
+     * Action, that will be called before model will be saved.
+     * @return boolean parent beforeSave() status.
      */
-    public function afterSave(){
+    public function beforeSave(){
         AuthItemChild::model()->deleteAll(
-            'child=:itemid',
+            'child=:itemid OR parent=:itemid',
             array(':itemid' => $this->name)
         );
+        if ($this->getScenario() == 'edit')
+        {
+            $this->detectLoopRule('parents',array());
+            $this->detectLoopRule('children',array());
+        }
         if ($this->parents !== null)
             foreach ($this->parents as $parent)
                 Yii::app()->authManager->addItemChild($parent,$this->name);
-        return parent::afterSave();
+        if ($this->children !== null)
+            foreach ($this->children as $child)
+                Yii::app()->authManager->addItemChild($this->name,$child);
+        return parent::beforeSave();
     }
     
     /**

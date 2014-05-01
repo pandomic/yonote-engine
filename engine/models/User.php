@@ -79,15 +79,15 @@ class User extends CActiveRecord
             ),
             array(
                 'name','length',
-                'min' => Yii::app()->settings->get('user','name.length.min'),
-                'max' => Yii::app()->settings->get('user','name.length.max'),
+                'min' => Yii::app()->settings->get('users','name.length.min'),
+                'max' => Yii::app()->settings->get('users','name.length.max'),
                 'tooShort' => Yii::t('users','model.user.error.name.short'),
                 'tooLong' => Yii::t('users','model.user.error.name.long')
             ),
             array(
                 'password','length',
-                'min' => Yii::app()->settings->get('user','password.length.min'),
-                'max' => Yii::app()->settings->get('user','password.length.max'),
+                'min' => Yii::app()->settings->get('users','password.length.min'),
+                'max' => Yii::app()->settings->get('users','password.length.max'),
                 'tooShort' => Yii::t('users','model.user.error.password.short'),
                 'tooLong' => Yii::t('users','model.user.error.password.long')
             )

@@ -144,7 +144,7 @@ class UsersSettings extends CFormModel
         {
             $model = Setting::model()->find('name=:name AND category=:cat',array(
                 ':name' => $k,
-                ':cat' => 'user'
+                ':cat' => 'users'
             ));
             if ($model !== null)
             {
@@ -197,7 +197,7 @@ class UsersSettings extends CFormModel
         );
         
         $criteria = new CDbCriteria();
-        $criteria->params = array(':category' => 'user');
+        $criteria->params = array(':category' => 'users');
         $criteria->addInCondition('name',array_keys($this->_relations));
         $criteria->addCondition('category=:category');
         

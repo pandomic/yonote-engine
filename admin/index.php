@@ -1,6 +1,6 @@
 <?php
 /**
- * YOnote ENGINE backend application
+ * YOnote ENGINE backend application file
  *
  * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
  * @link http://yonote.org

@@ -1,7 +1,80 @@
 <?php
+/**
+ * PmController class file.
+ *
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @link http://yonote.org
+ * @copyright 2014 Vlad Gramuzov
+ * @license http://yonote.org/license.html
+ */
+
+/**
+ * Personal messages manager controller, used in administrative panel.
+ * 
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @since 1.0
+ */
 class PmController extends CApplicationController
 {
+    /**
+     * Controller filters.
+     * @return array filters.
+     */
+    public function filters()
+    {
+        return array(
+            'accessControl'
+        );
+    }
     
+    /**
+     * Controller access rules.
+     * @return array access rules.
+     */
+    public function accessRules()
+    {
+        return array(
+            array(
+                'allow',
+                'actions' => array('index'),
+                'roles' => array('admin.pm.index')
+            ),
+            array(
+                'allow',
+                'actions' => array('settings'),
+                'roles' => array('admin.pm.settings')
+            ),
+            array(
+                'allow',
+                'actions' => array('read'),
+                'roles' => array('admin.pm.read')
+            ),
+            array(
+                'allow',
+                'actions' => array('remove'),
+                'roles' => array('admin.pm.remove')
+            ),
+            array(
+                'allow',
+                'actions' => array('outbox'),
+                'roles' => array('admin.pm.outbox')
+            ),
+            array(
+                'allow',
+                'actions' => array('new'),
+                'roles' => array('admin.pm.new')
+            ),
+            array(
+                'deny',
+                'users' => array('*')
+            )
+        );
+    }
+    
+    /**
+     * PM settings.
+     * @return void.
+     */
     public function actionSettings()
     {
         $this->pageTitle = Yii::t('pm','page.settings.title');
@@ -29,6 +102,10 @@ class PmController extends CApplicationController
         ));
     }
     
+    /**
+     * Inbox messages.
+     * @return void.
+     */
     public function actionIndex()
     {
         $this->pageTitle = Yii::t('pm','page.pm.title');
@@ -43,7 +120,12 @@ class PmController extends CApplicationController
         ));
     }
     
-    public function actionRead()
+    /**
+     * Read message.
+     * @param int $id message id.
+     * @throws CHttpException if message not found or invalid request given.
+     */
+    public function actionRead($id)
     {
         $this->pageTitle = Yii::t('pm','page.read.title');
         $this->addBreadcrumb(
@@ -53,13 +135,10 @@ class PmController extends CApplicationController
             Yii::t('pm','page.read.title'),
             Yii::app()->createUrl($this->getRoute())
         );
-        if (isset($_GET['id']))
-            $model = Pm::model()->find('ownerid=:ownerid AND id=:id',array(
-                ':ownerid' => Yii::app()->user->getId(),
-                ':id' => $_GET['id']
-            ));
-        else
-            throw new CHttpException(400,Yii::t('system','error.400.description'));
+        $model = Pm::model()->find('ownerid=:ownerid AND id=:id',array(
+            ':ownerid' => Yii::app()->user->getId(),
+            ':id' => (int) $id
+        ));
         if ($model == null)
             throw new CHttpException(404,Yii::t('system','error.404.description'));
         $model->read();
@@ -69,6 +148,10 @@ class PmController extends CApplicationController
         ));
     }
     
+    /**
+     * Removes selected messages.
+     * @return void.
+     */
     public function actionRemove()
     {
         $c = 0;
@@ -86,7 +169,11 @@ class PmController extends CApplicationController
             Yii::app()->user->setFlash('pmSuccess',Yii::t('pm','success.messages.remove'));
         $this->redirect(array('index'));
     }
-
+    
+    /**
+     * Show outbox.
+     * @return void.
+     */
     public function actionOutbox()
     {
         $this->pageTitle = Yii::t('pm','page.outbox.title');
@@ -104,6 +191,11 @@ class PmController extends CApplicationController
         ));
     }
     
+    /**
+     * Add new message.
+     * @return void.
+     * @throws CHttpException if invalid replyid given.
+     */
     public function actionNew()
     {
         $this->pageTitle = Yii::t('pm','page.add.title');
@@ -159,6 +251,11 @@ class PmController extends CApplicationController
         ));
     }
     
+    /**
+     * Load PM list with specified conditions.
+     * @param boolean $inbox true for inbox, false for outbox messages.
+     * @return CAttributeCollection of models and sort.
+     */
     public function loadPmListModel($inbox = true)
     {
         $return = new CAttributeCollection();

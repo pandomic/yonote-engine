@@ -14,17 +14,17 @@
 defined('YONOTE_ENGINE') or die('Hacking attempt!');
 
 // Database user name
-define('DB_USER','user');
+define('DB_USER','{user}');
 // Database password
-define('DB_PASSWORD','111111');
+define('DB_PASSWORD','{password}');
 // Database name
-define('DB_NAME','yonote');
+define('DB_NAME','{dbname}');
 // Database host
-define('DB_HOST','localhost');
+define('DB_HOST','{host}');
 // Database type
-define('DB_TYPE','mysql');
+define('DB_TYPE','{type}');
 // Database tables prefix
-define('DB_PREFIX','yonote_');
+define('DB_PREFIX','{prefix}');
 // Database connection string
 define('DB_STRING',DB_TYPE . ':host=' . DB_HOST . ';dbname=' . DB_NAME)
 ?>

@@ -245,7 +245,7 @@ class UsersController extends CApplicationController
             $count = User::model()->count($criteria);
             $pages = new CPagination($count);
 
-            $pages->pageSize = Yii::app()->settings->get('user','users.page.size');
+            $pages->pageSize = Yii::app()->settings->get('users','users.page.size');
             $pages->applyLimit($criteria);
 
             $sort->applyOrder($criteria);

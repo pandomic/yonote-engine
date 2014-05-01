@@ -1,11 +1,16 @@
 <?php
 // Build permissions selected items
-$selected = array();
+$selectedParents = array();
+$selectedChildren = array();
 if (isset($model->parentrelations))
 {
-    $selected = array();
     foreach ($model->parentrelations as $parent)
-        $selected[] = $parent->parent;
+        $selectedParents[] = $parent->parent;
+}
+if (isset($model->childrelations))
+{
+    foreach ($model->childrelations as $child)
+        $selectedChildren[] = $child->child;
 }
 ?>
 
@@ -65,16 +70,32 @@ if (isset($model->parentrelations))
                     </div>
                     <div class="form-group <?php if ($model->hasErrors('parents')) echo('has-error'); ?>">
                         <?php echo CHtml::activeLabel($model,'parents',array(
-                            'for' => 'rolePermissions',
+                            'for' => 'roleParents',
                             'class' => 'col-sm-2 control-label'
                         )); ?>
                         <div class="col-sm-10">
-                            <select class="form-control" multiple="true" name="AuthItem[parents][]" size="<?php echo count($authTree); ?>">
+                            <select id="roleParents" class="form-control" multiple="true" name="AuthItem[parents][]" size="<?php echo count($authTree); ?>">
                                 <?php foreach($authTree as $arr): list($k,$v) = each($arr); ?>
-                                    <option <?php if (in_array($k,$selected)) echo 'selected="true"'; ?> value="<?php echo $k; ?>"><?php echo $v; ?></option>
+                                    <option <?php if (in_array($k,$selectedParents)) echo 'selected="true"'; ?> value="<?php echo $k; ?>"><?php echo $v; ?></option>
                                 <?php endforeach; ?>
                             </select>
                             <?php echo CHtml::error($model,'parents',array(
+                                'class' => 'help-block text-danger'
+                            )); ?>
+                        </div>
+                    </div>
+                    <div class="form-group <?php if ($model->hasErrors('children')) echo('has-error'); ?>">
+                        <?php echo CHtml::activeLabel($model,'children',array(
+                            'for' => 'roleChildren',
+                            'class' => 'col-sm-2 control-label'
+                        )); ?>
+                        <div class="col-sm-10">
+                            <select id="roleChildren" class="form-control" multiple="true" name="AuthItem[children][]" size="<?php echo count($authTree); ?>">
+                                <?php foreach($authTree as $arr): list($k,$v) = each($arr); ?>
+                                    <option <?php if (in_array($k,$selectedChildren)) echo 'selected="true"'; ?> value="<?php echo $k; ?>"><?php echo $v; ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                            <?php echo CHtml::error($model,'children',array(
                                 'class' => 'help-block text-danger'
                             )); ?>
                         </div>
