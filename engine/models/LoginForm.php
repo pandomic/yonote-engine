@@ -16,6 +16,8 @@
  */
 class LoginForm extends CFormModel
 {
+    private $_identity = null;
+    
     /**
      * @var string user name.
      */
@@ -29,8 +31,6 @@ class LoginForm extends CFormModel
      */
     public $rememberMe = false;
     
-    private $_identity = null;
-    
     /**
      * Validation rules.
      * @return array validation rules.
@@ -38,7 +38,10 @@ class LoginForm extends CFormModel
     public function rules()
     {
         return array(
-            array('name,password','required','message' => 'wow','on' => 'login'),
+            array(
+                'name,password','required',
+                'message' => Yii::t('login','model.loginform.error.required')
+            ),
             array('rememberMe','boolean','on' => 'login'),
             array('password','authenticateRule','on' => 'login')
         );
@@ -51,9 +54,9 @@ class LoginForm extends CFormModel
     public function attributeLabels()
     {
         return array(
-            'rememberMe'=>'Remember me next time',
-            'name' => 'User name',
-            'password' => 'User password'
+            'rememberMe' => Yii::t('login','model.loginform.remember'),
+            'name' => Yii::t('login','model.loginform.name'),
+            'password' => Yii::t('login','model.loginform.password')
         );
     }
     
@@ -68,7 +71,7 @@ class LoginForm extends CFormModel
     {
         $this->_identity = new CApplicationIdentity($this->name,$this->password);
         if (!$this->_identity->authenticate())
-            $this->addError('password',Yii::t('system','Invalid username or password!'));
+            $this->addError('password',Yii::t('login','model.loginform.error.login'));
             
     }
     
@@ -93,6 +96,7 @@ class LoginForm extends CFormModel
             return true;
         }
         
+        $this->addError('password',Yii::t('login','model.loginform.error.login'));
         return false;
     }
 }

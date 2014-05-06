@@ -1,3 +1,18 @@
+<?php
+/**
+ * Pages module template file.
+ * Pages controller file.
+ * Settings template.
+ * 
+ * $this - current controller.
+ * $model - special PagesSettings model.
+ *
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @link http://yonote.org
+ * @copyright 2014 Vlad Gramuzov
+ * @license http://yonote.org/license.html
+ */
+?>
 <?php if (Yii::app()->user->hasFlash('pagesSettingsSuccess')): ?>
     <div class="row">
         <div class="col-md-12">
@@ -8,7 +23,6 @@
         </div>
     </div>
 <?php endif; ?>
-
 <div class="row">
     <div class="col-md-2">
         <div class="list-group">
@@ -21,15 +35,12 @@
             <div class="panel-heading table-middle clearfix">
                 <h3 class="panel-title"><?php echo Yii::t('PagesModule.settings','page.settings.title'); ?></h3>
             </div>
-            
             <?php echo CHtml::form('','POST',array(
                 'role' => 'form',
                 'class' => 'form-horizontal'
             )); ?>
-            
                 <div class="panel-body"> 
                     <?php foreach ($model->getAttributes() as $key => $val): ?>            
-
                         <div class="form-group <?php if ($model->hasErrors($key)) echo 'has-error'; ?>">
                             <?php echo CHtml::activeLabel($model,$key,array(
                                 'for' => $key,
@@ -45,7 +56,6 @@
                                 )); ?>
                             </div>
                         </div>
-
                     <?php endforeach; ?>
                 </div>
                 <div class="panel-footer">

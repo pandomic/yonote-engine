@@ -19,7 +19,7 @@ class BaseController extends CController
     
     public function langsList()
     {
-        $langs = scandir(Yii::getPathOfAlias('application.messages'));
+        $langs = scandir(realpath(__DIR__.'/../../engine/messages'));
         array_shift($langs);
         array_shift($langs);
         return $langs;

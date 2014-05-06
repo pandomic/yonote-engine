@@ -1,9 +1,19 @@
 --
--- Drop table, if exists
+-- Pages module database schema file
+--
+-- @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+-- @link http://yonote.org
+-- @copyright 2014 Vlad Gramuzov
+-- @license http://yonote.org/license.html
+--
+
+--
+-- Drop tables, if exist
 --
 
 drop table if exists `{{mod_post}}`;
 drop table if exists `{{mod_post_hashtags}}`;
+drop table if exists `{{mod_post_relation}}`;
 
 --
 -- Posts table
@@ -22,7 +32,7 @@ create table `{{mod_post}}`
 ) engine InnoDB;
 
 --
--- Posts hash tags table
+-- Posts hashtags table
 --
 
 create table `{{mod_post_hashtag}}`

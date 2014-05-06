@@ -1,4 +1,16 @@
 <?php
+/**
+ * Administrative panel common layout wrapper.
+ * 
+ * $content - page content.
+ * $this - current controller.
+ *
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @link http://yonote.org
+ * @copyright 2014 Vlad Gramuzov
+ * @license http://yonote.org/license.html
+ */
+
 // Template path
 $template = Yii::app()->request->baseUrl.'/templates/'.Yii::app()->getTheme()->name;
 // jQuery .js asset path
@@ -24,26 +36,22 @@ $bootstrapJS = Yii::app()->assetManager->publish(
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    
+    <meta name="robots" content="noindex,nofollow">
     <script src="<?php echo $jQueryJS; ?>"></script>
     <script src="<?php echo $easypieJS; ?>"></script>
     <script src="<?php echo $bootstrapJS; ?>"></script>
     <script src="<?php echo $template; ?>/js/functions.js"></script>
     <script src="<?php echo $template; ?>/js/ui.js"></script>
-    
     <title><?php echo $this->pageTitle; ?></title>
-    
     <link rel="shortcut icon" href="<?php echo $template; ?>/images/logo.gif">
     <link href="<?php echo $bootstrapCss; ?>" rel="stylesheet">
     <link href="<?php echo $template; ?>/stylesheet/css/theme.css" rel="stylesheet">
     <link href="<?php echo $template; ?>/stylesheet/css/theme-extended.css" rel="stylesheet">
     <link href="<?php echo $template; ?>/stylesheet/css/loadmeter.css" rel="stylesheet">
-
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-
   </head>
   <body>
     <div class="modal fade" id="confirm-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -63,7 +71,6 @@ $bootstrapJS = Yii::app()->assetManager->publish(
             </div>
         </div>
     </div>  
-    
     <div class="navbar navbar-inverse navbar-static-top"  role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
@@ -175,7 +182,6 @@ $bootstrapJS = Yii::app()->assetManager->publish(
                         </div>
                     </div>
                     <?php echo $content; ?>
-                    
                 </div>
             </div>
         </div>

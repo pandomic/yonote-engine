@@ -1,3 +1,17 @@
+<?php
+/**
+ * Modules manager template file.
+ * Index template.
+ * 
+ * $this - current controller.
+ * $models - array of Module models.
+ *
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @link http://yonote.org
+ * @copyright 2014 Vlad Gramuzov
+ * @license http://yonote.org/license.html
+ */
+?>
 <?php if (Yii::app()->user->hasFlash('modulesSuccess')): ?>
     <div class="row">
         <div class="col-md-12">
@@ -8,7 +22,6 @@
         </div>
     </div>
 <?php endif; ?>
-
 <?php if (Yii::app()->user->hasFlash('modulesWarning')): ?>
     <div class="row">
         <div class="col-md-12">
@@ -19,7 +32,6 @@
         </div>
     </div>
 <?php endif; ?>
-
 <div class="row">
     <div class="col-md-2">
        <div class="list-group">
@@ -38,7 +50,6 @@
                     'role' => 'form',
                     'class' => 'form-inline'
                 )); ?>
-
                     <div class="input-group">
                         <label class="sr-only" for="searchInput"><?php echo Yii::t('system','app.search'); ?></label>
                         <input type="text" class="form-control" name="search" value="<?php echo Yii::app()->session['modulesSearch']; ?>" id="searchInput" placeholder="<?php echo Yii::t('modules','placeholder.modules.search'); ?>">
@@ -46,12 +57,9 @@
                             <button class="btn btn-default" type="submit"><?php echo Yii::t('system','app.search'); ?></button>
                         </span>
                     </div>
-                    
                 <?php echo CHtml::endForm(); ?>
             </div>
-                
                 <?php if (count($models) > 0): ?>
-
                     <table class="table table-striped table-hover table-middle table-responsive table-separated">
                         <thead>
                             <tr>
@@ -62,9 +70,7 @@
                             </tr>
                         </thead>
                         <tbody>
-
                             <?php foreach ($models as $model): ?>
-
                                 <tr>
                                     <td>
                                         <div class="dropdown">
@@ -95,12 +101,9 @@
                                         <a href="<?php echo $this->createUrl('down',array('id' => $model->name)); ?>"><span class="glyphicon glyphicon-circle-arrow-down"></span></a>
                                     </td>
                                 </tr>
-
                             <?php endforeach; ?>
-
                         </tbody>
                     </table>
-
                 <?php else: ?>
                     <div class="panel-body">
                         <div class="alert alert-warning">
@@ -108,8 +111,6 @@
                         </div>
                     </div>
                 <?php endif; ?>
-
         </div>
     </div>
-    
 </div>

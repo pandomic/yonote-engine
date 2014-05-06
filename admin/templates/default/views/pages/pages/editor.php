@@ -1,11 +1,29 @@
 <?php
+/**
+ * Pages module template file.
+ * Pages controller file.
+ * Page editor template.
+ * 
+ * $this - current controller.
+ * $model - Page model.
+ *
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @link http://yonote.org
+ * @copyright 2014 Vlad Gramuzov
+ * @license http://yonote.org/license.html
+ */
+
+// tinymce asset.
 $tinymce = Yii::app()->assetManager->publish(
     Yii::getPathOfAlias('application.vendors.tinymce')
 );
+// System tinymce path.
 $tinymcePath = Yii::app()->assetManager->getPublishedPath(
     Yii::getPathOfAlias('application.vendors.tinymce')
 );
+// Load tinymce languages.
 $tinymceLangs = scandir($tinymcePath.'/langs');
+// Select tinymce language.
 $tinymceLanguage = (in_array(Yii::app()->getLanguage().'.js',$tinymceLangs)) ? Yii::app()->getLanguage() : '';
 ?>
 
@@ -19,7 +37,6 @@ tinymce.init({
     ]
  });
 </script>
-
 <?php if (Yii::app()->user->hasFlash('pagesSuccess')): ?>
     <div class="row">
         <div class="col-md-12">
@@ -30,16 +47,13 @@ tinymce.init({
         </div>
     </div>
 <?php endif; ?>
-
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
-            
             <?php echo CHtml::form(null,'POST',array(
                 'role' => 'form',
                 'id' => 'pagesForm'
             )); ?>
-            
                 <div class="panel-body"> 
                     <div class="form-group <?php if ($model->hasErrors('alias')) echo('has-error'); ?>">
                         <?php echo CHtml::activeLabel($model,'alias',array(
@@ -55,7 +69,6 @@ tinymce.init({
                             'class' => 'help-block text-danger'
                         )); ?>
                     </div>
-
                     <div class="form-group <?php if ($model->hasErrors('title')) echo('has-error'); ?>">
                         <?php echo CHtml::activeLabel($model,'title',array(
                             'for' => 'pageTitle',
@@ -70,7 +83,6 @@ tinymce.init({
                             'class' => 'help-block text-danger'
                         )); ?>
                     </div>
-
                     <div class="form-group <?php if ($model->hasErrors('language')) echo('has-error'); ?>">
                         <?php echo CHtml::activeLabel($model,'language',array(
                             'for' => 'pageLanguage',
@@ -84,7 +96,6 @@ tinymce.init({
                             'class' => 'help-block text-danger'
                         )); ?>
                     </div>
-
                     <div class="form-group <?php if ($model->hasErrors('content')) echo('has-error'); ?>">
                         <?php echo CHtml::activeLabel($model,'content',array(
                             'for' => 'pageContent',
@@ -104,7 +115,6 @@ tinymce.init({
                     <button type="submit" class="btn btn-primary"><?php echo Yii::t('system','app.save'); ?></button>
                     <button type="reset" class="btn btn-default"><?php echo Yii::t('system','app.reset'); ?></button>
                 </div>
-            
             <?php echo CHtml::endForm(); ?>
         </div>
     </div>

@@ -1,6 +1,7 @@
 <?php
 /**
  * Timezones list, based on official PHP timezones documentation.
+ * Language: EN.
  *
  * Copyright © 2001-2014 The PHP Group. All rights reserved.
  * Distributed under the Terms of Use in http://www.php.net/copyright.php.

@@ -1,11 +1,24 @@
-<?php Yii::import('admin.modules.loadmeter.LoadMeterModule'); ?>
+<?php
+/**
+ * Loadmeter widget template.
+ * 
+ * $memory - memory used.
+ * $disk - disk space used.
+ * $average - average system loading.
+ *
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @link http://yonote.org
+ * @copyright 2014 Vlad Gramuzov
+ * @license http://yonote.org/license.html
+ */
 
+// Import main module file.
+Yii::import('admin.modules.loadmeter.LoadMeterModule');
+?>
 <div class="cpu-chart hidden-sm hidden-xs" data-percent="<?php echo $average; ?>">
     <div class="cpu-chart-percent text-muted"><?php echo $average; ?></div>
     <div class="text-center"><?php echo Yii::t('LoadMeterModule.widget','label.load.average'); ?></div>
 </div>
-
-
 <div class="loading-chart hidden-sm hidden-xs">
     <div class="clearfix">
         <div class="progress pull-left">
@@ -17,7 +30,6 @@
     </div>
     <div class="text-center"><?php echo Yii::t('LoadMeterModule.widget','label.load.memory'); ?></div>
 </div>
-
 <div class="loading-chart hidden-sm hidden-xs">
     <div class="clearfix">
         <div class="progress pull-left">
@@ -29,7 +41,6 @@
     </div>
     <div class="text-center"><?php echo Yii::t('LoadMeterModule.widget','label.load.disk'); ?></div>
 </div>
-
 <script>
 $(function() {
     $('.cpu-chart').easyPieChart({

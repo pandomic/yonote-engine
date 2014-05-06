@@ -1,3 +1,15 @@
+<?php
+/**
+ * Modules list widget.
+ * 
+ * $models - array of enabled modules models.
+ *
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @link http://yonote.org
+ * @copyright 2014 Vlad Gramuzov
+ * @license http://yonote.org/license.html
+ */
+?>
 <?php if (count($models) > 0): ?>
     <div class="row">
         <?php foreach ($models as $model): ?>

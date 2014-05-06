@@ -17,6 +17,50 @@
 class RolesController extends CApplicationController
 {
     /**
+     * Controller filters.
+     * @return array filters.
+     */
+    public function filters()
+    {
+        return array(
+            'accessControl'
+        );
+    }
+    
+    /**
+     * Controller access rules.
+     * @return array access rules.
+     */
+    public function accessRules()
+    {
+        return array(
+            array(
+                'allow',
+                'actions' => array('index'),
+                'roles' => array('admin.roles.index')
+            ),
+            array(
+                'allow',
+                'actions' => array('add'),
+                'roles' => array('admin.roles.add')
+            ),
+            array(
+                'allow',
+                'actions' => array('edit'),
+                'roles' => array('admin.roles.edit')
+            ),
+            array(
+                'allow',
+                'actions' => array('remove'),
+                'roles' => array('admin.roles.remove')
+            ),
+            array(
+                'deny',
+                'users' => array('*')
+            )
+        );
+    }
+    /**
      * Remove selected auth items.
      * @return void.
      * @throws CHttpException if request type is not POST.

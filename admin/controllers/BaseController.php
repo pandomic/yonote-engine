@@ -58,24 +58,16 @@ class BaseController extends CApplicationController
      */
     public function actionLogin()
     {
+        $this->pageTitle = Yii::t('login','page.login.title');
         if (Yii::app()->user->checkAccess('admin.index'))
             $this->redirect(Yii::app()->user->getReturnUrl());
-        
-        $model = new LoginForm('login');
-        if(isset($_POST['ajax']) && $_POST['ajax'] == 'login-form')
+        $model = new LoginForm();
+        if(isset($_POST['LoginForm']))
         {
-            echo CActiveForm::validate($model);
-            Yii::app()->end();
-        }
-        // collect user input data
-        if(isset($_POST['login']))
-        {
-            $model->attributes = $_POST['login'];
+            $model->attributes = $_POST['LoginForm'];
             if($model->validate() && $model->login())
                 $this->redirect(Yii::app()->user->returnUrl);
         }
-
-        // display the login form
         $this->renderPartial('login',array('model' => $model));
     }
     
@@ -96,6 +88,7 @@ class BaseController extends CApplicationController
      */
     public function actionIndex()
     {
+        $this->pageTitle = Yii::t('system','yonote.engine');
         $this->render('index');
     }
 }

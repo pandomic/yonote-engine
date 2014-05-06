@@ -1,4 +1,5 @@
 <?php
+define('YII_DEBUG',true);
 require_once('../framework/yii.php');
 // Create new application instance
 Yii::createWebApplication(array(

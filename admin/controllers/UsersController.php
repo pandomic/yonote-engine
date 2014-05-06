@@ -1,4 +1,21 @@
 <?php
+/**
+ * UsersController class file.
+ *
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @link http://yonote.org
+ * @copyright 2014 Vlad Gramuzov
+ * @license http://yonote.org/license.html
+ */
+
+/**
+ * Users manager controller, used in administrative panel.
+ * Displays and allows to edit users and their profiles, also as common
+ * users settings.
+ * 
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @since 1.0
+ */
 class UsersController extends CApplicationController
 {
     
@@ -7,6 +24,65 @@ class UsersController extends CApplicationController
     private $_usersListSort;
     private $_userEditModel = null;
     
+    /**
+     * Controller filters.
+     * @return array filters.
+     */
+    public function filters()
+    {
+        return array(
+            'accessControl'
+        );
+    }
+    
+    /**
+     * Controller access rules.
+     * @return array access rules.
+     */
+    public function accessRules()
+    {
+        return array(
+            array(
+                'allow',
+                'actions' => array('index'),
+                'roles' => array('admin.users.index')
+            ),
+            array(
+                'allow',
+                'actions' => array('settings'),
+                'roles' => array('admin.users.settings')
+            ),
+            array(
+                'allow',
+                'actions' => array('profile'),
+                'roles' => array('admin.users.profile')
+            ),
+            array(
+                'allow',
+                'actions' => array('edit'),
+                'roles' => array('admin.users.edit')
+            ),
+            array(
+                'allow',
+                'actions' => array('remove'),
+                'roles' => array('admin.users.remove')
+            ),
+            array(
+                'allow',
+                'actions' => array('add'),
+                'roles' => array('admin.users.add')
+            ),
+            array(
+                'deny',
+                'users' => array('*')
+            )
+        );
+    }
+    
+    /**
+     * Show and edit users settings.
+     * @return void.
+     */
     public function actionSettings()
     {
         $this->pageTitle = Yii::t('users','page.settings.title');
@@ -34,8 +110,12 @@ class UsersController extends CApplicationController
         ));
     }
 
-
-    public function actionProfile()
+    /**
+     * Edit user profile.
+     * @throws CHttpException if profile not found.
+     * @return void.
+     */
+    public function actionProfile($id)
     {
         $this->pageTitle = Yii::t('users','page.profile.title');
         
@@ -47,9 +127,7 @@ class UsersController extends CApplicationController
             $this->createUrl($this->route)
         );
         
-        if (!isset($_GET['id']))
-            throw new CHttpException(400,Yii::t('system','error.400.description'));
-        $model = Profile::model()->findByPk($_GET['id']);
+        $model = Profile::model()->findByPk($id);
         if ($model === null)
             throw new CHttpException(404,Yii::t('system','error.404.description'));
         
@@ -70,8 +148,13 @@ class UsersController extends CApplicationController
             'model' => $model
         ));
     }
-
-    public function actionEdit()
+    
+    /**
+     * Edit user info.
+     * @param string $id user id to edit.
+     * @return void.
+     */
+    public function actionEdit($id)
     {
         $this->pageTitle = Yii::t('users','page.edituser.title');
         
@@ -83,7 +166,7 @@ class UsersController extends CApplicationController
             $this->createUrl($this->route)
         );
         
-        $model = $this->loadUserEditModel();
+        $model = $this->loadUserEditModel($id);
         $model->setScenario('edit');
         $model->setAttributes(array('password' => null));
         
@@ -108,6 +191,11 @@ class UsersController extends CApplicationController
         
     }
     
+    /**
+     * Remove user.
+     * @return void.
+     * @throws CHttpException if invalid request given.
+     */
     public function actionRemove()
     {
         if (Yii::app()->request->isPostRequest)
@@ -124,7 +212,11 @@ class UsersController extends CApplicationController
         else
             throw new CHttpException(400,Yii::t('system','error.400.description'));
     }
-
+    
+    /**
+     * Add new user.
+     * @return void.
+     */
     public function actionAdd()
     {
         
@@ -159,7 +251,11 @@ class UsersController extends CApplicationController
             'authTree' => AuthItem::model()->friendlyTree()
         ));
     }
-
+    
+    /**
+     * Display users list.
+     * @return void.
+     */
     public function actionIndex()
     {
         $this->pageTitle = Yii::t('users','page.users.title');
@@ -175,22 +271,27 @@ class UsersController extends CApplicationController
         ));
     }
     
-    public function loadUserEditModel()
+    /**
+     * Load user model for edit.
+     * @param string $id user id.
+     * @return User user model.
+     * @throws CHttpException if model not found.
+     */
+    public function loadUserEditModel($id)
     {
         if ($this->_userEditModel === null)
         {
-            if (isset($_GET['id']))
-            {
-                $this->_userEditModel = User::model()->with('assignments')->findByPk($_GET['id']);
-                if ($this->_userEditModel === null)
-                    throw new CHttpException(404,Yii::t('system','error.404.description'));
-            }
-            else
-                throw new CHttpException(400,Yii::t('system','error.400.description'));
+            $this->_userEditModel = User::model()->with('assignments')->findByPk($id);
+            if ($this->_userEditModel === null)
+                throw new CHttpException(404,Yii::t('system','error.404.description'));
         }
         return $this->_userEditModel;
     }
-
+    
+    /**
+     * Load users according to the given request params.
+     * @return array of User models.
+     */
     public function loadUsersListModel()
     {
         if ($this->_usersListModel === null)

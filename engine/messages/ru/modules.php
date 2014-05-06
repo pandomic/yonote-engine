@@ -1,4 +1,13 @@
 <?php
+/**
+ * Modules manager messages translations.
+ * Language: EN.
+ *
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @link http://yonote.org
+ * @copyright 2014 Vlad Gramuzov
+ * @license http://yonote.org/licence.html
+ */
 return array(
     'model.module.file' => 'File to upload',
     'model.module.name' => 'Name',

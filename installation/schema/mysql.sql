@@ -8,7 +8,7 @@
 --
 
 --
--- Drop tables, if exists
+-- Drop tables, if exist
 --
 
 drop table if exists `{{auth_item}}`;

@@ -1,3 +1,17 @@
+<?php
+/**
+ * Modules manager template file.
+ * Add module template.
+ * 
+ * $this - current controller.
+ * $model - Module model.
+ *
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @link http://yonote.org
+ * @copyright 2014 Vlad Gramuzov
+ * @license http://yonote.org/license.html
+ */
+?>
 <div class="row">
     <div class="col-md-2">
        <div class="list-group">
@@ -7,13 +21,11 @@
     </div>
     <div class="col-md-10">
         <div class="panel panel-default">
-            
             <?php echo CHtml::form('','POST',array(
                 'role' => 'form',
                 'class' => 'form-horizontal',
                 'enctype' => 'multipart/form-data'
             )); ?>
-            
                 <div class="panel-body"> 
 
                     <div class="form-group <?php if ($model->hasErrors('file')) echo('has-error'); ?>">
@@ -29,18 +41,14 @@
                             <?php echo CHtml::error($model,'file',array(
                                 'class' => 'help-block text-danger'
                             )); ?>
-
                         </div>
                     </div>
-
                 </div>
                 <div class="panel-footer">
                     <button type="submit" id="uploadSubmit" class="btn btn-primary"><?php echo Yii::t('system','app.submit'); ?></button>
                     <button type="reset" class="btn btn-default"><?php echo Yii::t('system','app.reset'); ?></button>
                 </div>
-            
             <?php Chtml::endForm(); ?>
-            
         </div>
     </div>
 </div>
