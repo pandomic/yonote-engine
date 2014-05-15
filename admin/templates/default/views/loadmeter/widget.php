@@ -1,10 +1,6 @@
 <?php
 /**
  * Loadmeter widget template.
- * 
- * $memory - memory used.
- * $disk - disk space used.
- * $average - average system loading.
  *
  * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
  * @link http://yonote.org

@@ -1,3 +1,14 @@
+<?php
+/**
+ * PM manager template file.
+ * Read message template.
+ *
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @link http://yonote.org
+ * @copyright 2014 Vlad Gramuzov
+ * @license http://yonote.org/license.html
+ */
+?>
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">

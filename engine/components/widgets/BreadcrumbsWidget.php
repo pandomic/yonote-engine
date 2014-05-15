@@ -19,10 +19,7 @@ class BreadcrumbsWidget extends CWidget
     /**
      * @var array widget params. 
      */
-    public $params = array(
-        'route',
-        'links' => array()
-    );
+    public $links = array();
     
     /**
      * Show widget.
@@ -30,7 +27,7 @@ class BreadcrumbsWidget extends CWidget
      */
     public function init()
     {
-        $this->render('breadcrumbs',$this->params);
+        $this->render('widget',array('links' => $this->links));
     }
 }
 ?>

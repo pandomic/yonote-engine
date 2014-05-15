@@ -1,4 +1,13 @@
 <?php
+/**
+ * Posts module general messages translations.
+ * Language: EN.
+ *
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @link http://yonote.org
+ * @copyright 2014 Vlad Gramuzov
+ * @license http://yonote.org/licence.html
+ */
 return array(
     'model.post.alias' => 'Post alias',
     'model.post.title' => 'Post title',

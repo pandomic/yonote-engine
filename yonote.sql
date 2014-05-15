@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Май 01 2014 г., 18:19
+-- Время создания: Май 15 2014 г., 22:36
 -- Версия сервера: 5.5.37-log
 -- Версия PHP: 5.3.28
 
@@ -70,12 +70,35 @@ INSERT INTO `yonote_auth_item` (`name`, `type`, `description`, `bizrule`, `data`
 ('admin.modules.remove', 0, 'Allow modules removing', NULL, 'N;'),
 ('admin.modules.status', 0, 'Toggle module status', NULL, 'N;'),
 ('admin.modules.up', 0, 'Allow move modules up', NULL, 'N;'),
+('admin.pages.add', 0, 'Allow add pages', NULL, 'N;'),
+('admin.pages.edit', 0, 'Allow edit pages', NULL, 'N;'),
+('admin.pages.index', 0, 'Access to the Pages module index', NULL, 'N;'),
+('admin.pages.remove', 0, 'Allow remove pages', NULL, 'N;'),
+('admin.pages.settings', 0, 'Allow access to the settings of the pages module', NULL, 'N;'),
 ('admin.pm.index', 0, 'PM manager access', NULL, 'N;'),
 ('admin.pm.new', 0, 'Allow send new pm messages', NULL, 'N;'),
 ('admin.pm.outbox', 0, 'PM outbox access', NULL, 'N;'),
 ('admin.pm.read', 0, 'Allow pm read', NULL, 'N;'),
 ('admin.pm.remove', 0, 'Allow pm remove', NULL, 'N;'),
 ('admin.pm.settings', 0, 'PM settings access', NULL, 'N;'),
+('admin.posts.add', 0, 'Allow add new posts', NULL, NULL),
+('admin.posts.edit', 0, 'Allow edit posts', NULL, 'N;'),
+('admin.posts.hashtags.index', 0, 'Allow access to hashtags manager of posts module', NULL, 'N;'),
+('admin.posts.hashtags.remove', 0, 'Allow remove hashtags of posts module', NULL, 'N;'),
+('admin.posts.index', 0, 'Allow access to the Posts module', NULL, 'N;'),
+('admin.posts.remove', 0, 'Allow remove posts', NULL, 'N;'),
+('admin.posts.settings', 0, 'Allow access to the Posts module settings', NULL, 'N;'),
+('admin.roles.add', 0, 'Allow add auth items', NULL, 'N;'),
+('admin.roles.edit', 0, 'Allow edit auth items', NULL, 'N;'),
+('admin.roles.index', 0, 'Roles manager access', NULL, 'N;'),
+('admin.roles.remove', 0, 'Allow remove auth items', NULL, 'N;'),
+('admin.settings.index', 0, 'Allow access to system settings management', NULL, 'N;'),
+('admin.users.add', 0, 'Allow to add new users', NULL, 'N;'),
+('admin.users.edit', 0, 'Allow edit user info', NULL, 'N;'),
+('admin.users.index', 0, 'Allow users manager access', NULL, 'N;'),
+('admin.users.profile', 0, 'Allow edit user profile', NULL, 'N;'),
+('admin.users.remove', 0, 'Allow remove users', NULL, 'N;'),
+('admin.users.settings', 0, 'Users settings access', NULL, 'N;'),
 ('administrator', 2, 'Administrator', '', 'N;'),
 ('authenticated', 2, 'Authenticated', 'return !Yii::app()->user->getIsGuest();', 'N;'),
 ('guest', 2, 'Guest', 'return Yii::app()->user->getIsGuest();', 'N;');
@@ -102,15 +125,39 @@ INSERT INTO `yonote_auth_item_child` (`parent`, `child`) VALUES
 ('administrator', 'admin.modules.add'),
 ('administrator', 'admin.modules.down'),
 ('administrator', 'admin.modules.index'),
+('administrator', 'admin.modules.info'),
 ('administrator', 'admin.modules.remove'),
 ('administrator', 'admin.modules.status'),
 ('administrator', 'admin.modules.up'),
+('administrator', 'admin.pages.add'),
+('administrator', 'admin.pages.edit'),
+('administrator', 'admin.pages.index'),
+('administrator', 'admin.pages.remove'),
+('administrator', 'admin.pages.settings'),
 ('administrator', 'admin.pm.index'),
 ('administrator', 'admin.pm.new'),
 ('administrator', 'admin.pm.outbox'),
 ('administrator', 'admin.pm.read'),
 ('administrator', 'admin.pm.remove'),
-('administrator', 'admin.pm.settings');
+('administrator', 'admin.pm.settings'),
+('administrator', 'admin.posts.add'),
+('administrator', 'admin.posts.edit'),
+('administrator', 'admin.posts.hashtags.index'),
+('administrator', 'admin.posts.hashtags.remove'),
+('administrator', 'admin.posts.index'),
+('administrator', 'admin.posts.remove'),
+('administrator', 'admin.posts.settings'),
+('administrator', 'admin.roles.add'),
+('administrator', 'admin.roles.edit'),
+('administrator', 'admin.roles.index'),
+('administrator', 'admin.roles.remove'),
+('administrator', 'admin.settings.index'),
+('administrator', 'admin.users.add'),
+('administrator', 'admin.users.edit'),
+('administrator', 'admin.users.index'),
+('administrator', 'admin.users.profile'),
+('administrator', 'admin.users.remove'),
+('administrator', 'admin.users.settings');
 
 -- --------------------------------------------------------
 
@@ -247,15 +294,16 @@ CREATE TABLE IF NOT EXISTS `yonote_pm` (
   PRIMARY KEY (`id`),
   KEY `ownerid` (`ownerid`),
   KEY `senderid` (`senderid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=3 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
 
 --
 -- Дамп данных таблицы `yonote_pm`
 --
 
 INSERT INTO `yonote_pm` (`id`, `title`, `message`, `ownerid`, `senderid`, `inbox`, `outbox`, `read`, `updatetime`) VALUES
-(1, 'Hello poop', '<p>sdfsdf</p>', 'admin', 'admin', 1, 0, 0, 1398889008),
-(2, 'Hello poop', '<p>sdfsdf</p>', 'admin', 'admin', 0, 1, 0, 1398889008);
+(1, 'Hello poop', '<p>sdfsdf</p>', 'admin', 'admin', 1, 0, 1, 1398889008),
+(2, 'Hello poop', '<p>sdfsdf</p>', 'admin', 'admin', 0, 1, 0, 1398889008),
+(4, 'RE: Hello poop', '<blockquote>\r\n<p>sdfsdf</p>\r\n</blockquote>\r\n<p>fdsfsdfsdf</p>', 'admin', 'admin', 0, 1, 0, 1400087409);
 
 -- --------------------------------------------------------
 
@@ -302,11 +350,11 @@ CREATE TABLE IF NOT EXISTS `yonote_setting` (
 --
 
 INSERT INTO `yonote_setting` (`category`, `name`, `value`, `updatetime`, `description`) VALUES
-('pages', 'admin.pages.page.size', '50', 1398703757, 'Posts page size (administrative panel)'),
-('pages', 'alias.length.max', '50', 1398703757, 'Page alias max length'),
-('pages', 'alias.length.min', '2', 1398703757, 'Page alias min length'),
-('pages', 'title.length.max', '50', 1398720709, 'Page title max length'),
-('pages', 'title.length.min', '1', 1398720709, 'Page title min length'),
+('pages', 'admin.pages.page.size', '50', 1398703757, 'description.admin.pages.page.size'),
+('pages', 'alias.length.max', '50', 1398703757, 'description.alias.length.max'),
+('pages', 'alias.length.min', '2', 1398703757, 'description.alias.length.min'),
+('pages', 'title.length.max', '50', 1398720709, 'description.title.length.min'),
+('pages', 'title.length.min', '1', 1398720709, 'description.title.length.max'),
 ('pm', 'message.length.max', '3000', 1398720810, 'description.message.length.max'),
 ('pm', 'message.length.min', '1', 1398720810, 'description.message.length.min'),
 ('pm', 'title.length.max', '50', 1398720810, 'description.title.length.max'),
@@ -327,15 +375,17 @@ INSERT INTO `yonote_setting` (`category`, `name`, `value`, `updatetime`, `descri
 ('posts', 'thumbnail.width.min', '300', 1398696710, 'description.thumbnail.width.min'),
 ('posts', 'title.length.max', '80', 6556598, 'description.title.length.max'),
 ('posts', 'title.length.min', '2', 54548, 'description.title.length.min'),
-('system', 'admin.language', 'ru', 1398535054, 'description.admin.language'),
-('system', 'admin.template', 'default', 1398535054, 'description.admin.template'),
-('system', 'admin.time.zone', 'Europe/Kaliningrad', 1398535054, 'description.admin.time.zone'),
-('system', 'login.duration', '604800', 1398535054, 'description.login.duration'),
-('system', 'module.size.max', '5242880', 1125699855, 'description.module.size.max'),
-('system', 'url.format', 'path', 1398535054, 'description.url.format'),
-('system', 'website.language', 'ru', 1398535054, 'description.website.language'),
-('system', 'website.template', 'default', 1398535054, 'description.website.template'),
-('system', 'website.time.zone', 'Europe/Kaliningrad', 1398535054, 'description.website.time.zone'),
+('system', 'admin.language', 'ru', 1400103009, 'description.admin.language'),
+('system', 'admin.template', 'default', 1400103009, 'description.admin.template'),
+('system', 'admin.time.zone', 'Europe/Minsk', 1400103009, 'description.admin.time.zone'),
+('system', 'languages', 'ru,en', 1400103009, 'description.languages'),
+('system', 'login.duration', '604800', 1400103009, 'description.login.duration'),
+('system', 'module.size.max', '5242880', 1400103009, 'description.module.size.max'),
+('system', 'url.format', 'path', 1400103009, 'description.url.format'),
+('system', 'url.redirectondefault', '1', 1400103009, 'description.url.redirectondefault'),
+('system', 'website.language', 'ru', 1400103009, 'description.website.language'),
+('system', 'website.template', 'rafineza', 1400103009, 'description.website.template'),
+('system', 'website.time.zone', 'Europe/Minsk', 1400103009, 'description.website.time.zone'),
 ('users', 'name.length.max', '20', 1398530025, 'description.name.length.max'),
 ('users', 'name.length.min', '2', 1398530025, 'description.name.length.min'),
 ('users', 'password.length.max', '50', 1398530025, 'description.password.length.max'),
@@ -380,7 +430,7 @@ CREATE TABLE IF NOT EXISTS `yonote_user` (
 --
 
 INSERT INTO `yonote_user` (`name`, `password`, `token`, `email`, `activated`, `verified`, `subscribed`, `updatetime`) VALUES
-('admin', '$2a$13$dKmIZvU4j0ZBuJ/NNTITJ.fZc1i4Qlyng90zbccfemEDJ1iOujSRO', '$2a$13$TIeb/C2u0Um3A4BQCOv.aa', 'email@email.com', 0, 0, 0, NULL),
+('admin', '$2a$13$dKmIZvU4j0ZBuJ/NNTITJ.fZc1i4Qlyng90zbccfemEDJ1iOujSRO', '$2a$13$.huqFGrseEBKUewNWO.GCX', 'email@email.com', 0, 0, 0, NULL),
 ('alonex', '', NULL, 'fsd@dgh.df', 1, 1, 1, 1398341536),
 ('newuser', '$2a$13$Xj25wAX9RwRO7JUK/rCsze7aLAfmXUuE5qKu/Vz21ryp3Y9HBcvme', NULL, 'fsd@dgh.df', 1, 1, 0, NULL),
 ('nikita', '$2a$13$J4Gk.kkH9YAGwp8RNkaD5.DKtTF.Bz7M0jJG2ha70GreKCwmlUSnG', NULL, 'email@mail.com', 0, 0, 0, NULL);

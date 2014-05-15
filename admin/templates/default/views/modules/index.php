@@ -2,9 +2,6 @@
 /**
  * Modules manager template file.
  * Index template.
- * 
- * $this - current controller.
- * $models - array of Module models.
  *
  * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
  * @link http://yonote.org

@@ -1,4 +1,13 @@
 <?php
+/**
+ * Posts module hashtags messages translations.
+ * Language: EN.
+ *
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @link http://yonote.org
+ * @copyright 2014 Vlad Gramuzov
+ * @license http://yonote.org/licence.html
+ */
 return array(
     'model.hashtag.name' => 'Name',
     'placeholder.hashtags.search' => 'Hashtag name',

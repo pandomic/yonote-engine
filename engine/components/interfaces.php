@@ -29,7 +29,7 @@ interface IApplicationUser
  * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
  * @since 1.0
  */
-interface IHeaders
+interface IApplicationHeaders
 {
     /**
      * Headers constants.
@@ -61,7 +61,7 @@ interface IHeaders
      * @param int $flag content-type flag.
      * @param int $lastMod last modified timestamp.
      */
-    public function mime($flag,$lastMod );
+    public function mime($flag,$lastMod);
     /**
      * Set response status.
      * @param int $code response code.

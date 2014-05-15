@@ -1,3 +1,16 @@
+<?php
+/**
+ * Posts module template file.
+ * Hashtags manager template file.
+ * Hashtags list template.
+ *
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @link http://yonote.org
+ * @copyright 2014 Vlad Gramuzov
+ * @license http://yonote.org/license.html
+ */
+?>
+
 <?php if (Yii::app()->user->hasFlash('hashtagsSuccess')): ?>
     <div class="row">
         <div class="col-md-12">

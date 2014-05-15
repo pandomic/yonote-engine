@@ -86,12 +86,9 @@ class UsersController extends CApplicationController
     public function actionSettings()
     {
         $this->pageTitle = Yii::t('users','page.settings.title');
-        
-        $this->addBreadcrumb(
-            Yii::t('users','page.settings.title'),
-            $this->createUrl($this->route)
-        );
-        
+        $this->setPathsQueue(array(
+            Yii::t('users','page.settings.title') => Yii::app()->createUrl($this->getRoute())
+        ));        
         $model = new UsersSettings();
         if (isset($_POST['UsersSettings']))
         {
@@ -118,15 +115,10 @@ class UsersController extends CApplicationController
     public function actionProfile($id)
     {
         $this->pageTitle = Yii::t('users','page.profile.title');
-        
-        $this->addBreadcrumb(
-            Yii::t('users','page.users.title'),
-            Yii::app()->createUrl('users/index')
-        )->addBreadcrumb(
-            Yii::t('users','page.profile.title'),
-            $this->createUrl($this->route)
-        );
-        
+        $this->setPathsQueue(array(
+            Yii::t('users','page.users.title') => Yii::app()->createUrl('users/index'),
+            Yii::t('users','page.profile.title') => Yii::app()->createUrl($this->getRoute())
+        ));
         $model = Profile::model()->findByPk($id);
         if ($model === null)
             throw new CHttpException(404,Yii::t('system','error.404.description'));
@@ -157,15 +149,10 @@ class UsersController extends CApplicationController
     public function actionEdit($id)
     {
         $this->pageTitle = Yii::t('users','page.edituser.title');
-        
-        $this->addBreadcrumb(
-            Yii::t('users','page.users.title'),
-            Yii::app()->createUrl('users/index')
-        )->addBreadcrumb(
-            Yii::t('users','page.edituser.title'),
-            $this->createUrl($this->route)
-        );
-        
+        $this->setPathsQueue(array(
+            Yii::t('users','page.users.title') => Yii::app()->createUrl('users/index'),
+            Yii::t('users','page.edituser.title') => Yii::app()->createUrl($this->getRoute())
+        ));
         $model = $this->loadUserEditModel($id);
         $model->setScenario('edit');
         $model->setAttributes(array('password' => null));
@@ -221,15 +208,10 @@ class UsersController extends CApplicationController
     {
         
         $this->pageTitle = Yii::t('users','page.adduser.title');
-        
-        $this->addBreadcrumb(
-            Yii::t('users','page.users.title'),
-            Yii::app()->createUrl('users/index')
-        )->addBreadcrumb(
-            Yii::t('users','page.adduser.title'),
-            $this->createUrl($this->route)
-        );
-        
+        $this->setPathsQueue(array(
+            Yii::t('users','page.users.title') => Yii::app()->createUrl('users/index'),
+            Yii::t('users','page.adduser.title') => Yii::app()->createUrl($this->getRoute())
+        ));
         $allAuthItems = array();
         $model = new User('add');
         
@@ -259,10 +241,9 @@ class UsersController extends CApplicationController
     public function actionIndex()
     {
         $this->pageTitle = Yii::t('users','page.users.title');
-        $this->addBreadcrumb(
-            Yii::t('users','page.users.title'),
-            Yii::app()->createUrl($this->route)
-        );
+        $this->setPathsQueue(array(
+            Yii::t('users','page.users.title') => Yii::app()->createUrl($this->getRoute())
+        ));
         $users = $this->loadUsersListModel();
         $this->render('index',array(
             'users' => $users,

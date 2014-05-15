@@ -92,12 +92,9 @@ class RolesController extends CApplicationController
     public function actionIndex()
     {
         $this->pageTitle = Yii::t('users','page.roles.title');
-        
-        $this->addBreadcrumb(
-            Yii::t('users','page.roles.title'),
-            Yii::app()->createUrl($this->getRoute())
-        );
-        
+        $this->setPathsQueue(array(
+            Yii::t('users','page.roles.title') => Yii::app()->createUrl($this->getRoute())
+        ));
         $criteria = new CDbCriteria();
         
         $sort = new CSort();
@@ -140,13 +137,10 @@ class RolesController extends CApplicationController
     public function actionAdd()
     {
         $this->pageTitle = Yii::t('users','page.addrole.title');
-        $this->addBreadcrumb(
-            Yii::t('users','page.roles.title'),
-            Yii::app()->createUrl('roles')
-        )->addBreadcrumb(
-            Yii::t('users','page.addrole.title'),
-            Yii::app()->createUrl($this->getRoute())
-        );
+        $this->setPathsQueue(array(
+            Yii::t('users','page.roles.title') => Yii::app()->createUrl('roles'),
+            Yii::t('users','page.addrole.title') => Yii::app()->createUrl($this->getRoute())
+        ));
         $model = new AuthItem('add');
         if (isset($_POST['AuthItem']))
         {
@@ -174,14 +168,10 @@ class RolesController extends CApplicationController
     public function actionEdit($id)
     {
         $this->pageTitle = Yii::t('users','page.editrole.title');
-        $this->addBreadcrumb(
-            Yii::t('users','page.roles.title'),
-            Yii::app()->createUrl('roles')
-        )->addBreadcrumb(
-            Yii::t('users','page.editrole.title'),
-            Yii::app()->createUrl($this->getRoute())
-        );
-        
+        $this->setPathsQueue(array(
+            Yii::t('users','page.roles.title') => Yii::app()->createUrl('roles'),
+            Yii::t('users','page.editrole.title') => Yii::app()->createUrl($this->getRoute())
+        ));        
         $model = AuthItem::model()->findByPk($id);
         
         if ($model === null)

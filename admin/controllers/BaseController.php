@@ -42,7 +42,7 @@ class BaseController extends CApplicationController
             ),
             array(
                 'allow',
-                'actions' => array('login','logout'),
+                'actions' => array('login','logout','error'),
                 'users' => array('*')
             ),
             array(
@@ -90,6 +90,12 @@ class BaseController extends CApplicationController
     {
         $this->pageTitle = Yii::t('system','yonote.engine');
         $this->render('index');
+    }
+    
+    public function actionError()
+    {
+        if($error = Yii::app()->errorHandler->error)
+            $this->renderPartial('error',array('error' => $error));
     }
 }
 ?>

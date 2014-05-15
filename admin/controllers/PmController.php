@@ -78,12 +78,9 @@ class PmController extends CApplicationController
     public function actionSettings()
     {
         $this->pageTitle = Yii::t('pm','page.settings.title');
-        
-        $this->addBreadcrumb(
-            Yii::t('pm','page.settings.title'),
-            $this->createUrl($this->getRoute())
-        );
-        
+        $this->setPathsQueue(array(
+            Yii::t('pm','page.settings.title') => $this->createUrl($this->getRoute())
+        ));
         $model = new PmSettings();
         if (isset($_POST['PmSettings']))
         {
@@ -109,10 +106,9 @@ class PmController extends CApplicationController
     public function actionIndex()
     {
         $this->pageTitle = Yii::t('pm','page.pm.title');
-        $this->addBreadcrumb(
-            Yii::t('pm','page.pm.title'),
-            Yii::app()->createUrl($this->getRoute())
-        );
+        $this->setPathsQueue(array(
+            Yii::t('pm','page.pm.title') => Yii::app()->createUrl($this->getRoute())
+        ));
         $pmList = $this->loadPmListModel();
         $this->render('index',array(
             'models' => $pmList->models,
@@ -128,13 +124,10 @@ class PmController extends CApplicationController
     public function actionRead($id)
     {
         $this->pageTitle = Yii::t('pm','page.read.title');
-        $this->addBreadcrumb(
-            Yii::t('pm','page.pm.title'),
-            Yii::app()->createUrl('pm/index')
-        )->addBreadcrumb(
-            Yii::t('pm','page.read.title'),
-            Yii::app()->createUrl($this->getRoute())
-        );
+        $this->setPathsQueue(array(
+            Yii::t('pm','page.pm.title') => Yii::app()->createUrl('pm/index'),
+            Yii::t('pm','page.read.title') => Yii::app()->createUrl($this->getRoute())
+        ));
         $model = Pm::model()->find('ownerid=:ownerid AND id=:id',array(
             ':ownerid' => Yii::app()->user->getId(),
             ':id' => (int) $id
@@ -177,13 +170,10 @@ class PmController extends CApplicationController
     public function actionOutbox()
     {
         $this->pageTitle = Yii::t('pm','page.outbox.title');
-        $this->addBreadcrumb(
-            Yii::t('pm','page.pm.title'),
-            Yii::app()->createUrl('pm/index')
-        )->addBreadcrumb(
-            Yii::t('pm','page.outbox.title'),
-            Yii::app()->createUrl($this->getRoute())
-        );
+        $this->setPathsQueue(array(
+            Yii::t('pm','page.pm.title') => Yii::app()->createUrl('pm/index'),
+            Yii::t('pm','page.outbox.title') => Yii::app()->createUrl($this->getRoute())
+        ));
         $pmList = $this->loadPmListModel(false);
         $this->render('outbox',array(
             'models' => $pmList->models,
@@ -199,13 +189,10 @@ class PmController extends CApplicationController
     public function actionNew()
     {
         $this->pageTitle = Yii::t('pm','page.add.title');
-        $this->addBreadcrumb(
-            Yii::t('pm','page.pm.title'),
-            Yii::app()->createUrl('pm/index')
-        )->addBreadcrumb(
-            Yii::t('pm','page.add.title'),
-            Yii::app()->createUrl($this->getRoute())
-        );
+        $this->setPathsQueue(array(
+            Yii::t('pm','page.pm.title') => Yii::app()->createUrl('pm/index'),
+            Yii::t('pm','page.add.title') => Yii::app()->createUrl($this->getRoute())
+        ));
         $model = new Pm('inbox');
         if (isset($_GET['replyid']))
         {

@@ -1,15 +1,49 @@
 <?php
+/**
+ * PagesSettings class file.
+ *
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @link http://yonote.org
+ * @copyright 2014 Vlad Gramuzov
+ * @license http://yonote.org/license.html
+ */
+
+/**
+ * This model class allows to manage general pages configuration.
+ * 
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @since 1.0
+ */
 class PagesSettings extends CFormModel
 {
+    /**
+     * @var int pages list page size (administrative panel).
+     */
     public $adminPagesPageSize;
+    /**
+     * @var int maximum alias length.
+     */
     public $aliasLengthMax;
+    /**
+     * @var int minumal alias length.
+     */
     public $aliasLengthMin;
+    /**
+     * @var int minimal title length.
+     */
     public $titleLengthMin;
+    /**
+     * @var int maximum title length.
+     */
     public $titleLengthMax;
     
     private $_settings = array();
     private $_relations = array();
-
+    
+    /**
+     * Validation rules.
+     * @return array validation rules.
+     */
     public function rules()
     {
         return array(
@@ -26,6 +60,10 @@ class PagesSettings extends CFormModel
         );
     }
     
+    /**
+     * Save pages configuration.
+     * @return boolean save is successfull.
+     */
     public function save()
     {
         if (!$this->validate())
@@ -45,6 +83,10 @@ class PagesSettings extends CFormModel
         return true;
     }
     
+    /**
+     * Attribute labels.
+     * @return array attribute labels.
+     */
     public function attributeLabels()
     {
         $labels = array();
@@ -52,7 +94,11 @@ class PagesSettings extends CFormModel
             $labels[$v] = Yii::t('PagesModule.settings',$this->_settings[$k]->description);
         return $labels;
     }
-
+    
+    /**
+     * Load settings parameters to show.
+     * @return void.
+     */
     public function init()
     {
         $this->_relations = array(

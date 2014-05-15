@@ -82,7 +82,7 @@ class ImageBehavior extends CBehavior
     public function setImageError($code)
     {
         $this->_error = $code;
-        return $this;
+        return $this->getOwner();
     }
     
     /**

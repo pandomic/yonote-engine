@@ -1,6 +1,17 @@
 <?php
-$unread = 0;
-$outbox = 0;
+/**
+ * PM manager template file.
+ * Inbox template.
+ *
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @link http://yonote.org
+ * @copyright 2014 Vlad Gramuzov
+ * @license http://yonote.org/license.html
+ */
+?>
+
+<?php
+$unread = 0; $outbox = 0;
 foreach ($models as $model)
 {
     if ((boolean) $model->inbox && (boolean) !$model->read)

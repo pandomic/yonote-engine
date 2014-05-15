@@ -47,6 +47,13 @@ return array(
     
     // Components settigns
     'components' => array(
+        // URL manager settings
+        'urlManager' => array(
+            'class' => 'CApplicationUrlManager',
+            'settingsComponentId' => 'settings',
+            'showScriptName' => false
+        ),
+        // Request settings
         'request' => array(
             'csrfTokenName' => CSRF_TOKEN,
             'enableCsrfValidation' => true,
@@ -59,7 +66,8 @@ return array(
         ),
         // Asset manager
         'assetManager' => array(
-            'basePath' => THIS_PATH.'/assets'
+            'basePath' => ASSETS_PATH,
+            'baseUrl' => ASSETS_PATH_URL
         ),
         // Settings
         'settings' => array(
@@ -72,7 +80,7 @@ return array(
         // Cache settings
         'cache' => array(
             'class' => 'CFileCache',
-            'cachePath' => ENGINE_PATH.'/cache'
+            'cachePath' => CACHE_PATH
         ),
         // Modules manager
         'mmanager' => array(
@@ -119,15 +127,19 @@ return array(
             'returnUrl' => array('base/index'),
             'dbComponentId' => 'db',
             'userTable' => '{{user}}'
+        ),
+        // Default error action
+        'errorHandler' => array(
+            'errorAction' => 'base/error'
         )
     ),
     
     // Application controllers path
-    'controllerPath' => THIS_PATH.'/controllers',
+    'controllerPath' => CONTROLLERS_PATH,
     // Engine modules path
     'modulePath' => MODULES_PATH,
     // Extensions path
-    'extensionPath' => ENGINE_PATH.'/extensions',
+    'extensionPath' => EXTENSIONS_PATH,
     // Default controller
     'defaultController' => 'base'
 );

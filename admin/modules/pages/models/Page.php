@@ -1,12 +1,42 @@
 <?php
+/**
+ * Page class file.
+ *
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @link http://yonote.org
+ * @copyright 2014 Vlad Gramuzov
+ * @license http://yonote.org/license.html
+ */
+
+/**
+ * Page model is used to manage single pages records.
+ * 
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @since 1.0
+ */
 class Page extends CActiveRecord
 {
-    
+    /**
+     * @var string page alias.
+     */
     public $alias;
+    /**
+     * @var string page title.
+     */
     public $title;
+    /**
+     * @var string page content.
+     */
     public $content;
+    /**
+     * @var string page language.
+     */
     public $language;
     
+    /**
+     * Attached behaviors.
+     * @return array behaviors.
+     */
     public function behaviors()
     {
         return array(
@@ -16,6 +46,10 @@ class Page extends CActiveRecord
         );
     }
     
+    /**
+     * Validation rules.
+     * @return array of rules.
+     */
     public function rules()
     {
         return array(
@@ -56,6 +90,10 @@ class Page extends CActiveRecord
         );
     }
     
+    /**
+     * Setup attribute labels.
+     * @return array of attribute labels.
+     */
     public function attributeLabels()
     {
         return array(
@@ -65,17 +103,33 @@ class Page extends CActiveRecord
             'language' => Yii::t('PagesModule.pages','model.page.language')
         );
     }
-
+    
+    /**
+     * Cpecify the ActiveRecord table name.
+     * @return string table name.
+     */
     public function tableName()
     {
         return '{{mod_page}}';
     }
     
+    /**
+     * Return static model of Pm.
+     * @param string $className current class name.
+     * @return Pm object.
+     */
     public static function model($className=__CLASS__)
     {
         return parent::model($className);
     }
     
+    /**
+     * Validation rule.
+     * Check language.
+     * @param string $attribute attribute name.
+     * @param array $params additional params.
+     * @return void.
+     */
     public function languageRule($attribute,$params)
     {
         if ($this->language != null)
@@ -85,6 +139,11 @@ class Page extends CActiveRecord
         }
     }
     
+    /**
+     * Action, that will be executed before model will be saved.
+     * Update the update time.
+     * @return boolean parent::beforeSave() status.
+     */
     public function beforeSave()
     {
         $this->updatetime = time();

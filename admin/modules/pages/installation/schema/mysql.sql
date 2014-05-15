@@ -1,5 +1,5 @@
 --
--- Loadmeter module database schema file
+-- Pages module database schema file
 --
 -- @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
 -- @link http://yonote.org

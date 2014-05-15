@@ -163,7 +163,7 @@ class Pm extends CActiveRecord
     /**
      * Action, that will be executed before model will be saved.
      * Upload and process module archive.
-     * @return boolean parent beforeSave() status.
+     * @return boolean parent::beforeSave() status.
      */
     public function beforeSave()
     {

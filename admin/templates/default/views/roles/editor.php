@@ -1,4 +1,16 @@
 <?php
+/**
+ * Roles manager file.
+ * Editor template.
+ *
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @link http://yonote.org
+ * @copyright 2014 Vlad Gramuzov
+ * @license http://yonote.org/license.html
+ */
+?>
+
+<?php
 // Build permissions selected items
 $selectedParents = array();
 $selectedChildren = array();

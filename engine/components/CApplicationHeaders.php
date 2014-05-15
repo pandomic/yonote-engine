@@ -14,7 +14,7 @@
  * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
  * @since 1.0
  */
-class CApplicationHeaders extends CApplicationComponent implements IHeaders
+class CApplicationHeaders extends CApplicationComponent implements IApplicationHeaders
 {
     /**
      * @var string content charset.

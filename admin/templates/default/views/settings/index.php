@@ -1,3 +1,15 @@
+<?php
+/**
+ * System settings manager file.
+ * Settings list template.
+ *
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @link http://yonote.org
+ * @copyright 2014 Vlad Gramuzov
+ * @license http://yonote.org/license.html
+ */
+?>
+
 <?php if (Yii::app()->user->hasFlash('settingsSuccess')): ?>
     <div class="row">
         <div class="col-md-12">
@@ -42,8 +54,28 @@
                                     )); ?>
                                 </div>
                             </div>
+                            <div class="checkbox col-md-10 col-md-offset-2">
+                                <label>
+                                    <?php echo CHtml::activeCheckBox($model,'redirectDefault'); ?> <?php echo $model->getAttributeLabel('redirectDefault'); ?>
+                                </label>
+                            </div>
                         </div>
                         <div class="tab-pane" id="localization">
+                            <div class="form-group <?php if ($model->hasErrors('allowedLanguages')) echo 'has-error'; ?>">
+                                <?php echo CHtml::activeLabel($model,'allowedLanguages',array(
+                                    'for' => 'allowedLanguages',
+                                    'class' => 'col-md-2 control-label'
+                                )); ?>
+                                <div class="col-md-10">
+                                    <?php echo CHtml::activeTextField($model,'allowedLanguages',array(
+                                        'class' => 'form-control',
+                                        'id' => 'allowedLanguages'
+                                    )); ?>
+                                    <?php echo CHtml::error($model,'allowedLanguages',array(
+                                        'class' => 'help-block text-danger'
+                                    )); ?>
+                                </div>
+                            </div>
                             <div class="form-group <?php if ($model->hasErrors('adminLanguage')) echo 'has-error'; ?>">
                                 <?php echo CHtml::activeLabel($model,'adminLanguage',array(
                                     'for' => 'adminLanguage',

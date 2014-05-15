@@ -40,8 +40,8 @@ class CApplicationSettings extends CApplicationComponent
      * Load settings.
      * @return void.
      */
-    public function init(){
-                
+    public function init()
+    {
         $db = Yii::app()->getComponent($this->dbComponentId);
         $dependency = new CDbCacheDependency("
             SELECT MAX(updateTime) FROM {$this->tableName}
@@ -58,8 +58,6 @@ class CApplicationSettings extends CApplicationComponent
         foreach ($results as $record){
             $this->_settings[$record->category][$record->name] = $record->value;
         }
-        
-        parent::init();
     }
     
     /**

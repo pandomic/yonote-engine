@@ -1,53 +1,31 @@
 <?php
 /**
  * Administrative panel common layout wrapper.
- * 
- * $content - page content.
- * $this - current controller.
  *
  * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
  * @link http://yonote.org
  * @copyright 2014 Vlad Gramuzov
  * @license http://yonote.org/license.html
  */
-
-// Template path
-$template = Yii::app()->request->baseUrl.'/templates/'.Yii::app()->getTheme()->name;
-// jQuery .js asset path
-$jQueryJS = Yii::app()->assetManager->publish(
-    Yii::getPathOfAlias('application.vendors.jquery').'/jquery.js'
-);
-// Easypie .js path
-$easypieJS = Yii::app()->assetManager->publish(
-    Yii::getPathOfAlias('application.vendors.easypie').'/easypie.js'
-);
-// Bootstrap .css asset path
-$bootstrapCss = Yii::app()->assetManager->publish(
-    Yii::getPathOfAlias('application.vendors.bootstrap.css').'/bootstrap.css'
-);
-// Boostrap .js asset path
-$bootstrapJS = Yii::app()->assetManager->publish(
-    Yii::getPathOfAlias('application.vendors.bootstrap.js').'/bootstrap.js'
-);
 ?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <title><?php echo $this->pageTitle; ?></title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex,nofollow">
-    <script src="<?php echo $jQueryJS; ?>"></script>
-    <script src="<?php echo $easypieJS; ?>"></script>
-    <script src="<?php echo $bootstrapJS; ?>"></script>
-    <script src="<?php echo $template; ?>/js/functions.js"></script>
-    <script src="<?php echo $template; ?>/js/ui.js"></script>
-    <title><?php echo $this->pageTitle; ?></title>
-    <link rel="shortcut icon" href="<?php echo $template; ?>/images/logo.gif">
-    <link href="<?php echo $bootstrapCss; ?>" rel="stylesheet">
-    <link href="<?php echo $template; ?>/stylesheet/css/theme.css" rel="stylesheet">
-    <link href="<?php echo $template; ?>/stylesheet/css/theme-extended.css" rel="stylesheet">
-    <link href="<?php echo $template; ?>/stylesheet/css/loadmeter.css" rel="stylesheet">
+    <link href="<?php echo $this->asset('application.vendors.bootstrap'); ?>/css/bootstrap.css" rel="stylesheet">
+    <link href="<?php echo $this->templateAsset('assets'); ?>/stylesheet/css/theme.css" rel="stylesheet">
+    <link href="<?php echo $this->templateAsset('assets'); ?>/stylesheet/css/theme-extended.css" rel="stylesheet">
+    <link href="<?php echo $this->templateAsset('assets'); ?>/stylesheet/css/loadmeter.css" rel="stylesheet">
+    <script src="<?php echo $this->asset('application.vendors.jquery'); ?>/jquery.js"></script>
+    <script src="<?php echo $this->asset('application.vendors.easypie'); ?>/easypie.js"></script>
+    <script src="<?php echo $this->asset('application.vendors.bootstrap'); ?>/js/bootstrap.js"></script>
+    <script src="<?php echo $this->templateAsset('assets'); ?>/js/functions.js"></script>
+    <script src="<?php echo $this->templateAsset('assets'); ?>/js/ui.js"></script>
+    <link rel="shortcut icon" href="<?php echo $this->templateAsset('assets'); ?>/images/logo.gif">
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -82,7 +60,7 @@ $bootstrapJS = Yii::app()->assetManager->publish(
                     <span class="sr-only"><?php echo Yii::t('system','message.toggle.navigation'); ?></span>
                     <span class="glyphicon glyphicon-th-list"></span>
                 </button>
-                <a class="navbar-brand logo-nav" href="<?php echo $this->createUrl('/base'); ?>"><img style="margin:-3px 10px 0 0; height:20px;" src="<?php echo $template; ?>/images/logo.gif"/>YOnote ENGINE</a>
+                <a class="navbar-brand logo-nav" href="<?php echo $this->createUrl('/base'); ?>"><img style="margin:-3px 10px 0 0; height:20px;" src="<?php echo $this->templateAsset('assets'); ?>/images/logo.gif"/>YOnote ENGINE</a>
             </div>
             <div class="collapse navbar-collapse navbar-collection">
                 <ul class="nav navbar-nav navbar-left">
@@ -110,13 +88,13 @@ $bootstrapJS = Yii::app()->assetManager->publish(
                             <li class="dropdown">
                                 <a href="#" class="dropdown-toggle dropdown-profile" data-toggle="dropdown">
                                     <span>
-                                        <img class="img-rounded" src="<?php if ($w->getPhoto() !== false): echo '/'.$w->getPhoto(); else: echo $template; ?>/images/user.jpg<?php endif; ?>">
+                                        <img class="img-rounded" src="<?php if ($w->getPhoto() !== false): echo '/'.$w->getPhoto(); else: echo $this->templateAsset('assets'); ?>/images/user.jpg<?php endif; ?>">
                                         <span><?php if ($w->getProfile()->name != null) echo $w->getProfile()->name; else echo $w->getUser()->name; ?> <?php if ($w->getUnreadCount() > 0): ?><span class="badge blue-badge"><?php echo $w->getUnreadCount(); ?></span><?php endif; ?> <b class="caret"></b></span>
                                     </span>
                                 </a>
                                 <ul class="dropdown-menu profile-box">
                                     <li class="avatar">
-                                        <img class="img-circle img-thumbnail" src="<?php if ($w->getPhoto() !== false): echo '/'.$w->getPhoto(); else: echo $template; ?>/images/user.jpg<?php endif; ?>">
+                                        <img class="img-circle img-thumbnail" src="<?php if ($w->getPhoto() !== false): echo '/'.$w->getPhoto(); else: echo $this->templateAsset('assets'); ?>/images/user.jpg<?php endif; ?>">
                                         <div class="text-center" >
                                             <h4><?php if ($w->getProfile()->name != null) echo $w->getProfile()->name; else echo $w->getUser()->name; ?></h4>
                                         </div>
@@ -178,7 +156,9 @@ $bootstrapJS = Yii::app()->assetManager->publish(
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-12">
-                            <?php echo $this->breadcrumbs; ?>
+                            <?php $this->widget('BreadcrumbsWidget',array(
+                                'links' => $this->pathsQueue
+                            )); ?>
                         </div>
                     </div>
                     <?php echo $content; ?>

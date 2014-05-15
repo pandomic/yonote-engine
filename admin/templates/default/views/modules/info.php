@@ -2,9 +2,6 @@
 /**
  * Modules manager template file.
  * Module info template.
- * 
- * $this - current controller.
- * $model - Module model.
  *
  * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
  * @link http://yonote.org

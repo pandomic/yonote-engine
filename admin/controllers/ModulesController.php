@@ -157,13 +157,10 @@ class ModulesController extends CApplicationController
     public function actionInfo($id)
     {
         $this->pageTitle = Yii::t('modules','page.info.title');
-        $this->addBreadcrumb(
-            Yii::t('modules','page.modules.title'),
-            Yii::app()->createUrl('modules/index')
-        )->addBreadcrumb(
-            Yii::t('modules','page.info.title'),
-            Yii::app()->createUrl($this->getRoute())
-        );
+        $this->setPathsQueue(array(
+            Yii::t('modules','page.modules.title') => Yii::app()->createUrl('modules/index'),
+            Yii::t('modules','page.info.title') => Yii::app()->createUrl($this->getRoute())
+        ));
         $this->render('info',array(
             'model' => $this->loadModuleEditModel($id)
         ));
@@ -176,13 +173,10 @@ class ModulesController extends CApplicationController
     public function actionAdd()
     {
         $this->pageTitle = Yii::t('modules','page.add.title');
-        $this->addBreadcrumb(
-            Yii::t('modules','page.modules.title'),
-            Yii::app()->createUrl('modules/index')
-        )->addBreadcrumb(
-            Yii::t('modules','page.add.title'),
-            Yii::app()->createUrl($this->getRoute())
-        );
+        $this->setPathsQueue(array(
+            Yii::t('modules','page.modules.title') => Yii::app()->createUrl('modules/index'),
+            Yii::t('modules','page.add.title') => Yii::app()->createUrl($this->getRoute())
+        ));
         $model = new Module('add');
         if (isset($_POST['Module']))
         {
@@ -217,10 +211,9 @@ class ModulesController extends CApplicationController
     public function actionIndex()
     {
         $this->pageTitle = Yii::t('modules','page.modules.title');
-        $this->addBreadcrumb(
-            Yii::t('modules','page.modules.title'),
-            Yii::app()->createUrl($this->getRoute())
-        );
+        $this->setPathsQueue(array(
+            Yii::t('modules','page.modules.title') => Yii::app()->createUrl($this->getRoute())
+        ));
         $this->render('index',array(
             'models' => $this->loadModulesListModel()
         ));

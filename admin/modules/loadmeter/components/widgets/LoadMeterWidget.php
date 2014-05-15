@@ -1,7 +1,27 @@
 <?php
+/**
+ * LoadMeterWidget class file.
+ *
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @link http://yonote.org
+ * @copyright 2014 Vlad Gramuzov
+ * @license http://yonote.org/license.html
+ */
+
+/**
+ * Loadmeter widget provides system loading information, such as
+ * memory used, disk space and etc.
+ * 
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @since 1.0
+ */
 class LoadMeterWidget extends CWidget
 {
 
+    /**
+     * Init widget.
+     * @return LoadMeterWidget instance itself.
+     */
     public function init()
     {
         $this->controller->renderPartial('//loadmeter/widget',array(
@@ -12,6 +32,11 @@ class LoadMeterWidget extends CWidget
         return $this;
     }
     
+    /**
+     * Get average system usage.
+     * Note, that this method can not be used on the Windows(tm) platform.
+     * @return int average system loading in percents.
+     */
     public function getAverageUsage()
     {
         if (function_exists('sys_getloadavg'))
@@ -22,6 +47,10 @@ class LoadMeterWidget extends CWidget
         return 0;
     }
     
+    /**
+     * Get PHP-memory usage.
+     * @return int memory usage in percents.
+     */
     public function getMemoryUsage()
     {
         $current = memory_get_usage(true);
@@ -32,6 +61,10 @@ class LoadMeterWidget extends CWidget
         return $usage;
     }
     
+    /**
+     * Get disk space used.
+     * @return int disk space used in percents.
+     */
     public function getDiskUsage()
     {
         $total = disk_total_space('/');
@@ -40,6 +73,11 @@ class LoadMeterWidget extends CWidget
         return ceil($used/$total*100);
     }
     
+    /**
+     * Used to convert string measurement values to numbers.
+     * @param string $val input value.
+     * @return int converted number.
+     */
     private function _returnBytes($val)
     {
         $val = trim($val);

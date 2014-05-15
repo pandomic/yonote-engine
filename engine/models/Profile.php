@@ -210,7 +210,7 @@ class Profile extends CActiveRecord
         $return = false;
         if ($this->photo != null)
             if (file_exists(UPLOADS_PATH.'/'.$this->photo))
-                $return = UPLOADS_PATH_URI."/{$this->photo}";
+                $return = UPLOADS_PATH_URL."/{$this->photo}";
         return $return;
     }
 }

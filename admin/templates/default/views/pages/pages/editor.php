@@ -3,9 +3,6 @@
  * Pages module template file.
  * Pages controller file.
  * Page editor template.
- * 
- * $this - current controller.
- * $model - Page model.
  *
  * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
  * @link http://yonote.org
@@ -13,21 +10,12 @@
  * @license http://yonote.org/license.html
  */
 
-// tinymce asset.
-$tinymce = Yii::app()->assetManager->publish(
-    Yii::getPathOfAlias('application.vendors.tinymce')
-);
-// System tinymce path.
-$tinymcePath = Yii::app()->assetManager->getPublishedPath(
-    Yii::getPathOfAlias('application.vendors.tinymce')
-);
-// Load tinymce languages.
-$tinymceLangs = scandir($tinymcePath.'/langs');
 // Select tinymce language.
-$tinymceLanguage = (in_array(Yii::app()->getLanguage().'.js',$tinymceLangs)) ? Yii::app()->getLanguage() : '';
+$tinymceLanguage = (in_array(Yii::app()->getLanguage().'.js',scandir($tinymcePath = Yii::app()->assetManager->getPublishedPath
+        (Yii::getPathOfAlias('application.vendors.tinymce')).'/langs'))) ? Yii::app()->getLanguage() : '';
 ?>
 
-<script type="text/javascript" src="<?php echo $tinymce; ?>/tinymce.min.js"></script>
+<script type="text/javascript" src="<?php echo $this->asset('application.vendors.tinymce'); ?>/tinymce.min.js"></script>
 <script type="text/javascript">
 tinymce.init({
     selector: 'textarea',

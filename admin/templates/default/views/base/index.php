@@ -1,8 +1,6 @@
 <?php
 /**
  * Administrative panel index page template.
- * 
- * $this - current controller.
  *
  * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
  * @link http://yonote.org

@@ -91,7 +91,7 @@ class Post extends CActiveRecord
             'ImageBehavior' => array(
                 'class' => 'ImageBehavior',
                 'fileField' => 'thumbnail',
-                'savePath' => '{uploads}/images',
+                'savePath' => UPLOADS_PATH.'/images',
                 'checkSides' => true,
                 'minWidth' => (int) Yii::app()->settings->get('posts','thumbnail.width.min'),
                 'minHeight' => (int) Yii::app()->settings->get('posts','thumbnail.height.min'),

@@ -1,5 +1,5 @@
 --
--- Pages module database schema file
+-- Posts module database schema file
 --
 -- @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
 -- @link http://yonote.org
@@ -11,9 +11,9 @@
 -- Drop tables, if exist
 --
 
+drop table if exists `{{mod_post_relation}}`;
 drop table if exists `{{mod_post}}`;
 drop table if exists `{{mod_post_hashtags}}`;
-drop table if exists `{{mod_post_relation}}`;
 
 --
 -- Posts table

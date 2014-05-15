@@ -52,6 +52,14 @@ class SystemSettings extends CFormModel
      * @var string maximum module file size
      */
     public $moduleMaxSize;
+    /**
+     * @var string allowed languages list (separated by comma)
+     */
+    public $allowedLanguages;
+    /**
+     * @var boolean redirect to default language version if null given.
+     */
+    public $redirectDefault = false;
     
     private $_settings = array();
     private $_relations = array();
@@ -97,6 +105,11 @@ class SystemSettings extends CFormModel
                 'systemUrlFormat','in','range' => array('path','get'),
                 'message' => Yii::t('settings','model.systemsettings.error.url.format')
             ),
+            array(
+                'allowedLanguages','match','pattern' => '/^([a-z]{2,3},?)*[a-z]{2,3}$/',
+                'message' => Yii::t('settings','model.systemsettings.error.allowedlanguages')
+            ),
+            array('redirectDefault','boolean'),
             array('adminLanguage,websiteLanguage','languageRule'),
             array('adminTemplate','templateRule','area' => 'backend'),
             array('websiteTemplate','templateRule','area' => 'frontend'),
@@ -143,7 +156,7 @@ class SystemSettings extends CFormModel
     }
     
     /**
-     * Save pm configuration.
+     * Save system configuration.
      * @return boolean save is successfull.
      */
     public function save()
@@ -227,7 +240,9 @@ class SystemSettings extends CFormModel
             'website.time.zone' => 'websiteTimezone',
             'url.format' => 'systemUrlFormat',
             'login.duration' => 'systemLoginDuration',
-            'module.size.max' => 'moduleMaxSize'
+            'module.size.max' => 'moduleMaxSize',
+            'languages' => 'allowedLanguages',
+            'url.redirectondefault' => 'redirectDefault'
         );
         
         $criteria = new CDbCriteria();

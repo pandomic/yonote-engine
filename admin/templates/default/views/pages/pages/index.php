@@ -3,11 +3,6 @@
  * Pages module template file.
  * Pages controller file.
  * Index template.
- * 
- * $this - current controller.
- * $models - array of Model models.
- * $pages - pages for pagenavi.
- * $sort - sorting object.
  *
  * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
  * @link http://yonote.org

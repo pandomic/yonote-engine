@@ -11,14 +11,31 @@
 -- Drop tables, if exist
 --
 
-drop table if exists `{{auth_item}}`;
 drop table if exists `{{auth_item_child}}`;
 drop table if exists `{{auth_assignment}}`;
+drop table if exists `{{auth_item}}`;
 drop table if exists `{{module}}`;
-drop table if exists `{{user}}`;
 drop table if exists `{{profile}}`;
 drop table if exists `{{setting}}`;
 drop table if exists `{{pm}}`;
+drop table if exists `{{user}}`;
+
+--
+-- Base user information
+--
+
+create table `{{user}}`
+(
+   `name`             varchar(64) not null,
+   `password`         text not null,
+   `token`            text,
+   `email`            varchar(64) not null,
+   `activated`        boolean default 0,
+   `verified`         boolean default 0,
+   `subscribed`       boolean default 0,
+   `updatetime`       integer,
+   primary key (`name`)
+) engine InnoDB;
 
 --
 -- Auth items table
@@ -81,23 +98,6 @@ create table `{{module}}`
    `version`          varchar(64),
    `updateTime`       integer default 0,
    primary key (`name`)
-) engine InnoDB;
-
---
--- Base user information
---
-
-create table `{{user}}`
-(
-   `userid`           varchar(64) not null,
-   `password`         text not null,
-   `token`            text,
-   `email`            varchar(64) not null,
-   `activated`        boolean default 0,
-   `verified`         boolean default 0,
-   `subscribed`       boolean default 0,
-   `updatetime`       integer,
-   primary key (`username`)
 ) engine InnoDB;
 
 --

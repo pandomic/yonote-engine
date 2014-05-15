@@ -3,9 +3,6 @@
  * Pages module template file.
  * Pages controller file.
  * Settings template.
- * 
- * $this - current controller.
- * $model - special PagesSettings model.
  *
  * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
  * @link http://yonote.org

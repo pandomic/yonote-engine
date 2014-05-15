@@ -1,3 +1,15 @@
+<?php
+/**
+ * PM manager template file.
+ * Outbox template.
+ *
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @link http://yonote.org
+ * @copyright 2014 Vlad Gramuzov
+ * @license http://yonote.org/license.html
+ */
+?>
+
 <?php if (Yii::app()->user->hasFlash('pmSuccess')): ?>
     <div class="row">
         <div class="col-md-12">

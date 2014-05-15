@@ -1,8 +1,6 @@
 <?php
 /**
  * Modules list widget.
- * 
- * $models - array of enabled modules models.
  *
  * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
  * @link http://yonote.org

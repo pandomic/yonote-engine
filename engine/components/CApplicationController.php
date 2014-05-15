@@ -9,49 +9,74 @@
  */
 
 /**
- * CApplicationController is the base YOnote ENGINE controller class
+ * CApplicationController is the base YOnote ENGINE controller class.
+ * This controller extends the base Yii CController class with
+ * breadcrumbs and additive assets functionality.
  * 
  * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
  * @since 1.0
  */
 class CApplicationController extends CController
 {
-    private $_breadcrumbs = array();
-    
     /**
      * @var string rendered breadcrumbs.
      */
-    public $breadcrumbs;
+    public $pathsQueue = array();
+    /**
+     * @var string current template path
+     */
+    public $template;
+    
+    private $_template;
     
     /**
-     * Add item to breadcrumbs.
-     * @param string $title item title.
-     * @param string $url item URL.
-     * @return CApplicationController instance itself.
+     * Init current template.
+     * Form base template path.
+     * @return void.
      */
-    public function addBreadcrumb($title,$url)
+    public function init()
     {
-        $this->_breadcrumbs[] = array(
-            'title' => $title,
-            'url' => $url
-        );
-        return $this;
+        if (ENGINE_APPTYPE == 'admin')
+            $part = '';
+        else if (ENGINE_APPTYPE == 'base')
+            $part = '/engine';
+        $this->_template = Yii::app()->getTheme()->getName();
+        $this->template = Yii::app()->request->getBaseUrl().$part."/templates/".$this->_template;
+        Yii::app()->language = Yii::app()->urlManager->getUrlLanguage();
     }
     
     /**
-     * Setup breadcrumbs before rendrering.
-     * @param string $view view to render.
-     * @return boolean beforeRender flag.
+     * Publish an asset.
+     * @param string $path asset path (e.g. application.vendors.bootstrap)
+     * @return string path to asset.
      */
-    protected function beforeRender($view)
+    public function asset($path)
     {
-        $this->breadcrumbs = $this->widget('BreadcrumbsWidget',array(
-            'params' => array(
-                'route' => $this->getRoute(),
-                'links' => $this->_breadcrumbs
-            )
-        ),true);
-        return parent::beforeRender($view);
+        return Yii::app()->assetManager->publish(
+            Yii::getPathOfAlias($path),false,-1,YII_DEBUG
+        );
+    }
+    
+    /**
+     * Publish asset from current template (e.g. assets folder in current
+     * template folder, containing all css,js and other data, that can be
+     * then accessed from the view file like
+     * <?php $this->templateAsset('assets'); ?>"/js/example.js").
+     * @param string $path asset path relative to the current template.
+     * @return string path to asset.
+     */
+    public function templateAsset($path)
+    {
+        if (ENGINE_APPTYPE == 'admin')
+            $scope = 'admin';
+        else if (ENGINE_APPTYPE == 'base')
+            $scope = 'application';
+        return $this->asset("{$scope}.templates.{$this->_template}.{$path}");
+    }
+    
+    public function setPathsQueue($paths)
+    {
+        $this->pathsQueue = $paths;
     }
 }
 ?>

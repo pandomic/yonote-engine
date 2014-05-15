@@ -1,15 +1,23 @@
 <?php
-$tinymce = Yii::app()->assetManager->publish(
-    Yii::getPathOfAlias('application.vendors.tinymce')
-);
-$tinymcePath = Yii::app()->assetManager->getPublishedPath(
-    Yii::getPathOfAlias('application.vendors.tinymce')
-);
-$tinymceLangs = scandir($tinymcePath.'/langs');
-$tinymceLanguage = (in_array(Yii::app()->getLanguage().'.js',$tinymceLangs)) ? Yii::app()->getLanguage() : '';
+/**
+ * Posts module template file.
+ * Posts manager template file.
+ * Editor template.
+ *
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @link http://yonote.org
+ * @copyright 2014 Vlad Gramuzov
+ * @license http://yonote.org/license.html
+ */
 ?>
 
-<script type="text/javascript" src="<?php echo $tinymce; ?>/tinymce.min.js"></script>
+<?php
+// Select tinymce language.
+$tinymceLanguage = (in_array(Yii::app()->getLanguage().'.js',scandir($tinymcePath = Yii::app()->assetManager->getPublishedPath
+        (Yii::getPathOfAlias('application.vendors.tinymce')).'/langs'))) ? Yii::app()->getLanguage() : '';
+?>
+
+<script type="text/javascript" src="<?php echo $this->asset('application.vendors.tinymce'); ?>/tinymce.min.js"></script>
 <script type="text/javascript">
 tinymce.init({
     selector: 'textarea',

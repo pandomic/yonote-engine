@@ -1,4 +1,20 @@
 <?php
+/**
+ * PostsController class file.
+ *
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @link http://yonote.org
+ * @copyright 2014 Vlad Gramuzov
+ * @license http://yonote.org/license.html
+ */
+
+/**
+ * Administrative panel Posts module controller.
+ * Provides posts management tools.
+ * 
+ * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
+ * @since 1.0
+ */
 class PostsController extends CApplicationController
 {
     
@@ -7,15 +23,66 @@ class PostsController extends CApplicationController
     private $_postsListPages;
     private $_postsListSort;
     
+    /**
+     * Controller filters.
+     * @return array filters.
+     */
+    public function filters()
+    {
+        return array(
+            'accessControl'
+        );
+    }
+    
+    /**
+     * Controller access rules.
+     * @return array access rules.
+     */
+    public function accessRules()
+    {
+        return array(
+            array(
+                'allow',
+                'actions' => array('index'),
+                'roles' => array('admin.posts.index')
+            ),
+            array(
+                'allow',
+                'actions' => array('settings'),
+                'roles' => array('admin.posts.settings')
+            ),
+            array(
+                'allow',
+                'actions' => array('add'),
+                'roles' => array('admin.posts.add')
+            ),
+            array(
+                'allow',
+                'actions' => array('remove'),
+                'roles' => array('admin.posts.remove')
+            ),
+            array(
+                'allow',
+                'actions' => array('edit'),
+                'roles' => array('admin.posts.edit')
+            ),
+            array(
+                'deny',
+                'users' => array('*')
+            )
+        );
+    }
+    
+    /**
+     * Show general posts settings.
+     * @return void.
+     */
     public function actionSettings()
     {
         $this->pageTitle = Yii::t('PostsModule.settings','page.settings.title');
-        
-        $this->addBreadcrumb(
-            Yii::t('PostsModule.settings','page.settings.title'),
-            $this->createUrl($this->getRoute())
-        );
-        
+        $this->setPathsQueue(array(
+            Yii::t('PostsModule.settings','page.settings.title') => $this->createUrl($this->getRoute())
+        ));
         $model = new PostsSettings();
         if (isset($_POST['PostsSettings']))
         {
@@ -34,20 +101,18 @@ class PostsController extends CApplicationController
         ));
     }
     
+    /**
+     * Add new post.
+     * @return void.
+     */
     public function actionAdd()
     {
         $this->pageTitle = Yii::t('PostsModule.posts','page.add.title');
-        
-        $this->addBreadcrumb(
-            Yii::t('PostsModule.posts','page.posts.title'),
-            $this->createUrl('index')
-        )->addBreadcrumb(
-            Yii::t('PostsModule.posts','page.add.title'),
-            $this->createUrl($this->route)
-        );
-        
+        $this->setPathsQueue(array(
+            Yii::t('PostsModule.posts','page.posts.title') => $this->createUrl('index'),
+            Yii::t('PostsModule.posts','page.add.title') => $this->createUrl($this->getRoute())
+        ));
         $model = new Post();
-        
         if (isset($_POST['Post']))
         {
             $model->setAttributes($_POST['Post']);
@@ -60,26 +125,23 @@ class PostsController extends CApplicationController
                 $this->redirect(array('index'));
             }
         }
-        
         $this->render('editor',array(
             'model' => $model
         ));
     }
     
-    public function actionEdit()
+    /**
+     * Edit post.
+     * @return void.
+     */
+    public function actionEdit($id)
     {
         $this->pageTitle = Yii::t('PostsModule.posts','page.edit.title');
-        
-        $this->addBreadcrumb(
-            Yii::t('PostsModule.posts','page.posts.title'),
-            Yii::app()->createUrl('posts/posts/index')
-        )->addBreadcrumb(
-            Yii::t('PostsModule.posts','page.edit.title'),
-            $this->createUrl($this->route)
-        );
-        
-        $model = $this->loadPostEditModel();
-        
+        $this->setPathsQueue(array(
+            Yii::t('PostsModule.posts','page.posts.title') => Yii::app()->createUrl('posts/posts/index'),
+            Yii::t('PostsModule.posts','page.edit.title') => $this->createUrl($this->getRoute())
+        ));
+        $model = $this->loadPostEditModel($id);
         if (isset($_POST['Post']))
         {
             $model->setAttributes($_POST['Post']);
@@ -100,6 +162,11 @@ class PostsController extends CApplicationController
         
     }
     
+    /**
+     * Remove post.
+     * @throws CHttpException if invalid request given.
+     * @return void.
+     */
     public function actionRemove()
     {
         if (Yii::app()->request->isPostRequest)
@@ -117,13 +184,16 @@ class PostsController extends CApplicationController
             throw new CHttpException(400,Yii::t('system','error.400.description'));
     }
     
+    /**
+     * Show posts list.
+     * @return void.
+     */
     public function actionIndex()
     {
         $this->pageTitle = Yii::t('PostsModule.posts','page.posts.title');
-        $this->addBreadcrumb(
-            Yii::t('PostsModule.posts','page.posts.title'),
-            Yii::app()->createUrl($this->getRoute())
-        );
+        $this->setPathsQueue(array(
+            Yii::t('PostsModule.posts','page.posts.title') => $this->createUrl($this->getRoute())
+        ));
         $models = $this->loadPostsListModel();
         $this->render('index',array(
             'models' => $models,
@@ -132,6 +202,10 @@ class PostsController extends CApplicationController
         ));
     }
     
+    /**
+     * Load Post models to show.
+     * @return array of Post models.
+     */
     public function loadPostsListModel()
     {
         if ($this->_postsListModel === null)
@@ -201,18 +275,17 @@ class PostsController extends CApplicationController
         return $this->_postsListModel;
     }
     
-    public function loadPostEditModel()
+    /**
+     * Load Post model for editing.
+     * @return Post model.
+     */
+    public function loadPostEditModel($id)
     {
         if ($this->_postEditModel === null)
         {
-            if (isset($_GET['id']))
-            {
-                $this->_postEditModel = Post::model()->findByPk($_GET['id']);
-                if ($this->_postEditModel === null)
-                    throw new CHttpException(404,Yii::t('system','error.404.description'));
-            }
-            else
-                throw new CHttpException(400,Yii::t('system','error.400.description'));
+            $this->_postEditModel = Post::model()->findByPk($id);
+            if ($this->_postEditModel === null)
+                throw new CHttpException(404,Yii::t('system','error.404.description'));
         }
         return $this->_postEditModel;
     }

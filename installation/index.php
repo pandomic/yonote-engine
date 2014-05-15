@@ -7,7 +7,16 @@ Yii::createWebApplication(array(
     'charset' => 'utf-8',
     'basePath' => __DIR__,
     'defaultController' => 'base',
-    'import' => array('application.models.*')
+    'language' => 'en',
+    'import' => array(
+        'application.models.*',
+        'application.components.*'
+    ),
+    'components' => array(
+        'db' => array(
+            'class' => 'CDbConnection'
+        )
+    )
 ));
 // Run application
 Yii::app()->run();

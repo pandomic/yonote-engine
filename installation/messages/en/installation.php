@@ -1,0 +1,47 @@
+<?php
+return array(
+    'model.firststep.inslang' => 'Installation language',
+    'model.firststep.welcome' => 'Welcome to the YOnote ENGINE installation package. This wizard allows you to quickly install YOnote ENGINE content management system on your website. Follow the instructions. For now, select the installation language.',
+    
+    'model.secondstep.phpversion' => 'Checking the PHP version',
+    'model.secondstep.servervars' => 'Checking required server variables',
+    'model.secondstep.phpreflections' => 'PHP Reflections API availability',
+    'model.secondstep.phppcre' => 'Checking PCRE extension',
+    'model.secondstep.phpspl' => 'Checking SPL extension',
+    'model.secondstep.phpdom' => 'DOMDocument availability',
+    'model.secondstep.phppdo' => 'Checking PDO extension',
+    'model.secondstep.dbinterfaces' => 'Searching the required database interfaces',
+    'model.secondstep.phpmcrypt' => 'Checking MCrypt extension',
+    'model.secondstep.phpblowfish' => 'Checking Blowfish availability',
+    'model.secondstep.phpctype' => 'Checking CType extension availability',
+    'model.secondstep.phpfileinfo' => 'Checking FileInfo extension',
+    'model.secondstep.phpgd' => 'Checking the PHP GD or Imagick extensions',
+    'model.secondstep.phpmemcache' => 'Checking Memcached or Memcache extensions',
+    'model.secondstep.phpapc' => 'Checking APC extension',
+    'model.secondstep.phpsoap' => 'CHecking SOAP extension',
+    'model.secondstep.dbtype' => 'Database type',
+    'model.secondstep.dbhost' => 'Database host',
+    'model.secondstep.dbuser' => 'Databse user',
+    'model.secondstep.dbpwd' => 'Database user password',
+    'model.secondstep.dbname' => 'Database name',
+    'model.secondstep.dbcnn' => 'Checking database connection',
+    'model.secondstep.dbprefix' => 'Database prefix',
+    'model.secondstep.username' => 'Username',
+    'model.secondstep.email' => 'Email',
+    'model.secondstep.password' => 'Password',
+    'model.secondstep.passwordrepeat' => 'Repeat password',
+    
+    'model.secondstep.error.required' => 'An empty field given.',
+    'model.secondstep.error.name.match' => 'Username can consists of only word characters, and "_","-" symbols.',
+    'model.secondstep.error.email' => 'Invalid email.',
+    'model.secondstep.error.pwdrepeat' => 'Passwords mismatch!',
+    'model.secondstep.error.tblprefix' => 'Table prefix can consisist of only lowercase characters, numbers and "_" symbol.',
+    
+    'button.firststep.submit' => 'Let\'s begin',
+    'label.step' => 'Step {current} of {all}',
+    'label.dbsettings' => 'Database settings',
+    'label.usersettings' => 'Administrator settings',
+    'label.requirements' => 'Checking requirements',
+    'title' => 'YOnote ENGINE installation package'
+);
+?>
