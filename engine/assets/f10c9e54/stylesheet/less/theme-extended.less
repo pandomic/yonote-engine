@@ -1,0 +1,344 @@
+//
+// Load core variables and mixins
+// --------------------------------------------------
+
+@import "variables.less";
+@import "mixins.less";
+
+.mce-edit-area blockquote {
+    border: 1px solid red;
+}
+
+.panel-heading {
+    
+    .panel-title {
+        display: inline-block;
+        vertical-align: middle;
+    }
+}
+
+.list-group-item {
+    &.active {
+        a {
+            color: @component-active-color;
+        }
+    }
+}
+
+
+
+//
+// Tables
+// --------------------------------------------------
+
+.table {
+    margin: 0;
+    &-separated {
+        border-top: 1px solid @table-border-color;
+    }
+    .asc {
+        background: url('../../images/up.gif') right center no-repeat;
+	padding-right: 10px;
+    }
+    .desc {
+        background: url('../../images/down.gif') right center no-repeat;
+	padding-right: 10px;
+    }
+    &.table-middle td,&.table-middle th {
+        vertical-align: middle;
+    }
+}
+
+//
+// Sidebar
+// --------------------------------------------------
+
+.sidebar-divider-gradient {
+    height:1px;
+    display:block;
+    content: " ";
+    #gradient > .horizontal-three-colors(darken(@navbar-inverse-bg,30%),lighten(@navbar-inverse-bg,10%),50%,darken(@navbar-inverse-bg,30%));
+
+}
+
+.sidebar-bg {
+    width: 200px;
+    position: fixed;
+    top: 0;
+    height: 100%;
+    background-color: @navbar-inverse-bg;
+}
+
+.sidebar {
+    
+    width: 200px;
+    float: left;
+    position: absolute;
+
+    .sidebar-nav {
+
+        padding: 0;
+        width: 100%;
+        
+        border-top: 0;
+        background-color: @navbar-inverse-bg;
+
+        &:after {
+            position:relative;
+            .sidebar-divider-gradient;
+        }
+
+        li a .glyphicon {
+            margin-right: 10px;
+        }
+
+        li,li a {
+            color: @navbar-inverse-link-color;
+            .transition(color 0.3s);
+            &:hover {
+                color: @navbar-inverse-link-hover-color;
+                background-color: @navbar-inverse-bg + 20%;
+                .transition(color 0.3s);
+            }
+            &:focus {
+                background-color: transparent;
+            }
+        }
+
+        > li {
+
+            position: relative;
+            border-bottom: 1px solid darken(@navbar-inverse-bg,30%);
+
+            &:hover,a:hover {
+                background-color: transparent;
+            }
+
+            &:before,& li:before {
+                .sidebar-divider-gradient;
+            }
+
+            &:after {
+                height: 1px;
+                background: darken(@navbar-inverse-bg,30%);
+            }
+
+            .glow {
+                display:block;
+                position: absolute;
+                height: 40px;
+                width: 5px;
+                background-color: @nav-glow-color-bg;
+                .box-shadow(0 0 1px 2px fade(@brand-primary,10%) inset);
+                .transition(box-shadow 1s);
+            }
+
+            &.active {
+
+                .glow {
+                    
+                    .box-shadow(0 0 1px 2px fade(@brand-primary,100%) inset);
+                    .transition(box-shadow 1s);
+
+                    &:after {
+                        display: block;
+                        position: absolute;
+                        width: 40px;
+                        height: 40px;
+                        content: " ";
+                        #gradient > .horizontal(fade(@nav-glow-color-shadow-hover,20%),fade(#000,0%));       
+                    }
+                }
+
+            }
+
+            &:hover {
+                .glow {
+                    .box-shadow(0 0 1px 2px fade(@brand-primary,100%) inset);
+                    .transition(box-shadow 1s);
+                }
+            }
+            
+            li {
+                font-size: 11px;
+                & a {
+                    padding: 5px 20px;
+                }
+            }
+
+        }
+    }
+}
+
+//
+// Badges
+// --------------------------------------------------
+
+.badge {
+    &.blue-badge {
+        background: @brand-primary;
+    }
+}
+
+//
+// Navbar
+// --------------------------------------------------
+
+.navbar {
+    .navbar-toggle {
+        & {
+            color: @navbar-inverse-link-color;
+        }
+        &:hover {
+            color: @navbar-inverse-link-hover-color;
+        }
+        &:active {
+            color: @navbar-inverse-link-active-color;
+        }
+    }
+    .navbar-nav {
+        
+        > li {
+            &.active {
+                > a {
+                    background-color: @navbar-inverse-bg - 5%;
+                    background-image: none;
+                    filter: none;
+                }
+            }
+            > a {
+                &:hover,&:active,&:focus {
+                    background-color: @navbar-inverse-bg - 5%;
+                }
+            }
+        }
+        
+        .profile-box {
+            
+            min-width: 200px;
+            margin: 0;
+            
+            .glyphicon {
+                margin-right: 10px;
+            }
+            
+            > .avatar > img {
+                display: block;
+                width: 100px;
+                height: 100px;
+                margin: 10px auto 0 auto;
+            }
+        }
+        
+        .dropdown-profile {
+            
+            padding: 9px 10px;
+            
+            img {
+                margin-right: 10px;
+                width: 32px;
+                height: 32px;
+            }
+        }
+    }
+}
+
+//
+// Dashboard
+// --------------------------------------------------
+
+.dashboard {
+    position: relative;
+    margin-left: 200px;
+    
+    .dashboard-header {
+        
+        padding: 10px 15px;
+        #gradient > .vertical(@panel-default-heading-bg; darken(@panel-default-heading-bg, 5%));
+        .box-shadow(0 1px 3px 0 fade(#000,20%));
+
+        .header {
+            font-size: 20px;
+        }
+    }
+    
+    .dashboard-body {
+        .breadcrumb {
+            margin: 20px 0 20px 0;
+            #gradient > .vertical(@breadcrumb-bg; darken(@breadcrumb-bg, 5%));
+            .box-shadow(0 1px 3px 0 fade(#000, 20%));
+        }
+    }
+    
+    
+}
+
+//
+// Extra small devices setup
+// --------------------------------------------------
+
+@media (max-width: @screen-xs-max) {
+    .sidebar {
+        width: auto;
+        float: none;
+        position: relative;
+    }
+    .profile-box {
+        margin: 200px;
+        h4 {
+            color: @navbar-inverse-link-color;
+        }
+    }
+    .profile-navbar {
+        margin-top: 20px;
+        padding-top: 8px;
+        border-top: 1px solid darken(@navbar-inverse-bg,20%);
+        .box-shadow(0 -1px 0 0 fade(#fff, 10%));
+    }
+    .dashboard {
+        margin-left: 0;
+    }
+    .dropdown {
+        li {
+            margin: 5px 0;
+            background-color: @navbar-inverse-bg;
+        }
+        li.avatar {
+            background-color: transparent;
+        }
+    }
+}
+
+//
+// Centered content
+// --------------------------------------------------
+
+html,body {
+    height: 100%;
+    background-image: url('../../images/bg.gif');
+    background-repeat: repeat;
+    background-color: @body-bg;
+}
+
+.page-center {
+    display: table;
+    height: 100%;
+}
+
+.page-center-body {
+    height: 100%;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+//
+// Glyphicons settingss
+// --------------------------------------------------
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: ~"url('@{icon-font-path}@{icon-font-name}.eot')";
+  src: ~"url('@{icon-font-path}@{icon-font-name}.eot?#iefix') format('embedded-opentype')",
+       ~"url('@{icon-font-path}@{icon-font-name}.woff') format('woff')",
+       ~"url('@{icon-font-path}@{icon-font-name}.ttf') format('truetype')",
+       ~"url('@{icon-font-path}@{icon-font-name}.svg#@{icon-font-svg-id}') format('svg')";
+}

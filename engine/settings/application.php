@@ -50,7 +50,6 @@ return array(
         // URL manager settings
         'urlManager' => array(
             'class' => 'CApplicationUrlManager',
-            'settingsComponentId' => 'settings',
             'showScriptName' => false
         ),
         // Request settings

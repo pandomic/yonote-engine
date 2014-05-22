@@ -6,7 +6,7 @@ class PostsModule extends CWebModule
         $this->defaultController = 'posts';
         $this->setImport(array(
             'posts.components.*',
-            'posts.models.*'
+            'application.modules.posts.models.*'
         ));
     }
 }

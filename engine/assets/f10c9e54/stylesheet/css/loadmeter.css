@@ -1,0 +1,39 @@
+.cpu-chart
+{
+    position: relative;
+    width: 140px;
+    margin: 20px auto 0 auto;
+    text-align:center;
+}
+
+.cpu-chart canvas
+{
+    top:0;
+    left:0;
+    position: absolute;
+
+}
+
+.cpu-chart-percent
+{
+    display: inline-block;
+    line-height: 140px;
+    z-index: 2;
+}
+
+.cpu-chart-percent:after {
+  content: '%';
+}
+
+.loading-chart
+{
+    width: 140px;
+    margin: 20px auto 0 auto;
+}
+
+.loading-chart .progress
+{
+    width: 100px;
+    margin: 0 0 5px 0;
+    background: #2e3641;
+}

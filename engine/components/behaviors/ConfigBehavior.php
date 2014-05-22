@@ -41,6 +41,8 @@ class ConfigBehavior extends CBehavior
         $app->headers->charset($app->charset);
         $app->headers->mime(CApplicationHeaders::HEADER_TEXT_HTML);
         $app->urlManager->setUrlFormat($app->settings->get('system','url.format'));
+        $app->urlManager->setMultilangEnabled($app->settings->get('system','url.multilingual',true));
+        $app->urlManager->setLanguages(explode(',',$app->settings->get('system','languages')));
         $app->urlManager->setRedirectOnDefault($app->settings->get('system','url.redirectondefault',true));
         
         if (ENGINE_APPTYPE == 'admin')
@@ -50,6 +52,7 @@ class ConfigBehavior extends CBehavior
             $app->setLanguage($app->settings->get('system','admin.language'));
             $app->setTimeZone($app->settings->get('system','admin.time.zone'));
             $app->urlManager->setDefaultLanguage($app->getLanguage());
+            $this->loadModUrlRules(Yii::getPathOfAlias('admin.modules'));
         }
         else if (ENGINE_APPTYPE == 'base')
         {
@@ -57,6 +60,21 @@ class ConfigBehavior extends CBehavior
             $app->setLanguage(Yii::app()->settings->get('system','website.language'));
             $app->setTimeZone($app->settings->get('system','website.time.zone'));
             $app->urlManager->setDefaultLanguage($app->getLanguage());
+            $this->loadModUrlRules(Yii::getPathOfAlias('application.modules'));
+        }
+    }
+    
+    private function loadModUrlRules($path)
+    {
+        $modules = Yii::app()->getModules();
+        foreach ($modules as $k => $v)
+        {
+            $file = $path."/{$k}/rules.php";
+            if (file_exists($file))
+            {
+                $rules = require($file);
+                Yii::app()->urlManager->addRules($rules);
+            }
         }
     }
 }
