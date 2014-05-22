@@ -42,7 +42,6 @@ class CApplicationController extends CController
             $part = '/engine';
         $this->_template = Yii::app()->getTheme()->getName();
         $this->template = Yii::app()->request->getBaseUrl().$part."/templates/".$this->_template;
-        Yii::app()->language = Yii::app()->urlManager->getUrlLanguage();
     }
     
     /**

@@ -4,9 +4,12 @@
 
 engine/templates/rafineza/
 engine/template/rafineza
+engine/templates/respekt/
+engine/templates/respekt
 
-*.bin
-*.BIN
+engine/assets/**
+
+engine/cache/*.bin
 
 #################
 ## Eclipse

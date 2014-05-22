@@ -27,20 +27,30 @@
 class CApplicationUrlManager extends CUrlManager
 {
     /**
-     * @var boolean redirect if language param was not given. 
-     */
-    public $redirectOnDefault = false;
-    /**
-     * @var string settings component identifier. 
-     */
-    public $settingsComponentId = 'settings';
-    /**
      * @var string default website language version. 
      */
     public $defaultLanguage = 'en';
+    public $multilangEnabled = true;
+    public $languages = array();
     
-    private $_language;
-    private $_languages = array();
+    private $_langChanged = false;
+    private $_rules = array();
+    
+    public function addRules($rules,$append=true)
+    {
+        if ($append)
+        {
+            foreach($rules as $pattern=>$route)
+                $this->_rules[]=$this->createUrlRule($route,$pattern);
+        }
+        else
+        {
+            $rules=array_reverse($rules);
+            foreach($rules as $pattern=>$route)
+                array_unshift($this->_rules,$this->createUrlRule($route,$pattern));
+        }
+        parent::addRules($rules,$append);
+    }
     
     /**
      * URL parsing rules
@@ -51,43 +61,44 @@ class CApplicationUrlManager extends CUrlManager
      */
     public function parseUrl($request)
     {
-        $settings = Yii::app()->getComponent($this->settingsComponentId);
-        $this->_languages = explode(',',$settings->get('system','languages'));
-        if (!in_array($this->defaultLanguage,$this->_languages))
+        if (!in_array($this->defaultLanguage,$this->languages))
             throw new CException(Yii::t('system','message.language.undefined',array(
                 '{language}' => $this->defaultLanguage
             )));
         if($this->getUrlFormat() === self::PATH_FORMAT)
         {
-            $rawPathInfo=$request->getPathInfo();
-            $pathInfo=$this->removeUrlSuffix($rawPathInfo,$this->urlSuffix);
-            if (($pos = strpos($pathInfo,'/')) === false)
-                $pos = mb_strlen($pathInfo);
-            $lang = mb_strtolower(substr($pathInfo,0,$pos));
-            if (preg_match('/^[a-z]{2,3}$/i',$lang))
+            $rawPathInfo = $request->getPathInfo();
+            if ($this->multilangEnabled)
             {
-                if (!empty($this->_languages))
+                if (($pos = strpos($rawPathInfo,'/')) === false)
+                    $pos = mb_strlen($rawPathInfo);
+                $lang = mb_strtolower(substr($rawPathInfo,0,$pos));
+                if ($lang != null)
                 {
-                    if (in_array($lang,$this->_languages))
+                    if (!empty($this->languages))
                     {
-                        $this->_language = $lang;
-                        $pathInfo = (string) substr($pathInfo,$pos + 1);
+                        if (in_array($lang,$this->languages))
+                        {
+                            $this->setLanguage($lang);
+                            $rawPathInfo = (string) substr($rawPathInfo,$pos + 1);
+                        }
                     }
+                    else
+                        throw new CException(Yii::t('system','message.languages.empty'));
                 }
-                else
-                    throw new CException(Yii::t('system','message.languages.empty'));
+                else if ($lang == null)
+                {
+                    if ($this->redirectOnDefault)
+                        $request->redirect($this->baseUrl."/{$this->defaultLanguage}");
+                }
             }
-            else if ($lang == null)
-            {
-                if ($this->redirectOnDefault)
-                    $request->redirect($this->baseUrl."/{$this->defaultLanguage}");
-            }
-            foreach($this->rules as $i => $rule)
+            $pathInfo = $this->removeUrlSuffix($rawPathInfo,$this->urlSuffix);
+            foreach($this->_rules as $i => $rule)
             {
                 if(is_array($rule))
-                        $this->rules[$i] = $rule=Yii::createComponent($rule);
+                    $this->_rules[$i] = $rule=Yii::createComponent($rule);
                 if(($r = $rule->parseUrl($this,$request,$pathInfo,$rawPathInfo)) !== false)
-                        return isset($_GET[$this->routeVar]) ? $_GET[$this->routeVar] : $r;
+                    return isset($_GET[$this->routeVar]) ? $_GET[$this->routeVar] : $r;
             }
             if($this->useStrictParsing)
                 throw new CHttpException(404,Yii::t('yii','Unable to resolve the request "{route}".',
@@ -97,17 +108,17 @@ class CApplicationUrlManager extends CUrlManager
         }
         elseif(isset($_GET[$this->routeVar]))
         {
-            $this->processGetUrlLanguage($_GET['language'],$request,$_GET[$this->routeVar]);
+            $this->_paramLanguage($_GET['language'],$request,$_GET[$this->routeVar]);
             return $_GET[$this->routeVar];
         }
         elseif(isset($_POST[$this->routeVar]))
         {
-            $this->processGetUrlLanguage($_POST['language'],$request,$_POST[$this->routeVar]);
+            $this->_paramLanguage($_POST['language'],$request,$_POST[$this->routeVar]);
             return $_POST[$this->routeVar];
         }
         else
         {
-            $this->processGetUrlLanguage($_GET['language'],$request,'');
+            $this->_paramLanguage($_GET['language'],$request,'');
             return '';
         }
     }
@@ -119,23 +130,25 @@ class CApplicationUrlManager extends CUrlManager
      * @param string $ampersand default params glue.
      * @return string formed URL.
      */
-    public function createUrlDefault($route,$params,$ampersand)
+    public function createUrl($route,$params=array(),$ampersand='&')
     {
         if($this->getUrlFormat() === self::PATH_FORMAT)
         {
-            $slash = ($route{0} == '/') ? '/' : '';
-            $lang = $this->_language;
+            $original = parent::createUrl($route,$params,$ampersand);
+            $slash = ($original{0} == '/') ? '/' : '';
+            $lang = Yii::app()->getLanguage();
+            
             if (isset($params['language']))
             {
                 $lang = $params['language'];
                 unset($params['language']);
             }
-            if (in_array($lang,$this->_languages))
-                $route = $slash.$lang.'/'.$route;
+            else if (in_array($lang,$this->languages) && $lang != $this->defaultLanguage)
+                return $slash.$lang.'/'.ltrim($original,'/');
         }
-        else
-            $params += array('language' => $this->_language);
-        return parent::createUrlDefault($route,$params,$ampersand);
+        else if (Yii::app()->getLanguage() != $this->defaultLanguage)
+            $params['language'] = Yii::app()->getLanguage();
+        return parent::createUrl($route,$params,$ampersand);
     }
     
     /**
@@ -146,34 +159,38 @@ class CApplicationUrlManager extends CUrlManager
      * @param CHttpRequest $request request object.
      * @return void.
      */
-    public function processGetUrlLanguage($param,$request,$route)
+    private function _paramLanguage($param,$request,$route)
     {
-        $param = mb_strtolower($param);
-        if (in_array($param,$this->_languages))
-            $this->_language = mb_strtolower($param);
-        else if ($param == null)
+        if ($this->multilangEnabled)
         {
-            $this->_language = $this->defaultLanguage;
-            if ($this->redirectOnDefault)
+            $param = mb_strtolower($param);
+            if (in_array($param,$this->languages))
+                $this->setLanguage(mb_strtolower($param));
+            else if ($param == null)
             {
-                if($this->getUrlFormat() === self::PATH_FORMAT)
-                    $request->redirect($this->baseUrl."/{$this->defaultLanguage}");
-                else
-                    $request->redirect($this->createUrl($route,array('language' => $this->defaultLanguage) + $_GET));
+                $this->setLanguage(mb_strtolower($this->defaultLanguage));
+                if ($this->redirectOnDefault)
+                {
+                    if($this->getUrlFormat() === self::PATH_FORMAT)
+                        $request->redirect($this->baseUrl."/{$this->defaultLanguage}");
+                    else
+                        $request->redirect($this->createUrl($route,array('language' => $this->defaultLanguage) + $_GET));
+                }
             }
+            else
+                throw new CHttpException(404,Yii::t('yii','Unable to resolve the request "{route}".',
+                    array('{route}' => $route)));
         }
-        else
-            throw new CHttpException(404,Yii::t('yii','Unable to resolve the request "{route}".',
-                array('{route}' => $route)));
     }
     
-    /**
-     * Get current URL parsed language.
-     * @return string URL language.
-     */
-    public function getUrlLanguage()
+    public function setLanguage($language)
     {
-        return $this->_language;
+        
+        if ($this->multilangEnabled && !$this->_langChanged)
+        {
+            Yii::app()->setLanguage($language);
+            $this->_langChanged = true;
+        }
     }
     
     /**
@@ -197,14 +214,14 @@ class CApplicationUrlManager extends CUrlManager
         $this->defaultLanguage = $language;
     }
     
-    /**
-     * Sett settings component identifier.
-     * @param string $componentId component identifier.
-     * @return void.
-     */
-    public function setSettingsComponentId($componentId)
+    public function setLanguages($languages)
     {
-        $this->settingsComponentId = $componentId;
+        $this->languages = $languages;
+    }
+    
+    public function setMultilangEnabled($status)
+    {
+        $this->multilangEnabled = $status;
     }
 }
 ?>

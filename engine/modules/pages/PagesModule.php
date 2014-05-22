@@ -25,8 +25,7 @@ class PagesModule extends CWebModule
     {
         $this->defaultController = 'pages';
         $this->setImport(array(
-            'pages.components.*',
-            'application.modules.pages.models.*'
+            'pages.models.*'
         ));
     }
 }
