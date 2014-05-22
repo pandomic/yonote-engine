@@ -12,6 +12,7 @@
 
 <?php
 // Select tinymce language.
+$this->asset('application.vendors.tinymce');
 $tinymceLanguage = (in_array(Yii::app()->getLanguage().'.js',scandir($tinymcePath = Yii::app()->assetManager->getPublishedPath
         (Yii::getPathOfAlias('application.vendors.tinymce')).'/langs'))) ? Yii::app()->getLanguage() : '';
 ?>
