@@ -3,6 +3,10 @@
 #################
 
 engine/templates/rafineza/
+engine/template/rafineza
+
+*.bin
+*.BIN
 
 #################
 ## Eclipse
