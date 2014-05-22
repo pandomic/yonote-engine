@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Май 15 2014 г., 22:36
+-- Время создания: Май 22 2014 г., 17:46
 -- Версия сервера: 5.5.37-log
 -- Версия PHP: 5.3.28
 
@@ -210,7 +210,7 @@ CREATE TABLE IF NOT EXISTS `yonote_mod_page` (
 --
 
 INSERT INTO `yonote_mod_page` (`alias`, `title`, `content`, `language`, `updatetime`) VALUES
-('hello-world-mypitty', 'Привет мир!', '<p>Hello <strong>world</strong>!</p>', '', NULL);
+('for-advertisers', 'Рекламодателям', '<p>Уважаемые клиенты! Для размещения рекламного модуля в газете "Рекламный проспект" Вам необходимо обратиться в наш офис для заключения договора по адресу:</p>', 'ru', 1400761762);
 
 -- --------------------------------------------------------
 
@@ -375,17 +375,18 @@ INSERT INTO `yonote_setting` (`category`, `name`, `value`, `updatetime`, `descri
 ('posts', 'thumbnail.width.min', '300', 1398696710, 'description.thumbnail.width.min'),
 ('posts', 'title.length.max', '80', 6556598, 'description.title.length.max'),
 ('posts', 'title.length.min', '2', 54548, 'description.title.length.min'),
-('system', 'admin.language', 'ru', 1400103009, 'description.admin.language'),
-('system', 'admin.template', 'default', 1400103009, 'description.admin.template'),
-('system', 'admin.time.zone', 'Europe/Minsk', 1400103009, 'description.admin.time.zone'),
-('system', 'languages', 'ru,en', 1400103009, 'description.languages'),
-('system', 'login.duration', '604800', 1400103009, 'description.login.duration'),
-('system', 'module.size.max', '5242880', 1400103009, 'description.module.size.max'),
-('system', 'url.format', 'path', 1400103009, 'description.url.format'),
-('system', 'url.redirectondefault', '1', 1400103009, 'description.url.redirectondefault'),
-('system', 'website.language', 'ru', 1400103009, 'description.website.language'),
-('system', 'website.template', 'rafineza', 1400103009, 'description.website.template'),
-('system', 'website.time.zone', 'Europe/Minsk', 1400103009, 'description.website.time.zone'),
+('system', 'admin.language', 'ru', 1400756657, 'description.admin.language'),
+('system', 'admin.template', 'default', 1400756657, 'description.admin.template'),
+('system', 'admin.time.zone', 'Europe/Minsk', 1400756657, 'description.admin.time.zone'),
+('system', 'languages', 'ru,en', 1400756657, 'description.languages'),
+('system', 'login.duration', '604800', 1400756657, 'description.login.duration'),
+('system', 'module.size.max', '5242880', 1400756657, 'description.module.size.max'),
+('system', 'url.format', 'path', 1400756657, 'description.url.format'),
+('system', 'url.multilingual', '1', 1256589, 'Enable multilingual URL mode'),
+('system', 'url.redirectondefault', '1', 1400756657, 'description.url.redirectondefault'),
+('system', 'website.language', 'ru', 1400756657, 'description.website.language'),
+('system', 'website.template', 'respekt', 1400756657, 'description.website.template'),
+('system', 'website.time.zone', 'Europe/Minsk', 1400756657, 'description.website.time.zone'),
 ('users', 'name.length.max', '20', 1398530025, 'description.name.length.max'),
 ('users', 'name.length.min', '2', 1398530025, 'description.name.length.min'),
 ('users', 'password.length.max', '50', 1398530025, 'description.password.length.max'),
@@ -430,7 +431,7 @@ CREATE TABLE IF NOT EXISTS `yonote_user` (
 --
 
 INSERT INTO `yonote_user` (`name`, `password`, `token`, `email`, `activated`, `verified`, `subscribed`, `updatetime`) VALUES
-('admin', '$2a$13$dKmIZvU4j0ZBuJ/NNTITJ.fZc1i4Qlyng90zbccfemEDJ1iOujSRO', '$2a$13$.huqFGrseEBKUewNWO.GCX', 'email@email.com', 0, 0, 0, NULL),
+('admin', '$2a$13$dKmIZvU4j0ZBuJ/NNTITJ.fZc1i4Qlyng90zbccfemEDJ1iOujSRO', '$2a$13$ijsf3dKhCNeCHvxQXBDL2E', 'email@email.com', 0, 0, 0, NULL),
 ('alonex', '', NULL, 'fsd@dgh.df', 1, 1, 1, 1398341536),
 ('newuser', '$2a$13$Xj25wAX9RwRO7JUK/rCsze7aLAfmXUuE5qKu/Vz21ryp3Y9HBcvme', NULL, 'fsd@dgh.df', 1, 1, 0, NULL),
 ('nikita', '$2a$13$J4Gk.kkH9YAGwp8RNkaD5.DKtTF.Bz7M0jJG2ha70GreKCwmlUSnG', NULL, 'email@mail.com', 0, 0, 0, NULL);
