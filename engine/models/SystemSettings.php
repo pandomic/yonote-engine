@@ -57,6 +57,10 @@ class SystemSettings extends CFormModel
      */
     public $allowedLanguages;
     /**
+     * @var boolean allow to use and form multilingual URLs.
+     */
+    public $allowMultilingualUrls = false;
+    /**
      * @var boolean redirect to default language version if null given.
      */
     public $redirectDefault = false;
@@ -109,7 +113,7 @@ class SystemSettings extends CFormModel
                 'allowedLanguages','match','pattern' => '/^([a-z]{2,3},?)*[a-z]{2,3}$/',
                 'message' => Yii::t('settings','model.systemsettings.error.allowedlanguages')
             ),
-            array('redirectDefault','boolean'),
+            array('redirectDefault,allowMultilingualUrls','boolean'),
             array('adminLanguage,websiteLanguage','languageRule'),
             array('adminTemplate','templateRule','area' => 'backend'),
             array('websiteTemplate','templateRule','area' => 'frontend'),
@@ -204,8 +208,11 @@ class SystemSettings extends CFormModel
         else
             $alias = 'admin.templates';
         $this->_templates[$area] = scandir(Yii::getPathOfAlias($alias));
-        array_shift($this->_templates[$area]); // Remove ./
-        array_shift($this->_templates[$area]); // Remove ../
+        foreach ($this->_templates[$area] as $k => $template)
+        {
+            if (!is_dir(Yii::getPathOfAlias($alias).'/'.$template) || $template == '.' || $template == '..')
+                unset($this->_templates[$area][$k]);
+        }
         $this->_templates[$area] = array_combine(
             $this->_templates[$area],
             $this->_templates[$area]
@@ -242,7 +249,8 @@ class SystemSettings extends CFormModel
             'login.duration' => 'systemLoginDuration',
             'module.size.max' => 'moduleMaxSize',
             'languages' => 'allowedLanguages',
-            'url.redirectondefault' => 'redirectDefault'
+            'url.redirectondefault' => 'redirectDefault',
+            'url.multilingual' => 'allowMultilingualUrls'
         );
         
         $criteria = new CDbCriteria();

@@ -1,6 +1,6 @@
 <?php
 /**
- * ModulesController class file.
+ * ModsController class file.
  *
  * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
  * @link http://yonote.org
@@ -14,7 +14,7 @@
  * @author Vlad Gramuzov <vlad.gramuzov@gmail.com>
  * @since 1.0
  */
-class ModulesController extends CApplicationController
+class ModsController extends CApplicationController
 {
     
     private $_modulesListModel = null;
@@ -158,7 +158,7 @@ class ModulesController extends CApplicationController
     {
         $this->pageTitle = Yii::t('modules','page.info.title');
         $this->setPathsQueue(array(
-            Yii::t('modules','page.modules.title') => Yii::app()->createUrl('modules/index'),
+            Yii::t('modules','page.modules.title') => Yii::app()->createUrl('mods/index'),
             Yii::t('modules','page.info.title') => Yii::app()->createUrl($this->getRoute())
         ));
         $this->render('info',array(
@@ -174,7 +174,7 @@ class ModulesController extends CApplicationController
     {
         $this->pageTitle = Yii::t('modules','page.add.title');
         $this->setPathsQueue(array(
-            Yii::t('modules','page.modules.title') => Yii::app()->createUrl('modules/index'),
+            Yii::t('modules','page.modules.title') => Yii::app()->createUrl('mods/index'),
             Yii::t('modules','page.add.title') => Yii::app()->createUrl($this->getRoute())
         ));
         $model = new Module('add');

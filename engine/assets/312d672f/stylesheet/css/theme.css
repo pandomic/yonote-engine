@@ -1,435 +1,52 @@
-@media (min-width: 768px) {
-  .nav.mainnav {
-    float: right;
-  }
-}
-@media (min-width: 992px) {
-  .nav.mainnav {
-    float: right;
-  }
-}
-.debug {
-  outline: 1px solid red;
-}
-.rfz-modal {
-  -webkit-transition: all 0.5s;
-  transition: all 0.5s;
-  -webkit-transform: scale(0.9, 0.9);
-  -ms-transform: scale(0.9, 0.9);
-  transform: scale(0.9, 0.9);
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  z-index: 20;
-  background: #645b58;
-  visibility: hidden;
-  opacity: 0;
-  overflow: scroll;
-  overflow-x: hidden;
-  -ms-overflow-x: hidden;
-}
-.rfz-modal .title {
-  background: #eeeeee;
-}
-.rfz-modal .title h3 {
-  margin: 5px 0 34px 0;
-  color: #7f7470;
-  text-transform: uppercase;
-}
-.rfz-modal .title .logo {
-  margin: 34px auto 0 auto;
-  display: block;
-  border: 0;
-  width: 130px;
-  height: 35px;
-  background: url('../../images/logo_brand.png');
-}
-.rfz-modal .name {
-  display: block;
-  background: #7f7470;
-  margin: 0;
-  padding: 76px 0;
-  color: #fff;
-  text-transform: uppercase;
-  border-bottom: 1px solid #8c817d;
-}
-.rfz-modal .close {
-  font-size: 36px;
-  margin-right: 10px;
-}
-.rfz-modal.active {
-  opacity: 1;
-  visibility: visible;
-  -webkit-transform: scale(1, 1);
-  -ms-transform: scale(1, 1);
-  transform: scale(1, 1);
-}
-.rfz-modal .description {
-  text-align: center;
-  padding: 34px 0;
-  margin: 0 auto;
-  background: #645b58;
-  color: #fff;
-}
-.rfz-modal .description h3 {
-  color: #7f7470;
-  margin: 0;
-}
-.rfz-modal .description .text {
-  margin-top: 10px;
-}
-.rfz-modal .photo-region {
-  padding: 20px 0;
-  width: 100%;
-  margin: 0 auto;
-  border-bottom: 1px solid #847975;
-  text-align: center;
-  color: #fff;
-}
-.rfz-modal .photo-region .subinfo {
-  margin-top: 10px;
-  color: #8c817d;
-}
-.rfz-modal .photo-region .prev,
-.rfz-modal .photo-region .next {
-  color: #fff;
-  margin: 10px 0 0 0;
-  cursor: pointer;
-}
-.rfz-modal .photo-region .prev:hover,
-.rfz-modal .photo-region .next:hover {
-  color: #7f7470;
-}
-.rfz-modal .photo-region .photo {
-  background: #716864;
-  height: auto;
-  cursor: pointer;
-  padding: 0;
-  background: #645b58;
-  width: 400px;
-  margin: 0 auto;
-  position: relative;
-}
-.rfz-modal .photo-region .photo .zoom-area {
-  background: transparent;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-}
-.rfz-modal .photo-region .photo .zoom-area .zoom {
-  -webkit-transition: opacity 0.2s linear, visibility 0.2s linear;
-  transition: opacity 0.2s linear, visibility 0.2s linear;
-  width: 400px;
-  display: none;
-  height: 400px;
-  position: relative;
-  z-index: 2;
-  border: 20px solid #645b58;
-  padding: 0;
-  background-repeat: no-repeat;
-  pointer-events: none;
-}
-.rfz-modal .photo-region .photo .zoom-area .zoom.active {
-  display: block;
-}
-.rfz-modal .photo-region .photo img {
-  width: 100%;
-  height: auto;
-}
-.rfz-modal .photo-region .photo.loading {
-  background-image: url('../../images/loading.gif');
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-}
 .text-serif {
   font-family: Georgia, "Times New Roman", Times, serif;
 }
 .text-large {
   font-size: 18px;
 }
-.rfz-collection-types .item {
-  height: 400px;
-  overflow: hidden;
-  margin: 0;
-  padding: 0;
-}
-.rfz-collection-types .item .bg-position {
-  background-position: 50% 50%;
-  background-size: cover;
-}
-.rfz-collection-types .item.evening {
-  background: url('../../images/collections/evening.jpg');
-  background-position: 50% 50%;
-  background-size: cover;
-}
-.rfz-collection-types .item.wedding {
-  background: url('../../images/collections/wedding.jpg');
-  background-position: 50% 50%;
-  background-size: cover;
-}
-.rfz-collection-types .item.children {
-  background: url('../../images/collections/children.jpg');
-  background-position: 50% 50%;
-  background-size: cover;
-}
-.rfz-collection-types .item img {
-  -webkit-transform: translate(0, 0);
-  -ms-transform: translate(0, 0);
-  transform: translate(0, 0);
-  height: 400px;
-  width: auto;
-}
-.rfz-collection-types .item .item-button {
-  -webkit-transition: background-color 0.5s;
-  transition: background-color 0.5s;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  border: 1px solid #ffffff;
-  font-weight: bold;
-  color: #ffffff;
-  position: absolute;
-  z-index: 2;
-  margin: 0;
-  top: 90%;
-  left: 50%;
-  width: 80%;
-  background: transparent;
-}
-.rfz-collection-types .item .item-fader {
-  -webkit-transition: opacity 0.5s;
-  transition: opacity 0.5s;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  z-index: 1;
-  background: rgba(127, 116, 112, 0.7);
-  opacity: 1.0;
-}
-.rfz-collection-types .item:hover .item-fader {
-  opacity: 0.0;
-}
-.rfz-collection-types .item:hover .item-button {
-  border: 1px solid transparent;
-  background: #ffffff;
-  color: #555555;
-}
-.collections {
-  margin-top: 20px;
-  padding: 0;
-}
-.collections .description {
-  text-align: center;
-  color: #fff;
-  padding: 54px 115px;
-  font-family: Georgia, "Times New Roman", Times, serif;
-}
-.collections .description p {
-  padding-bottom: 20px;
-}
-.collections .description .divider {
-  margin: 0 auto;
-  background: #fff;
-  width: 370px;
-  height: 1px;
-}
-.collections.wedding .description {
-  background: #7f7470;
-}
 .rfz-main {
   margin-top: 50px;
 }
-.btn.rfz-down-btn {
-  text-transform: none;
-  background: transparent;
-}
-.btn.btn-margin {
-  margin-top: 20px;
-}
-.rfz-about {
-  padding: 0 0 10px 0;
-  margin: 0;
-  background: #e0e0e0;
-  color: #555555;
-}
-.rfz-about .columns {
-  -webkit-column-count: 2;
-  -moz-column-count: 2;
-  column-count: 2;
-  -webkit-column-gap: 30px;
-  -moz-column-gap: 30px;
-  column-gap: 30px;
-  margin-top: 20px;
-}
-.rfz-about .title {
-  text-transform: uppercase;
-  font-weight: bold;
-}
-.rfz-slider {
-  width: 100%;
-  height: 432px;
-  overflow: hidden;
-  position: relative;
-  background: #7f7470;
-}
-.rfz-slider:hover .carousel-inner-fader,
-.rfz-slider:hover .carousel-indicators,
-.rfz-slider:hover .carousel-caption,
-.rfz-slider:hover .carousel-control {
-  -webkit-transition: opacity 0.5s;
-  transition: opacity 0.5s;
-  opacity: 1.0;
-}
-.rfz-slider .carousel-indicators,
-.rfz-slider .carousel-inner-fader,
-.rfz-slider .carousel-caption,
-.rfz-slider .carousel-control {
-  -webkit-transition: opacity 0.5s;
-  transition: opacity 0.5s;
-  opacity: 0.0;
-}
-.rfz-slider .carousel-control.left {
-  background-image: -webkit-linear-gradient(left, color-stop(rgba(0, 0, 0, 0) 0%), color-stop(rgba(0, 0, 0, 0) 100%));
-  background-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 100%);
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#00000000', GradientType=1);
-}
-.rfz-slider .carousel-control.right {
-  left: auto;
-  right: 0;
-  background-image: -webkit-linear-gradient(left, color-stop(rgba(0, 0, 0, 0) 0%), color-stop(rgba(0, 0, 0, 0) 100%));
-  background-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0) 100%);
-  background-repeat: repeat-x;
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#00000000', GradientType=1);
-}
-.rfz-slider .carousel-caption {
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-  position: absolute;
-  z-index: 3;
-  margin: 0;
-  padding: 0;
-  top: 50%;
-  left: 50%;
-  right: auto;
-  bottom: auto;
-  text-align: left;
-}
-.rfz-slider .carousel-caption a {
-  color: #ffffff;
-}
-.rfz-slider .item {
-  height: 432px;
-  overflow: hidden;
-}
-.rfz-slider.collections {
-  height: 490px;
-  margin: 0;
-}
-.rfz-slider.collections .carousel-indicators,
-.rfz-slider.collections .carousel-inner-fader,
-.rfz-slider.collections .carousel-caption,
-.rfz-slider.collections .carousel-control {
-  opacity: 1.0;
-}
-.rfz-slider.collections .carousel-caption {
-  left: 0;
-  right: 0;
-  -webkit-transform: translate(0, -50%);
-  -ms-transform: translate(0, -50%);
-  transform: translate(0, -50%);
-}
-.rfz-slider.collections .carousel-caption a {
-  text-shadow: none;
-  font-weight: normal;
-  color: #555555;
-  background: #fff;
-  padding: 10px;
-  display: inline-block;
-}
-.rfz-slider.collections .item {
-  height: 490px;
-}
-.rfz-slider .carousel-control {
-  z-index: 3;
-}
-.rfz-slider .carousel-inner-fader {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  z-index: 2;
-  background: rgba(127, 116, 112, 0.7);
-}
-.rfz-slider img {
-  width: 100%;
-  height: auto;
-}
 .rfz-header {
-  height: 100%;
-  width: 100%;
-}
-.rfz-menu {
-  z-index: 20;
   position: absolute;
   top: 100%;
   width: 100%;
-  -webkit-transition: opacity 0.5s;
-  transition: opacity 0.5s;
-  opacity: 1.0;
-}
-.rfz-menu.glued {
-  position: fixed;
-  top: 0;
-  opacity: 0.8;
-}
-.rfz-menu:hover {
-  opacity: 1.0;
-}
-.rfz-menu-bg {
-  height: 50px;
-  width: 100%;
-  z-index: 2;
-  position: absolute;
-  background: #7f7470;
 }
 .rfz-parallax {
   width: 100%;
   height: 100%;
-  background: #7f7470;
+  background: #cecece;
 }
-.rfz-parallax .layer {
+.rfz-parallax .rfz-parallax-layer {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
 }
-.rfz-parallax .layer.layer-1 {
+.rfz-parallax .rfz-parallax-layer.layer-1 {
   z-index: 2;
   background-image: url('../../images/parallax/layer_1.png');
   background-position: center;
   background-repeat: no-repeat;
 }
-.rfz-parallax .layer.layer-2 {
+.rfz-parallax .rfz-parallax-layer.layer-2 {
   z-index: 1;
   background-image: url('../../images/parallax/layer_2.gif');
 }
 .rfz-parallax .rfz-parallax-container {
   position: absolute;
   z-index: 3;
+  display: table-cell;
   left: 50%;
   top: 50%;
-  -webkit-transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
 }
-.rfz-parallax .rfz-parallax-container .logo {
+.rfz-parallax .rfz-parallax-container .rfz-parallax-container-logo {
   margin: 0 auto;
 }
-.rfz-parallax .rfz-parallax-container .button {
+.rfz-parallax .rfz-parallax-container .rfz-parallax-container-button {
   margin: 0 auto;
   text-align: center;
   margin-top: 82px;

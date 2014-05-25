@@ -41,7 +41,8 @@ tinymce.init({
         <div class="panel panel-default">
             <?php echo CHtml::form(null,'POST',array(
                 'role' => 'form',
-                'id' => 'pagesForm'
+                'id' => 'pagesForm',
+                'enctype' => 'multipart/form-data'
             )); ?>
                 <div class="panel-body"> 
                     <div class="form-group <?php if ($model->hasErrors('alias')) echo('has-error'); ?>">
@@ -84,6 +85,27 @@ tinymce.init({
                         <?php echo CHtml::error($model,'language',array(
                             'class' => 'help-block text-danger'
                         )); ?>
+                    </div>
+                    <div class="form-group <?php if ($model->hasErrors('thumbnail')) echo('has-error'); ?>">
+                        <?php echo CHtml::activeLabel($model,'thumbnail',array(
+                            'for' => 'pageThumbnail',
+                            'class' => 'control-label'
+                        )); ?>
+                        <?php echo CHtml::activeFileField($model,'thumbnail',array(
+                            'class' => 'form-control',
+                            'id' => 'pageThumbnail'
+                        )); ?>
+                        <?php echo CHtml::error($model,'thumbnail',array(
+                            'class' => 'help-block text-danger'
+                        )); ?>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <?php echo CHtml::activeCheckBox($model,'removeThumbnail'); ?>
+                                <?php echo Yii::t('PagesModule.pages','model.page.removethumbnail'); ?>
+                            </label>
+                        </div>
                     </div>
                     <div class="form-group <?php if ($model->hasErrors('content')) echo('has-error'); ?>">
                         <?php echo CHtml::activeLabel($model,'content',array(

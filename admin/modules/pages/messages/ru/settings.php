@@ -17,6 +17,14 @@ return array(
     'description.alias.length.min' => 'Page alias min length',
     'description.title.length.min' => 'Page title min length',
     'description.title.length.max' => 'Page title max length',
+    'description.thumbnail.width.min' => 'Page thumbnail min width',
+    'description.thumbnail.width.max' => 'Page thumbnail max width',
+    'description.thumbnail.height.min' => 'Page thumbnail min height',
+    'description.thumbnail.height.max' => 'Page thumbnail max height',
+    'description.thumbnail.resize.enabled' => 'Resize thumbnail',
+    'description.thumbnail.resize.width' => 'Thumbnail resize width',
+    'description.thumbnail.resize.height' => 'Thumbnail resize height',
+    'description.' => 'Thumbnail quality',
     'success.settings.update' => 'Settings have been successfully updated.',
     'page.settings.title' => 'Pages module settings'
 );

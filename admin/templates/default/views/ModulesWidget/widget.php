@@ -16,7 +16,7 @@
           <div class="caption">
               <h3><?php echo $model->title; ?></h3>
               <p><?php echo $model->description; ?></p>
-              <p><a href="<?php echo $this->controller->createUrl('/'.$model->name); ?>" class="btn btn-primary" role="button"><?php echo Yii::t('modules','label.module.goto'); ?></a> <a href="<?php echo $this->controller->createUrl('/modules/info',array('id' => $model->name)); ?>" class="btn btn-default" role="button"><?php echo Yii::t('modules','label.module.info.view'); ?></a></p>
+              <p><a href="<?php echo $this->controller->createUrl('/'.$model->name); ?>" class="btn btn-primary" role="button"><?php echo Yii::t('modules','label.module.goto'); ?></a> <a href="<?php echo $this->controller->createUrl('/mods/info',array('id' => $model->name)); ?>" class="btn btn-default" role="button"><?php echo Yii::t('modules','label.module.info.view'); ?></a></p>
           </div>
         </div>
             </div>

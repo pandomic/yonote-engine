@@ -1,171 +1,10 @@
+
 //
 // Load core variables and mixins
 // --------------------------------------------------
 
 @import "variables.less";
 @import "mixins.less";
-
-@media (min-width: @screen-sm-min) {
-    .nav.mainnav {
-        float: right;
-    }
-}
-
-@media (min-width: @screen-md-min) {
-    .nav.mainnav {
-        float: right;
-    }
-}
-
-.debug {
-    outline: 1px solid red;
-}
-
-.rfz-modal {
-    
-    .transition(all 0.5s);
-    .scale(0.9,0.9);
-    
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    position: fixed;
-    z-index: 20;
-    background: darken(@rfz-brand,10%);
-    visibility: hidden;
-    opacity: 0;
-    overflow: scroll;
-    overflow-x: hidden;
-    -ms-overflow-x: hidden;
-    
-    .title {
-        background: @gray-lighter;
-        h3 {
-            margin: 5px 0 34px 0;
-            color: @rfz-brand;
-            text-transform: uppercase;
-        }
-        .logo {
-            margin: 34px auto 0 auto;
-            display: block;
-            border: 0;
-            width: 130px;
-            height: 35px;
-            background: url('../../images/logo_brand.png')
-        }
-    }
-    
-    .name {
-        display: block;
-        background: @rfz-brand;
-        margin: 0;
-        padding: 76px 0;
-        color: #fff;
-        text-transform: uppercase;
-        border-bottom: 1px solid lighten(@rfz-brand,5%);
-    }
-    
-    .close {
-        font-size: @font-size-h1;
-        margin-right: 10px;
-    }
-    
-    &.active {
-        opacity: 1;
-        visibility: visible;
-        .scale(1,1);
-    }
-    
-    .description {
-        text-align: center;
-        padding: 34px 0;
-        margin: 0 auto;
-        background: darken(@rfz-brand,10%);
-        color: #fff;
-        h3 {
-            color: @rfz-brand;
-            margin: 0;
-        }
-        .text {
-            margin-top: 10px;
-        }
-    }
-    
-    .photo-region {
-        padding: 20px 0;
-        width: 100%;
-        margin: 0 auto;
-        border-bottom: 1px solid lighten(@rfz-brand,2%);
-        text-align: center;
-        color: #fff;
-        
-        .subinfo {
-            margin-top: 10px;
-            color: lighten(@rfz-brand,5%);
-        }
-        
-        .prev,.next {
-            color: #fff;
-            margin: 10px 0 0 0;
-            cursor: pointer;
-            &:hover {
-                color: @rfz-brand;
-            }
-        }
-        
-        .photo {
-            background: darken(@rfz-brand,5%);
-            height: auto;
-            cursor: pointer;
-            padding: 0;
-            background: darken(@rfz-brand,10%);
-            width: 400px;
-            margin: 0 auto;
-            position: relative;
-            
-            .zoom-area {
-                
-                background: transparent;
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                
-                .zoom {
-
-                    .transition(~"opacity 0.2s linear, visibility 0.2s linear");
-                    width: 400px;
-                    display: none;
-                    height: 400px;
-                    position: relative;
-                    z-index: 2;
-                    border: 20px solid darken(@rfz-brand,10%);
-                    padding: 0;
-                    background-repeat: no-repeat;
-                    pointer-events: none;
-
-                    &.active {
-                        display: block;
-                    }
-                }
-            }
-            
-            img {
-                width: 100%;
-                height: auto;
-            }
-
-            &.loading {
-                background-image: url('../../images/loading.gif');
-                background-position: 50% 50%;
-                background-repeat: no-repeat;
-            }
-        }
-    }
-    
-    
-    
-}
 
 .text {
     &-serif {
@@ -176,303 +15,22 @@
     }
 }
 
-.rfz-collection-types {
-    .item {
-        
-        height: 400px;
-        overflow: hidden;
-        margin: 0;
-        padding: 0;
-        
-        .bg-position {
-            background-position: 50% 50%;
-            background-size: cover;
-        }
-        
-        &.evening {
-            background: url(@rfz-collections-evening);
-            .bg-position;
-        }
-        
-        &.wedding {
-            background: url(@rfz-collections-wedding);
-            .bg-position;
-        }
-        
-        &.children {
-            background: url(@rfz-collections-children);
-            .bg-position;
-        }
-        
-        img {
-            .translate(0,0);
-            height: 400px;
-            width: auto;
-        }
-        
-        .item-button
-        {
-            .transition(background-color 0.5s);
-            .translate(-50%,-50%);
-            border: @rfz-collections-item-button-border;
-            font-weight: @rfz-collections-item-button-weight;
-            color: @rfz-collections-item-button-color;
-            position: absolute;
-            z-index: 2;
-            margin: 0;
-            top: 90%;
-            left: 50%;
-            width: 80%;
-            background: @rfz-collections-item-button-bg;
-        }
-        
-        .item-fader {
-            .transition(opacity 0.5s);
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            z-index: 1;
-            background: fade(@rfz-brand,70%);
-            opacity: 1.0;
-        }
-        
-        &:hover {
-            .item-fader {
-                opacity: 0.0;
-            }
-            .item-button {
-                color: @rfz-collections-item-button-color-hover;
-                border: @rfz-collections-item-button-border-hover;
-                background: @rfz-collections-item-button-bg-hover;
-                color: @gray;
-            }
-        }
-        
-    }
-}
-
-.collections {
-    margin-top: @line-height-computed;
-    padding: 0;
-    .description {
-
-        text-align: center;
-        color: #fff;
-        padding: 54px 115px;
-        font-family: @font-family-serif;
-
-        p {
-            padding-bottom: @line-height-computed;
-        }
-
-        .divider {
-            margin: 0 auto;
-            background: #fff;
-            width: 370px;
-            height: 1px;
-        }
-    }
-
-    &.wedding {
-        .description {
-            background: @rfz-brand;
-        }
-    }
-
-}
-
-.rfz-wedding-collections-slider
-{
-    
-}
-
 .rfz-main {
     margin-top: 50px;
 }
 
-.btn {
-    &.rfz-down-btn {
-        text-transform: none;
-        background: transparent;
-    }
-    &.btn-margin {
-        margin-top: @line-height-computed;
-    }
-}
-
-
-.rfz-about {
-        
-    padding: 0 0 @line-height-computed/2 0;
-    margin: 0;
-    background: @rfz-about-bg-color;
-    color: @gray;
-
-    .columns {
-        .content-columns(2);
-        margin-top: @line-height-computed;
-    }
-
-    .title {
-        text-transform: uppercase;
-        font-weight: @rfz-about-title-weight;
-    }
-}
-
-.rfz-slider {
-        
-    width: 100%;
-    height: @rfz-topslider-height;
-    overflow: hidden;
-    position: relative;
-    background: @rfz-brand;
-
-    &:hover {
-
-        .carousel-inner-fader,
-        .carousel-indicators,
-        .carousel-caption,
-        .carousel-control {
-            .transition(opacity 0.5s);
-            opacity: 1.0;
-        }
-
-    }
-
-    .carousel-indicators,
-    .carousel-inner-fader,
-    .carousel-caption,
-    .carousel-control {
-        .transition(opacity 0.5s);
-        opacity: 0.0;
-    }
-
-    .carousel-control {
-          &.left {
-            #gradient > .horizontal(@start-color: rgba(0,0,0,0); @end-color: rgba(0,0,0,0));
-          }
-          &.right {
-            left: auto;
-            right: 0;
-            #gradient > .horizontal(@start-color: rgba(0,0,0,0); @end-color: rgba(0,0,0,0));
-          }
-    }
-    
-    .carousel-caption {
-        .translate(-50%,-50%);
-        position: absolute;
-        z-index: 3;
-        margin: 0;
-        padding: 0;
-        top: 50%;
-        left: 50%;
-        right: auto;
-        bottom: auto;
-        text-align: left;
-
-        a {
-            color: @rfz-topslider-link-color;
-        }
-
-    }
-    
-    .item {
-        height: @rfz-topslider-height;
-        overflow: hidden;
-    }
-    
-    &.collections {
-        
-        height: 490px;
-        margin: 0;
-        
-        .carousel-indicators,
-        .carousel-inner-fader,
-        .carousel-caption,
-        .carousel-control {
-            opacity: 1.0;
-        }
-        
-        .carousel-caption {
-            
-            left: 0;
-            right: 0;
-            .translate(0,-50%);
-            
-            a {
-                text-shadow: none;
-                font-weight: normal;
-                color: @gray;
-                background: #fff;
-                padding: 10px;
-                display: inline-block;
-            }
-
-        }
-        
-        .item {
-            height: 490px;
-        }
-    }
-
-    .carousel-control {
-        z-index: 3;
-    }
-
-    .carousel-inner-fader {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        z-index: 2;
-        background: fade(@rfz-brand,70%);
-    }
-
-    img {
-        width: 100%;
-        height: auto;
-    }
-}
-
 .rfz-header {
-    height: 100%;
-    width: 100%;
-}
-
-.rfz-menu {
-    
-    z-index: 20;
     position: absolute;
     top: 100%;
     width: 100%;
-    .transition(opacity 0.5s);
-    opacity: 1.0;
-    
-    &.glued {
-        position: fixed;
-        top: 0;
-        opacity: 0.8;
-    }
-    
-    &:hover {
-        opacity: 1.0;
-    }
-}
-
-.rfz-menu-bg {
-    height: 50px;
-    width: 100%;
-    z-index: 2;
-    position: absolute;
-    background: @rfz-brand;
 }
 
 .rfz-parallax {
-    
     width: 100%;
     height: 100%;
-    background: @rfz-brand;
+    background: #cecece;
     
-    .layer {
+    .rfz-parallax-layer {
         
         position: absolute;
         top: 0;
@@ -483,31 +41,32 @@
         
         &.layer-1 {
             z-index: 2;
-            background-image: url(@rfz-parallax-layer-1);
+            background-image: url('../../images/parallax/layer_1.png');
             background-position: center;
             background-repeat: no-repeat;
         }
         
         &.layer-2 {
             z-index: 1;
-            background-image: url(@rfz-parallax-layer-2);
+            background-image: url('../../images/parallax/layer_2.gif');
             
         }
     }
     
     .rfz-parallax-container {
-        
         position: absolute;
         z-index: 3;
+        display: table-cell;
         left: 50%;
         top: 50%;
-        .translate(-50%,-50%);
+        transform: translate(-50%,-50%);
+        -webkit-transform: translate(-50%,-50%);
         
-        .logo {
+        .rfz-parallax-container-logo {
             margin: 0 auto;
         }
         
-        .button {
+        .rfz-parallax-container-button {
             margin: 0 auto;
             text-align: center;
             margin-top: 82px;

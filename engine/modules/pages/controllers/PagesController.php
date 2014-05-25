@@ -1,9 +1,14 @@
 <?php
 class PagesController extends CApplicationController
 {
+    
+    
     public function actionIndex()
     {
-        
+        $models = Page::model()->findAll();
+        $this->render('index',array(
+            'models' => $models
+        ));
     }
     
     public function actionShow($id)

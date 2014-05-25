@@ -56,6 +56,11 @@
                             </div>
                             <div class="checkbox col-md-10 col-md-offset-2">
                                 <label>
+                                    <?php echo CHtml::activeCheckBox($model,'allowMultilingualUrls'); ?> <?php echo $model->getAttributeLabel('allowMultilingualUrls'); ?>
+                                </label>
+                            </div>
+                            <div class="checkbox col-md-10 col-md-offset-2">
+                                <label>
                                     <?php echo CHtml::activeCheckBox($model,'redirectDefault'); ?> <?php echo $model->getAttributeLabel('redirectDefault'); ?>
                                 </label>
                             </div>

@@ -7,28 +7,6 @@
 //
 //## Gray and brand colors for use across Bootstrap.
 
-@rfz-brand:                           #7f7470;
-@rfz-about-bg-color:                  #e0e0e0;
-@rfz-about-title-weight:              bold;
-@rfz-topslider-bg-color:              @rfz-brand;
-@rfz-topslider-link-color:            #fff;
-@rfz-collections-item-button-bg: transparent;
-@rfz-collections-item-button-bg-hover:      #fff;
-@rfz-collections-item-button-border: 1px solid #fff;
-@rfz-collections-item-button-border-hover: 1px solid transparent;
-@rfz-collections-item-button-color: #fff;
-@rfz-collections-item-button-color-hover: @gray;
-@rfz-collections-item-button-weight:  bold;
-
-@rfz-topslider-height: 432px;
-
-@rfz-collections-evening:  '../../images/collections/evening.jpg';
-@rfz-collections-wedding:  '../../images/collections/wedding.jpg';
-@rfz-collections-children: '../../images/collections/children.jpg';
-
-@rfz-parallax-layer-1: '../../images/parallax/layer_1.png';
-@rfz-parallax-layer-2: '../../images/parallax/layer_2.gif';
-
 @gray-darker:            lighten(#000, 13.5%); // #222
 @gray-dark:              lighten(#000, 20%);   // #333
 @gray:                   lighten(#000, 33.5%); // #555
@@ -52,7 +30,7 @@
 @text-color:            @gray-dark;
 
 //** Global textual link color.
-@link-color:            darken(@brand-primary,10%);
+@link-color:            @brand-primary;
 //** Link hover color set via `darken()` function.
 @link-hover-color:      darken(@link-color, 15%);
 
@@ -356,7 +334,7 @@
 @navbar-collapse-max-height:       340px;
 
 @navbar-default-color:             #fff;
-@navbar-default-bg:                @rfz-brand;
+@navbar-default-bg:                #7f7470;
 @navbar-default-border:            darken(@navbar-default-bg, 6.5%);
 
 // Navbar links

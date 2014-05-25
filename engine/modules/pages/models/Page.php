@@ -33,6 +33,9 @@ class Page extends CActiveRecord
      */
     public $language;
     
+    public $thumbnail;
+    public $removeThumbnail;
+    
     /**
      * Attached behaviors.
      * @return array behaviors.
@@ -42,6 +45,21 @@ class Page extends CActiveRecord
         return array(
             'LanguagesBehavior' => array(
                 'class' => 'LanguagesBehavior'
+            ),
+            'ImageBehavior' => array(
+                'class' => 'ImageBehavior',
+                'fileField' => 'thumbnail',
+                'savePath' => UPLOADS_PATH.'/images',
+                'checkSides' => true,
+                'minWidth' => (int) Yii::app()->settings->get('pages','thumbnail.width.min'),
+                'minHeight' => (int) Yii::app()->settings->get('pages','thumbnail.height.min'),
+                'maxWidth' => (int) Yii::app()->settings->get('pages','thumbnail.width.max'),
+                'maxHeight' => (int) Yii::app()->settings->get('pages','thumbnail.height.max'),
+                'resizeImage' => Yii::app()->settings->get('pages','thumbnail.resize.enabled',true),
+                'cropOnResize' => true,
+                'resizeWidth' => (int) Yii::app()->settings->get('pages','thumbnail.resize.width'),
+                'resizeHeight' => (int) Yii::app()->settings->get('pages','thumbnail.resize.height'),
+                'quality' => (int) Yii::app()->settings->get('pages','thumbnail.quality')
             )
         );
     }
@@ -84,9 +102,17 @@ class Page extends CActiveRecord
                 'title','match','pattern' => '/^[\w\s.,\-!?:@]+$/iu',
                 'message' => Yii::t('PagesModule.pages','model.page.error.title.match')
             ),
+            array(
+                'thumbnail','file','types' => 'jpg,jpeg,gif,png','allowEmpty' => true,
+                'maxSize' => Yii::app()->settings->get('pages','thumbnail.size.max'),
+                'tooLarge' => Yii::t('PagesModule.pages','model.page.error.thumbnail.size.large'),
+                'tooMany' => Yii::t('PagesModule.pages','model.page.error.thumbnail.many'),
+                'wrongType' => Yii::t('PagesModule.pages','model.page.error.thumbnail.type')
+            ),
             array('language','languageRule'),
             array('content','safe'),
             array('alias','filter','filter'=>'mb_strtolower'),
+            array('removeThumbnail','boolean')
         );
     }
     
@@ -100,7 +126,9 @@ class Page extends CActiveRecord
             'alias' => Yii::t('PagesModule.pages','model.page.alias'),
             'title' => Yii::t('PagesModule.pages','model.page.title'),
             'content' => Yii::t('PagesModule.pages','model.page.content'),
-            'language' => Yii::t('PagesModule.pages','model.page.language')
+            'language' => Yii::t('PagesModule.pages','model.page.language'),
+            'thumbnail' => Yii::t('PagesModule.pages','model.page.thumbnail'),
+            'removeThumbnail' => Yii::t('PagesModule.pages','model.page.removethumbnail')
         );
     }
     
@@ -147,6 +175,39 @@ class Page extends CActiveRecord
     public function beforeSave()
     {
         $this->updatetime = time();
+        $oldThumbnail = $this->findByPk($this->alias)->thumbnail;
+        $image = $this->processImage();
+        if ($image === false && $this->getImageError() != ImageBehavior::ERROR_FILE_EMPTY){
+            $status = $this->getImageError();
+
+            $minWidth = Yii::app()->settings->get('pages','thumbnail.width.min');
+            $maxWidth = Yii::app()->settings->get('pages','thumbnail.width.max');
+            $minHeight = Yii::app()->settings->get('pages','thumbnail.height.min');
+            $maxHeight = Yii::app()->settings->get('pages','thumbnail.height.max');
+
+            if ($status == ImageBehavior::ERROR_SIDES_BIG)
+                $this->addError('photo',Yii::t('PagesModule.pages','model.page.error.thumbnail.sides.large',array(
+                    '{maxwidth}' => $maxWidth,'{maxheight}' => $maxHeight
+                )));
+            else if ($status == ImageBehavior::ERROR_SIDES_SMALL)
+                $this->addError('photo',Yii::t('PagesModule.pages','model.page.error.thumbnail.sides.small',array(
+                    '{minwidth}' => $minWidth,'{minheight}' => $minHeight
+                )));
+            return false;
+        }
+        else if ($image !== false)
+        {
+            if ($oldThumbnail != null && file_exists(UPLOADS_PATH.'/'.$oldThumbnail))
+                unlink($oldThumbnail);
+            $this->thumbnail = 'images/'.$image;
+        }
+        
+        if ($this->removeThumbnail)
+        {
+            $this->thumbnail = null;
+            if ($oldThumbnail != null && file_exists(UPLOADS_PATH.'/'.$oldThumbnail))
+                unlink(UPLOADS_PATH.'/'.$oldThumbnail);
+        }
         return parent::beforeSave();
     }
 }

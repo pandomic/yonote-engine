@@ -13,7 +13,7 @@
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading clearfix">
-                <a class="pull-right" href="<?php echo Yii::app()->createUrl('modules'); ?>"><span class="glyphicon glyphicon-arrow-left"></span> <?php echo Yii::t('system','app.back'); ?></a>
+                <a class="pull-right" href="<?php echo Yii::app()->createUrl('mods'); ?>"><span class="glyphicon glyphicon-arrow-left"></span> <?php echo Yii::t('system','app.back'); ?></a>
                 <h3 class="panel-title"><?php echo Yii::t('modules','label.module.info',array('{module}' => ucfirst($model->name))); ?></h3>
             </div>
             <div class="panel-body"> 

@@ -18,6 +18,7 @@ return array(
     'model.systemsettings.error.timezone' => 'Undefined timezone',
     'model.systemsettings.error.template' => 'Undefined template',
     'model.systemsettings.error.allowedlanguages' => 'Only lowercase characters allowed, separated by comma!',
+    'description.url.multilingual' => 'Enable multilingual URL mode',
     'description.url.redirectondefault' => 'Redirect to default language version, if the given language version of the website not found',
     'description.languages' => 'Allowed languages list',
     'description.admin.language' => 'Default administrative language',

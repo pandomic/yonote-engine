@@ -136,7 +136,7 @@
                 <span class="glow"></span>
                 <a href="#" data-toggle="collapse" data-parent="#accordion" data-target="#collapseTwo" href="#"><span class="glyphicon glyphicon-cog"></span> <?php echo Yii::t('dashboard','system'); ?></a>
                 <ul class="nav collapse" id="collapseTwo">
-                    <li><a href="<?php echo $this->createUrl('/modules'); ?>"><span class="glyphicon glyphicon-th-large"></span> <?php echo Yii::t('dashboard','system.modules'); ?></a></li>
+                    <li><a href="<?php echo $this->createUrl('/mods'); ?>"><span class="glyphicon glyphicon-th-large"></span> <?php echo Yii::t('dashboard','system.modules'); ?></a></li>
                     <li><a href="<?php echo $this->createUrl('/settings'); ?>"><span class="glyphicon glyphicon-cog"></span> <?php echo Yii::t('dashboard','system.settings'); ?></a></li>
                 </ul>
             </li>

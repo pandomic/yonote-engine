@@ -1,63 +1,61 @@
 <?php
 class PostsController extends CApplicationController
 {
-    private $_list = null;    
-    
+
     public function actionIndex()
     {
-        $list = $this->loadPostListModels();
+        $sort = new CSort();
+        $sort->sortVar = 'sort';
+        $sort->defaultOrder = 'alias ASC';
+        $sort->multiSort = true;
+
+        $criteria = new CDbCriteria();
+        $criteria->condition = 'language=:language OR language=\'\'';
+        $criteria->params = array(
+            ':language' => Yii::app()->getLanguage()
+        );
+        $model = Post::model();
+
+        if (isset($_GET['hashtag']))
+        {
+            $criteria->together = true;
+            $criteria->with = array(
+                'relations' => array(
+                    'select' => false,
+                    'joinType' => 'INNER JOIN',
+                    'condition' => 'relations.hashtagid=:hashtagid',
+                    'params' => array(':hashtagid' => $_GET['hashtag'])
+                )
+            );
+        }
+
+        $count = $model->count($criteria);
+        $pages = new CPagination($count);
+
+        $pages->pageSize = (int) Yii::app()->settings->get('posts','website.posts.page.size');
+        $pages->applyLimit($criteria);
+        $sort->applyOrder($criteria);
+        
         $this->render('index',array(
-            'models' => $list->models,
-            'pages' => $list->pages
+            'models' => $model->findAll($criteria),
+            'pages' => $pages
         ));
     }
     
-    public function loadPostListModels()
+    public function actionShow($id)
     {
-        if ($this->_list === null)
-        {
-            $this->_list = new CAttributeCollection();
-            $sort = new CSort();
-            
-            $sort->sortVar = 'sort';
-            $sort->defaultOrder = 'alias ASC';
-            $sort->multiSort = true;
-
-            $criteria = new CDbCriteria();
-            $model = Post::model();
-            
-            if (isset($_GET['hashtag']))
-            {
-                $criteria->together = true;
-                $criteria->with = array(
-                    'relations' => array(
-                        'select' => false,
-                        'joinType' => 'INNER JOIN',
-                        'condition' => 'relations.hashtagid=:hashtagid',
-                        'params' => array(':hashtagid' => $_GET['hashtag'])
-                    )
-                );
-            }
-                
-            if (isset($_POST['search']))
-            {
-                $criteria->addSearchCondition('title',$_POST['search'],true,'OR');
-                $criteria->addSearchCondition('short',$_POST['search'],true,'OR');
-                $criteria->addSearchCondition('full',$_POST['search'],true,'OR');
-            }
-
-            $count = $model->count($criteria);
-            $pages = new CPagination($count);
-
-            $pages->pageSize = (int) Yii::app()->settings->get('posts','website.posts.page.size');
-            $pages->applyLimit($criteria);
-            $sort->applyOrder($criteria);
-            
-            $this->_list->models = $model->findAll($criteria);
-            $this->_list->pages = $pages;
-        }
-        
-        return $this->_list;
+        $model = Post::model()->find(
+            'alias=:alias AND (language=:language OR language=\'\')',
+            array(
+                ':alias' => $id,
+                ':language' => Yii::app()->getLanguage()
+            )
+        );
+        if ($model === null)
+            throw new CHttpException(404,'Not found');
+        $this->render('post',array(
+            'model' => $model
+        ));
     }
 }
 ?>

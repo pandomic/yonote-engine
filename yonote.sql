@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Май 22 2014 г., 17:46
+-- Время создания: Май 26 2014 г., 01:05
 -- Версия сервера: 5.5.37-log
 -- Версия PHP: 5.3.28
 
@@ -186,7 +186,8 @@ CREATE TABLE IF NOT EXISTS `yonote_module` (
 --
 
 INSERT INTO `yonote_module` (`name`, `title`, `description`, `author`, `email`, `website`, `copyright`, `license`, `installed`, `updatetime`, `position`, `version`) VALUES
-('loadmeter', 'System load meter module', 'This module provides the base LoadMeterWidget class to access the system load information and represent it via widget. Widget class can be accessed through the "admin.modules.loadmeter.components.widgets.LoadMeterWidget" alais. No configuration needed. Template file should be placed in "views/loadmeter" widget file. In the view you can access "$average" - average system loading (not working on Windows platform), "$memory" - memory used, "$disk" - disk space used.', 'Vlad Gramuzov', 'vlad.gramuzov@gmail.com', 'http://yonote.org', '(c) 2014 Vlad Gramuzov', 'Creative Commons Attribution 4.0 International (CC BY 4.0)', 1, 1398783955, 4, '1.0'),
+('feedback', 'Feedback module', 'Feedback module', 'Vlad Gramuzov', 'vlad.gramuzov@gmail.com', 'http://yonote.org', '(c) 2014 Vlad Gramuzov', 'Creative Commons Attribution 4.0 International (CC BY 4.0)', 1, 1398560710, 4, '1.0'),
+('loadmeter', 'System load meter module', 'This module provides the base LoadMeterWidget class to access the system load information and represent it via widget. Widget class can be accessed through the "admin.modules.loadmeter.components.widgets.LoadMeterWidget" alais. No configuration needed. Template file should be placed in "views/loadmeter" widget file. In the view you can access "$average" - average system loading (not working on Windows platform), "$memory" - memory used, "$disk" - disk space used.', 'Vlad Gramuzov', 'vlad.gramuzov@gmail.com', 'http://yonote.org', '(c) 2014 Vlad Gramuzov', 'Creative Commons Attribution 4.0 International (CC BY 4.0)', 1, 1398783955, 3, '1.0'),
 ('pages', 'Pages module', 'This module allows to organize static-style pages, that then can be accessed in "pages/page.html" format.', 'Vlad Gramuzov', 'vlad.gramuzov@gmail.com', 'http://yonote.org', '(c) 2014 Vlad Gramuzov', 'Creative Commons Attribution 4.0 International (CC BY 4.0)', 1, 1398560709, 2, '1.0'),
 ('posts', 'Posts module', 'This module allows to create and distribute Posts on the specified hashtags.', 'Vlad Gramuzov', 'vlad.gramuzov@gmail.com', 'http://yonote.org', '(c) 2014 Vlad Gramuzov', 'Creative Commons Attribution 4.0 International (CC BY 4.0)', 1, 1398510982, 1, '1.0');
 
@@ -202,6 +203,7 @@ CREATE TABLE IF NOT EXISTS `yonote_mod_page` (
   `content` text,
   `language` text,
   `updatetime` int(11) DEFAULT NULL,
+  `thumbnail` text,
   PRIMARY KEY (`alias`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -209,8 +211,10 @@ CREATE TABLE IF NOT EXISTS `yonote_mod_page` (
 -- Дамп данных таблицы `yonote_mod_page`
 --
 
-INSERT INTO `yonote_mod_page` (`alias`, `title`, `content`, `language`, `updatetime`) VALUES
-('for-advertisers', 'Рекламодателям', '<p>Уважаемые клиенты! Для размещения рекламного модуля в газете "Рекламный проспект" Вам необходимо обратиться в наш офис для заключения договора по адресу:</p>', 'ru', 1400761762);
+INSERT INTO `yonote_mod_page` (`alias`, `title`, `content`, `language`, `updatetime`, `thumbnail`) VALUES
+('cost', 'Стоимость размещения', '<p>Уважаемые клиенты, напоминаем Вам, что размещенные на данной странице сведения представлены лишь для ознакомления. Для уточнения стоимости размещения объявлений в газете "Рекламный проспект" обращайтесь в редакцию.</p>\r\n<h2>Тарифы на размещение рекламы (бел.руб./см<sup>2</sup>):</h2>\r\n<ul><li>1-я страница (цв.): 15 000;</li>\r\n<li>2-3 страницы (ч/б): 4 000;</li>\r\n<li>4-5 страницы (цв.): 7 000;</li>\r\n<li>6-7 страницы (ч.б. для частных объявлений): 6 000;</li>\r\n<li>8-я страница (цв.): 10 000.</li>\r\n</ul><p>Реклама размещается в газете на условии полной предоплаты.</p>', 'ru', 1401035285, 'images/5380dd36c2406.jpg'),
+('for-advertisers', 'Рекламодателям', '<p>Уважаемые клиенты! Для размещения рекламного модуля в газете "Рекламный проспект" Вам необходимо обратиться в наш офис для заключения договора по адресу:</p>\r\n<p><strong>г. Орша, ул. Мира, д.11 корпус "А" офис №9 (старое здание гостиницы "Орша").</strong></p>\r\n<p>Реламные модули в газете печатаются на основе определенных макетов. Такие макеты могут быть предоставлены рекламодателем или изготовлены нами. Требования к макетам и графическим файлам представлены ниже.</p>\r\n<h2>Требования к макетам:</h2>\r\n<ul><li>формат: Corel Draw .CDR (версии 14.0 или ниже);</li>\r\n<li>цветовая схема: CMYK (также для вложенных растровых изображений);</li>\r\n<li>формат текста: кривые;</li>\r\n<li>одноцветная цветовая схема для мелких шрифтов.</li>\r\n</ul><h2>Требования к графическим файлам:</h2>\r\n<ul><li>формат: .TIFF;</li>\r\n<li>цветовая схема: CMYK;</li>\r\n<li>разрешение: 300dpi;</li>\r\n<li>глубина цвета: 8бит/канал.</li>\r\n</ul>', 'ru', 1400953675, 'images/5380db4ba780f.png'),
+('the-latest-issue', 'Последний выпуск', '<p>На данной странице расположены основные выпуски газеты "Рекламный проспект". Вы можете скачать себе любой такой выпуск, перейдя по одной из представленных ниже ссылок.</p>\r\n<h2>Последний выпуск</h2>\r\n<p><a title="Выпуск #58 от 12.02.2014" href="#">Выпуск #58 от 12.02.2014</a></p>\r\n<h2>Март 2014</h2>\r\n<p><a title="Выпуск #57 от 12.02.2014" href="#">Выпуск #57 от 12.02.2014</a></p>\r\n<p><a title="Выпуск #56 от 12.02.2014" href="#">Выпуск #56 от 12.02.2014</a></p>\r\n<p><a title="Выпуск #55 от 12.02.2014" href="#">Выпуск #55 от 12.02.2014</a></p>\r\n<p><a title="Выпуск #54 от 12.02.2014" href="#">Выпуск #54 от 12.02.2014</a></p>\r\n<h2>Февраль 2014</h2>\r\n<p>Выпуск #57 от 12.02.2014</p>\r\n<p>Выпуск #56 от 12.02.2014</p>\r\n<p>Выпуск #55 от 12.02.2014</p>\r\n<p>Выпуск #54 от 12.02.2014</p>', 'ru', 1401036846, NULL);
 
 -- --------------------------------------------------------
 
@@ -234,8 +238,8 @@ CREATE TABLE IF NOT EXISTS `yonote_mod_post` (
 --
 
 INSERT INTO `yonote_mod_post` (`alias`, `title`, `short`, `full`, `thumbnail`, `language`, `updatetime`) VALUES
-('hello-world', 'sdfsdfsdf', '<p>sdfsdf</p>', '<p>sdfsdf bla bla #helloworld</p>', NULL, 'aa', 1398440852),
-('my-first-post', 'Hello world!', '<p>ываыва</p>', '<p>ываыва</p>', '{uploads}/images/53599ff1a131b.png', 'en', 1398382577);
+('hello-world', 'Необычная новость', '<p><span style="font-family:Arial, Helvetica, sans;line-height:14px;text-align:justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vel lacinia leo. In ultricies lacus nisi, sed egestas urna ornare sit amet. Aenean interdum nunc vitae velit congue, sit amet elementum diam sagittis. Vestibulum vestibulum, tellus a vestibulum vestibulum, eros nisl dignissim sapien, ac placerat augue lectus ut augue. Sed commodo ligula ornare risus feugiat venenatis. Mauris at nibh tortor. Praesent aliquet, libero eu tincidunt adipiscing, orci massa consectetur justo, sed ultrices nunc nulla a lacus. Donec nec quam varius, varius nisl vehicula, semper odio.</span></p>', '<p><span style="font-family:Arial, Helvetica, sans;line-height:14px;text-align:justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vel lacinia leo. In ultricies lacus nisi, sed egestas urna ornare sit amet. Aenean interdum nunc vitae velit congue, sit amet elementum diam sagittis. Vestibulum vestibulum, tellus a vestibulum vestibulum, eros nisl dignissim sapien, ac placerat augue lectus ut augue. Sed commodo ligula ornare risus feugiat venenatis. Mauris at nibh tortor. Praesent aliquet, libero eu tincidunt adipiscing, orci massa consectetur justo, sed ultrices nunc nulla a lacus. Donec nec quam varius, varius nisl vehicula, semper odio.</span></p>\r\n<p><span style="font-family:Arial, Helvetica, sans;line-height:14px;text-align:justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vel lacinia leo. In ultricies lacus nisi, sed egestas urna ornare sit amet. Aenean interdum nunc vitae velit congue, sit amet elementum diam sagittis. Vestibulum vestibulum, tellus a vestibulum vestibulum, eros nisl dignissim sapien, ac placerat augue lectus ut augue. Sed commodo ligula ornare risus feugiat venenatis. Mauris at nibh tortor. Praesent aliquet, libero eu tincidunt adipiscing, orci massa consectetur justo, sed ultrices nunc nulla a lacus. Donec nec quam varius, varius nisl vehicula, semper odio.</span></p>\r\n<p><span style="font-family:Arial, Helvetica, sans;line-height:14px;text-align:justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vel lacinia leo. In ultricies lacus nisi, sed egestas urna ornare sit amet. Aenean interdum nunc vitae velit congue, sit amet elementum diam sagittis. Vestibulum vestibulum, tellus a vestibulum vestibulum, eros nisl dignissim sapien, ac placerat augue lectus ut augue. Sed commodo ligula ornare risus feugiat venenatis. Mauris at nibh tortor. Praesent aliquet, libero eu tincidunt adipiscing, orci massa consectetur justo, sed ultrices nunc nulla a lacus. Donec nec quam varius, varius nisl vehicula, semper odio.</span></p>', NULL, 'ru', 1401035024),
+('my-first-post', 'Привет мир!', '<p><span style="font-family:Arial, Helvetica, sans;line-height:14px;text-align:justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vel lacinia leo. In ultricies lacus nisi, sed egestas urna ornare sit amet. Aenean interdum nunc vitae velit congue, sit amet elementum diam sagittis. Vestibulum vestibulum, tellus a vestibulum vestibulum, eros nisl dignissim sapien, ac placerat augue lectus ut augue. Sed commodo ligula ornare risus feugiat venenatis. Mauris at nibh tortor. Praesent aliquet, libero eu tincidunt adipiscing, orci massa consectetur justo, sed ultrices nunc nulla a lacus. Donec nec quam varius, varius nisl vehicula, semper odio.</span></p>', '<p><span style="font-family:Arial, Helvetica, sans;line-height:14px;text-align:justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vel lacinia leo. In ultricies lacus nisi, sed egestas urna ornare sit amet. Aenean interdum nunc vitae velit congue, sit amet elementum diam sagittis. Vestibulum vestibulum, tellus a vestibulum vestibulum, eros nisl dignissim sapien, ac placerat augue lectus ut augue. Sed commodo ligula ornare risus feugiat venenatis. Mauris at nibh tortor. Praesent aliquet, libero eu tincidunt adipiscing, orci massa consectetur justo, sed ultrices nunc nulla a lacus. Donec nec quam varius, varius nisl vehicula, semper odio.</span></p>\r\n<p><span style="font-family:Arial, Helvetica, sans;line-height:14px;text-align:justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vel lacinia leo. In ultricies lacus nisi, sed egestas urna ornare sit amet. Aenean interdum nunc vitae velit congue, sit amet elementum diam sagittis. Vestibulum vestibulum, tellus a vestibulum vestibulum, eros nisl dignissim sapien, ac placerat augue lectus ut augue. Sed commodo ligula ornare risus feugiat venenatis. Mauris at nibh tortor. Praesent aliquet, libero eu tincidunt adipiscing, orci massa consectetur justo, sed ultrices nunc nulla a lacus. Donec nec quam varius, varius nisl vehicula, semper odio.</span></p>\r\n<p><span style="font-family:Arial, Helvetica, sans;line-height:14px;text-align:justify;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse vel lacinia leo. In ultricies lacus nisi, sed egestas urna ornare sit amet. Aenean interdum nunc vitae velit congue, sit amet elementum diam sagittis. Vestibulum vestibulum, tellus a vestibulum vestibulum, eros nisl dignissim sapien, ac placerat augue lectus ut augue. Sed commodo ligula ornare risus feugiat venenatis. Mauris at nibh tortor. Praesent aliquet, libero eu tincidunt adipiscing, orci massa consectetur justo, sed ultrices nunc nulla a lacus. Donec nec quam varius, varius nisl vehicula, semper odio.</span></p>', NULL, 'ru', 1401035167);
 
 -- --------------------------------------------------------
 
@@ -268,13 +272,6 @@ CREATE TABLE IF NOT EXISTS `yonote_mod_post_relation` (
   KEY `postid` (`postid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Дамп данных таблицы `yonote_mod_post_relation`
---
-
-INSERT INTO `yonote_mod_post_relation` (`hashtagid`, `postid`) VALUES
-('helloworld', 'hello-world');
-
 -- --------------------------------------------------------
 
 --
@@ -294,16 +291,14 @@ CREATE TABLE IF NOT EXISTS `yonote_pm` (
   PRIMARY KEY (`id`),
   KEY `ownerid` (`ownerid`),
   KEY `senderid` (`senderid`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
 --
 -- Дамп данных таблицы `yonote_pm`
 --
 
 INSERT INTO `yonote_pm` (`id`, `title`, `message`, `ownerid`, `senderid`, `inbox`, `outbox`, `read`, `updatetime`) VALUES
-(1, 'Hello poop', '<p>sdfsdf</p>', 'admin', 'admin', 1, 0, 1, 1398889008),
-(2, 'Hello poop', '<p>sdfsdf</p>', 'admin', 'admin', 0, 1, 0, 1398889008),
-(4, 'RE: Hello poop', '<blockquote>\r\n<p>sdfsdf</p>\r\n</blockquote>\r\n<p>fdsfsdfsdf</p>', 'admin', 'admin', 0, 1, 0, 1400087409);
+(1, 'Hello poop', '<p>sdfsdf</p>', 'admin', 'admin', 1, 0, 1, 1398889008);
 
 -- --------------------------------------------------------
 
@@ -350,9 +345,21 @@ CREATE TABLE IF NOT EXISTS `yonote_setting` (
 --
 
 INSERT INTO `yonote_setting` (`category`, `name`, `value`, `updatetime`, `description`) VALUES
+('feedback', 'email', 'somemail@mail.ru', 56598985, 'Default feedback email'),
+('feedback', 'from', 'noreply@re-spekt.by', 6565985, 'Default sender email (globaly)'),
+('feedback', 'sender', 'feedback@re-spekt.by', 56659885, 'Default feedback sender (may be user)'),
+('feedback', 'subject', 'Форма обратной связи', 656598856, 'Default feedback email subject'),
 ('pages', 'admin.pages.page.size', '50', 1398703757, 'description.admin.pages.page.size'),
 ('pages', 'alias.length.max', '50', 1398703757, 'description.alias.length.max'),
 ('pages', 'alias.length.min', '2', 1398703757, 'description.alias.length.min'),
+('pages', 'thumbnail.height.max', '1000', 56565987, 'description.thumbnail.height.max'),
+('pages', 'thumbnail.height.min', '300', 45454548, 'description.thumbnail.height.min'),
+('pages', 'thumbnail.quality', '80', 56568, 'description.thumbnail.quality'),
+('pages', 'thumbnail.resize.enabled', '0', 65658, 'description.thumbnail.resize.enabled'),
+('pages', 'thumbnail.resize.height', '300', 565658, 'description.thumbnail.resize.height'),
+('pages', 'thumbnail.resize.width', '300', 545458, 'description.thumbnail.resize.width'),
+('pages', 'thumbnail.width.max', '1000', 2121587, 'description.thumbnail.width.max'),
+('pages', 'thumbnail.width.min', '300', 656568, 'description.thumbnail.width.min'),
 ('pages', 'title.length.max', '50', 1398720709, 'description.title.length.min'),
 ('pages', 'title.length.min', '1', 1398720709, 'description.title.length.max'),
 ('pm', 'message.length.max', '3000', 1398720810, 'description.message.length.max'),
@@ -375,18 +382,23 @@ INSERT INTO `yonote_setting` (`category`, `name`, `value`, `updatetime`, `descri
 ('posts', 'thumbnail.width.min', '300', 1398696710, 'description.thumbnail.width.min'),
 ('posts', 'title.length.max', '80', 6556598, 'description.title.length.max'),
 ('posts', 'title.length.min', '2', 54548, 'description.title.length.min'),
-('system', 'admin.language', 'ru', 1400756657, 'description.admin.language'),
-('system', 'admin.template', 'default', 1400756657, 'description.admin.template'),
-('system', 'admin.time.zone', 'Europe/Minsk', 1400756657, 'description.admin.time.zone'),
-('system', 'languages', 'ru,en', 1400756657, 'description.languages'),
-('system', 'login.duration', '604800', 1400756657, 'description.login.duration'),
-('system', 'module.size.max', '5242880', 1400756657, 'description.module.size.max'),
-('system', 'url.format', 'path', 1400756657, 'description.url.format'),
-('system', 'url.multilingual', '1', 1256589, 'Enable multilingual URL mode'),
-('system', 'url.redirectondefault', '1', 1400756657, 'description.url.redirectondefault'),
-('system', 'website.language', 'ru', 1400756657, 'description.website.language'),
-('system', 'website.template', 'respekt', 1400756657, 'description.website.template'),
-('system', 'website.time.zone', 'Europe/Minsk', 1400756657, 'description.website.time.zone'),
+('system', 'admin.language', 'ru', 1400771362, 'description.admin.language'),
+('system', 'admin.template', 'default', 1400771362, 'description.admin.template'),
+('system', 'admin.time.zone', 'Europe/Minsk', 1400771362, 'description.admin.time.zone'),
+('system', 'languages', 'ru,en', 1400771362, 'description.languages'),
+('system', 'login.duration', '604800', 1400771362, 'description.login.duration'),
+('system', 'module.size.max', '5242880', 1400771362, 'description.module.size.max'),
+('system', 'smtp.enabled', '0', 5454895, 'Enable SMTP authentication for email sending'),
+('system', 'smtp.host', 'ssl://smtp.google.com', 656595, 'SMTP host'),
+('system', 'smtp.password', 'password', 566586, 'SMTP password'),
+('system', 'smtp.port', '465', 56564, 'SMTP port'),
+('system', 'smtp.user', 'user', 6565689, 'SMTP user name'),
+('system', 'url.format', 'path', 1400771362, 'description.url.format'),
+('system', 'url.multilingual', '1', 1400771362, 'Enable multilingual URL mode'),
+('system', 'url.redirectondefault', '1', 1400771362, 'description.url.redirectondefault'),
+('system', 'website.language', 'ru', 1400771362, 'description.website.language'),
+('system', 'website.template', 'respekt', 1400771362, 'description.website.template'),
+('system', 'website.time.zone', 'Europe/Minsk', 1400771362, 'description.website.time.zone'),
 ('users', 'name.length.max', '20', 1398530025, 'description.name.length.max'),
 ('users', 'name.length.min', '2', 1398530025, 'description.name.length.min'),
 ('users', 'password.length.max', '50', 1398530025, 'description.password.length.max'),
@@ -431,7 +443,7 @@ CREATE TABLE IF NOT EXISTS `yonote_user` (
 --
 
 INSERT INTO `yonote_user` (`name`, `password`, `token`, `email`, `activated`, `verified`, `subscribed`, `updatetime`) VALUES
-('admin', '$2a$13$dKmIZvU4j0ZBuJ/NNTITJ.fZc1i4Qlyng90zbccfemEDJ1iOujSRO', '$2a$13$ijsf3dKhCNeCHvxQXBDL2E', 'email@email.com', 0, 0, 0, NULL),
+('admin', '$2a$13$dKmIZvU4j0ZBuJ/NNTITJ.fZc1i4Qlyng90zbccfemEDJ1iOujSRO', '$2a$13$NBrq04sRvKG8MqFR3rmrG7', 'email@email.com', 0, 0, 0, NULL),
 ('alonex', '', NULL, 'fsd@dgh.df', 1, 1, 1, 1398341536),
 ('newuser', '$2a$13$Xj25wAX9RwRO7JUK/rCsze7aLAfmXUuE5qKu/Vz21ryp3Y9HBcvme', NULL, 'fsd@dgh.df', 1, 1, 0, NULL),
 ('nikita', '$2a$13$J4Gk.kkH9YAGwp8RNkaD5.DKtTF.Bz7M0jJG2ha70GreKCwmlUSnG', NULL, 'email@mail.com', 0, 0, 0, NULL);

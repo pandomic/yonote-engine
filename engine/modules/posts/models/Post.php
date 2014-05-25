@@ -113,11 +113,7 @@ class Post extends CActiveRecord
         
         $this->updatetime = time();
         
-        $oldThumbnail = str_replace(
-            array_keys($this->placeholders),
-            array_values($this->placeholders),
-            self::model()->findByPk($this->alias)->thumbnail
-        );
+        $oldThumbnail = $this->findByPk($this->alias)->thumbnail;
 
         $image = $this->processImage();
         if ($image === false && $this->getImageError() != ImageBehavior::ERROR_FILE_EMPTY){
@@ -140,16 +136,16 @@ class Post extends CActiveRecord
         }
         else if ($image !== false)
         {
-            if (file_exists($oldThumbnail))
+            if ($oldThumbnail != null && file_exists(UPLOADS_PATH.'/'.$oldThumbnail))
                 unlink($oldThumbnail);
-            $this->thumbnail = $image;
+            $this->thumbnail = 'images/'.$image;
         }
         
         if ($this->removeThumbnail)
         {
             $this->thumbnail = null;
-            if (file_exists($oldThumbnail))
-                unlink($oldThumbnail);
+            if ($oldThumbnail != null && file_exists(UPLOADS_PATH.'/'.$oldThumbnail))
+                unlink(UPLOADS_PATH.'/'.$oldThumbnail);
         }
 
         return parent::beforeSave();

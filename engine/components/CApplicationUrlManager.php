@@ -32,10 +32,28 @@ class CApplicationUrlManager extends CUrlManager
     public $defaultLanguage = 'en';
     public $multilangEnabled = true;
     public $languages = array();
+    public $redirectOnDefault = false;
     
     private $_langChanged = false;
     private $_rules = array();
     
+    public $settingsComponentId = 'settings';
+    
+    public function init()
+    {
+        $settings = Yii::app()->getComponent($this->settingsComponentId);
+        $this->defaultLanguage = Yii::app()->getLanguage();
+        $this->urlFormat = $settings->get('system','url.format');
+        $this->multilangEnabled = $settings->get('system','url.multilingual',true);
+        $this->languages = explode(',',$settings->get('system','languages'));
+        $this->redirectOnDefault = $settings->get('system','url.redirectondefault',true);
+    }
+
+    /**
+     * Add URL rules.
+     * @param array $rules rules to add.
+     * @param boolean $append append to existing rules.
+     */
     public function addRules($rules,$append=true)
     {
         if ($append)
@@ -108,17 +126,23 @@ class CApplicationUrlManager extends CUrlManager
         }
         elseif(isset($_GET[$this->routeVar]))
         {
-            $this->_paramLanguage($_GET['language'],$request,$_GET[$this->routeVar]);
+            $this->_paramLanguage(
+                $_GET['language'],$request,$_GET[$this->routeVar]
+            );
             return $_GET[$this->routeVar];
         }
         elseif(isset($_POST[$this->routeVar]))
         {
-            $this->_paramLanguage($_POST['language'],$request,$_POST[$this->routeVar]);
+            $this->_paramLanguage(
+                $_POST['language'],$request,$_POST[$this->routeVar]
+            );
             return $_POST[$this->routeVar];
         }
         else
         {
-            $this->_paramLanguage($_GET['language'],$request,'');
+            $this->_paramLanguage(
+                $_GET['language'],$request,''
+            );
             return '';
         }
     }
@@ -132,22 +156,25 @@ class CApplicationUrlManager extends CUrlManager
      */
     public function createUrl($route,$params=array(),$ampersand='&')
     {
-        if($this->getUrlFormat() === self::PATH_FORMAT)
+        if ($this->multilangEnabled)
         {
-            $original = parent::createUrl($route,$params,$ampersand);
-            $slash = ($original{0} == '/') ? '/' : '';
-            $lang = Yii::app()->getLanguage();
-            
-            if (isset($params['language']))
+            if($this->getUrlFormat() === self::PATH_FORMAT)
             {
-                $lang = $params['language'];
-                unset($params['language']);
+                $original = parent::createUrl($route,$params,$ampersand);
+                $slash = ($original{0} == '/') ? '/' : '';
+                $lang = Yii::app()->getLanguage();
+
+                if (isset($params['language']))
+                {
+                    $lang = $params['language'];
+                    unset($params['language']);
+                }
+                else if (in_array($lang,$this->languages) && $lang != $this->defaultLanguage)
+                    return $slash.$lang.'/'.ltrim($original,'/');
             }
-            else if (in_array($lang,$this->languages) && $lang != $this->defaultLanguage)
-                return $slash.$lang.'/'.ltrim($original,'/');
+            else if (Yii::app()->getLanguage() != $this->defaultLanguage)
+                $params['language'] = Yii::app()->getLanguage();
         }
-        else if (Yii::app()->getLanguage() != $this->defaultLanguage)
-            $params['language'] = Yii::app()->getLanguage();
         return parent::createUrl($route,$params,$ampersand);
     }
     
@@ -183,9 +210,12 @@ class CApplicationUrlManager extends CUrlManager
         }
     }
     
+    /**
+     * Used to set current app language.
+     * @param string $language language.
+     */
     public function setLanguage($language)
     {
-        
         if ($this->multilangEnabled && !$this->_langChanged)
         {
             Yii::app()->setLanguage($language);
@@ -214,11 +244,19 @@ class CApplicationUrlManager extends CUrlManager
         $this->defaultLanguage = $language;
     }
     
+    /**
+     * Set allowed languages.
+     * @param array $languages languages.
+     */
     public function setLanguages($languages)
     {
         $this->languages = $languages;
     }
     
+    /**
+     * Allow to use multilingual URLs.
+     * @param boolean $status use/or not.
+     */
     public function setMultilangEnabled($status)
     {
         $this->multilangEnabled = $status;

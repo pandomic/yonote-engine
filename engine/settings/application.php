@@ -47,10 +47,16 @@ return array(
     
     // Components settigns
     'components' => array(
+        // Mail settings
+        'mail' => array(
+            'class' => 'CApplicationMail',
+            'settingsComponentId' => 'settings'
+        ),
         // URL manager settings
         'urlManager' => array(
             'class' => 'CApplicationUrlManager',
-            'showScriptName' => false
+            'showScriptName' => false,
+            'settingsComponentId' => 'settings'
         ),
         // Request settings
         'request' => array(
