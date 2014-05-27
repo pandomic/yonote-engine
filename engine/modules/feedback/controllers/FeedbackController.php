@@ -4,7 +4,6 @@ class FeedbackController extends CApplicationController
     public function actions()
     {
         return array(
-            // captcha action renders the CAPTCHA image displayed on the contact page
             'captcha'=>array(
                 'class'=>'CCaptchaAction',
                 'backColor'=>0xFFFFFF,
@@ -18,13 +17,13 @@ class FeedbackController extends CApplicationController
         if (isset($_POST['Feedback']))
         {
            $model->setAttributes($_POST['Feedback']);
-           if ($model->validate() && $model->send())
+           $model->setMessageTemplate($this->renderPartial('mail',array(
+               'model' => $model
+           ),true));
+           if ($model->save())
            {
-               
-           }
-           else
-           {
-               
+               Yii::app()->user->setFlash('feedback.success',Yii::t('FeedbackModule.feedback','success.feedback'));
+               $this->refresh();
            }
         }
         $this->render('index',array(

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Май 26 2014 г., 01:05
+-- Время создания: Май 27 2014 г., 17:08
 -- Версия сервера: 5.5.37-log
 -- Версия PHP: 5.3.28
 
@@ -194,6 +194,32 @@ INSERT INTO `yonote_module` (`name`, `title`, `description`, `author`, `email`, 
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `yonote_mod_feedback`
+--
+
+CREATE TABLE IF NOT EXISTS `yonote_mod_feedback` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(128) NOT NULL,
+  `email` varchar(128) NOT NULL,
+  `phone` varchar(64) DEFAULT NULL,
+  `message` text,
+  `updatetime` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5 ;
+
+--
+-- Дамп данных таблицы `yonote_mod_feedback`
+--
+
+INSERT INTO `yonote_mod_feedback` (`id`, `name`, `email`, `phone`, `message`, `updatetime`) VALUES
+(1, 'Николай Петрович', 'email@email.com', '+375291234567', 'Проверка сообщения еще того', 1401172321),
+(2, 'Николай Петрович', 'email@email.com', '+375291234567', 'Проверка сообщения еще того', 1401172373),
+(3, 'Николай Петрович', 'email@email.com', '+375291234567', 'sdfsdf asdasd asda asd as das dasd as das as asd as das d', 1401172819),
+(4, 'Николай Петрович', 'email@email.com', '+375291234567', 'sdfsdf asdasdas asdas as dasd ', 1401172876);
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `yonote_mod_page`
 --
 
@@ -348,6 +374,7 @@ INSERT INTO `yonote_setting` (`category`, `name`, `value`, `updatetime`, `descri
 ('feedback', 'email', 'somemail@mail.ru', 56598985, 'Default feedback email'),
 ('feedback', 'from', 'noreply@re-spekt.by', 6565985, 'Default sender email (globaly)'),
 ('feedback', 'sender', 'feedback@re-spekt.by', 56659885, 'Default feedback sender (may be user)'),
+('feedback', 'sendmail', '1', 9985654, 'Send additionaly email to manager(s)'),
 ('feedback', 'subject', 'Форма обратной связи', 656598856, 'Default feedback email subject'),
 ('pages', 'admin.pages.page.size', '50', 1398703757, 'description.admin.pages.page.size'),
 ('pages', 'alias.length.max', '50', 1398703757, 'description.alias.length.max'),
@@ -382,23 +409,23 @@ INSERT INTO `yonote_setting` (`category`, `name`, `value`, `updatetime`, `descri
 ('posts', 'thumbnail.width.min', '300', 1398696710, 'description.thumbnail.width.min'),
 ('posts', 'title.length.max', '80', 6556598, 'description.title.length.max'),
 ('posts', 'title.length.min', '2', 54548, 'description.title.length.min'),
-('system', 'admin.language', 'ru', 1400771362, 'description.admin.language'),
-('system', 'admin.template', 'default', 1400771362, 'description.admin.template'),
-('system', 'admin.time.zone', 'Europe/Minsk', 1400771362, 'description.admin.time.zone'),
-('system', 'languages', 'ru,en', 1400771362, 'description.languages'),
-('system', 'login.duration', '604800', 1400771362, 'description.login.duration'),
-('system', 'module.size.max', '5242880', 1400771362, 'description.module.size.max'),
+('system', 'admin.language', 'ru', 1401186596, 'description.admin.language'),
+('system', 'admin.template', 'default', 1401186596, 'description.admin.template'),
+('system', 'admin.time.zone', 'Europe/Minsk', 1401186596, 'description.admin.time.zone'),
+('system', 'languages', 'ru,en', 1401186596, 'description.languages'),
+('system', 'login.duration', '604800', 1401186596, 'description.login.duration'),
+('system', 'module.size.max', '5242880', 1401186596, 'description.module.size.max'),
 ('system', 'smtp.enabled', '0', 5454895, 'Enable SMTP authentication for email sending'),
 ('system', 'smtp.host', 'ssl://smtp.google.com', 656595, 'SMTP host'),
 ('system', 'smtp.password', 'password', 566586, 'SMTP password'),
 ('system', 'smtp.port', '465', 56564, 'SMTP port'),
 ('system', 'smtp.user', 'user', 6565689, 'SMTP user name'),
-('system', 'url.format', 'path', 1400771362, 'description.url.format'),
-('system', 'url.multilingual', '1', 1400771362, 'Enable multilingual URL mode'),
-('system', 'url.redirectondefault', '1', 1400771362, 'description.url.redirectondefault'),
-('system', 'website.language', 'ru', 1400771362, 'description.website.language'),
-('system', 'website.template', 'respekt', 1400771362, 'description.website.template'),
-('system', 'website.time.zone', 'Europe/Minsk', 1400771362, 'description.website.time.zone'),
+('system', 'url.format', 'path', 1401186596, 'description.url.format'),
+('system', 'url.multilingual', '1', 1401186596, 'Enable multilingual URL mode'),
+('system', 'url.redirectondefault', '1', 1401186596, 'description.url.redirectondefault'),
+('system', 'website.language', 'ru', 1401186596, 'description.website.language'),
+('system', 'website.template', 'sovi', 1401186596, 'description.website.template'),
+('system', 'website.time.zone', 'Europe/Minsk', 1401186596, 'description.website.time.zone'),
 ('users', 'name.length.max', '20', 1398530025, 'description.name.length.max'),
 ('users', 'name.length.min', '2', 1398530025, 'description.name.length.min'),
 ('users', 'password.length.max', '50', 1398530025, 'description.password.length.max'),
@@ -443,7 +470,7 @@ CREATE TABLE IF NOT EXISTS `yonote_user` (
 --
 
 INSERT INTO `yonote_user` (`name`, `password`, `token`, `email`, `activated`, `verified`, `subscribed`, `updatetime`) VALUES
-('admin', '$2a$13$dKmIZvU4j0ZBuJ/NNTITJ.fZc1i4Qlyng90zbccfemEDJ1iOujSRO', '$2a$13$NBrq04sRvKG8MqFR3rmrG7', 'email@email.com', 0, 0, 0, NULL),
+('admin', '$2a$13$dKmIZvU4j0ZBuJ/NNTITJ.fZc1i4Qlyng90zbccfemEDJ1iOujSRO', '$2a$13$5pVkIbrwKrGtWo4cFSkPuV', 'email@email.com', 0, 0, 0, NULL),
 ('alonex', '', NULL, 'fsd@dgh.df', 1, 1, 1, 1398341536),
 ('newuser', '$2a$13$Xj25wAX9RwRO7JUK/rCsze7aLAfmXUuE5qKu/Vz21ryp3Y9HBcvme', NULL, 'fsd@dgh.df', 1, 1, 0, NULL),
 ('nikita', '$2a$13$J4Gk.kkH9YAGwp8RNkaD5.DKtTF.Bz7M0jJG2ha70GreKCwmlUSnG', NULL, 'email@mail.com', 0, 0, 0, NULL);

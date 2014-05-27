@@ -130,6 +130,7 @@ return array(
             'class' => 'CApplicationUser',
             'loginUrl' => array('base/login'),
             'returnUrl' => array('base/index'),
+            'allowAutoLogin' => true,
             'dbComponentId' => 'db',
             'userTable' => '{{user}}'
         ),
