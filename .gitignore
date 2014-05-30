@@ -3,17 +3,15 @@
 #################
 
 engine/templates/rafineza/
-<<<<<<< HEAD
 engine/templates/rafineza
-=======
-engine/template/rafineza
 engine/templates/respekt/
 engine/templates/respekt
 engine/templates/sovi
 engine/templates/sovi/
+engine/templates/nikolai
+engine/templates/nikolai/
 
 engine/assets/**
-
 engine/cache/*.bin
 >>>>>>> 37a660eae4f6a4fe8943220fb84cccfedc3d989d
 

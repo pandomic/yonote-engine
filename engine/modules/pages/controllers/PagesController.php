@@ -21,6 +21,7 @@ class PagesController extends CApplicationController
         ));
         if ($model == null)
             throw new CHttpException(404,'Ohh nooo');
+        $this->pageTitle = $model->title;
         $this->render('page',array(
             'model' => $model
         ));

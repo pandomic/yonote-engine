@@ -186,11 +186,11 @@ class Page extends CActiveRecord
             $maxHeight = Yii::app()->settings->get('pages','thumbnail.height.max');
 
             if ($status == ImageBehavior::ERROR_SIDES_BIG)
-                $this->addError('photo',Yii::t('PagesModule.pages','model.page.error.thumbnail.sides.large',array(
+                $this->addError('thumbnail',Yii::t('PagesModule.pages','model.page.error.thumbnail.sides.large',array(
                     '{maxwidth}' => $maxWidth,'{maxheight}' => $maxHeight
                 )));
             else if ($status == ImageBehavior::ERROR_SIDES_SMALL)
-                $this->addError('photo',Yii::t('PagesModule.pages','model.page.error.thumbnail.sides.small',array(
+                $this->addError('thumbnail',Yii::t('PagesModule.pages','model.page.error.thumbnail.sides.small',array(
                     '{minwidth}' => $minWidth,'{minheight}' => $minHeight
                 )));
             return false;
@@ -198,7 +198,7 @@ class Page extends CActiveRecord
         else if ($image !== false)
         {
             if ($oldThumbnail != null && file_exists(UPLOADS_PATH.'/'.$oldThumbnail))
-                unlink($oldThumbnail);
+                unlink(UPLOADS_PATH.'/'.$oldThumbnail);
             $this->thumbnail = 'images/'.$image;
         }
         
