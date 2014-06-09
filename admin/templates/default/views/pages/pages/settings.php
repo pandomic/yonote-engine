@@ -25,6 +25,7 @@
         <div class="list-group">
             <a href="<?php echo $this->createUrl('pages/index'); ?>" class="list-group-item"><?php echo Yii::t('PagesModule.pages','page.pages.title'); ?></a>
             <a href="<?php echo $this->createUrl('pages/settings'); ?>" class="list-group-item active"><?php echo Yii::t('PagesModule.settings','page.settings.title'); ?></a>
+            <a href="<?php echo $this->createUrl('pages/add'); ?>" class="list-group-item"><?php echo Yii::t('PagesModule.pages','page.add.title'); ?></a>
         </div>
     </div>
     <div class="col-md-10">

@@ -12,6 +12,7 @@ return array(
     'model.feedback.error.message.short' => 'Message is too short.',
     'model.feedback.error.captcha' => 'Invalid verification code given!',
     'model.feedback.error.required' => 'Please, fill all necessary fields!',
-    'success.feedback' => 'Your message has been successfully sent.'
+    'success.feedback' => 'Your message has been successfully sent.',
+    'page.feedback.title' => 'Контакты'
 );
 ?>

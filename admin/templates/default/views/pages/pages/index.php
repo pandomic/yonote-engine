@@ -35,13 +35,14 @@
        <div class="list-group">
           <a href="<?php echo $this->createUrl('pages/index'); ?>" class="list-group-item active"><?php echo Yii::t('PagesModule.pages','page.pages.title'); ?></a>
           <a href="<?php echo $this->createUrl('pages/settings'); ?>" class="list-group-item"><?php echo Yii::t('PagesModule.settings','page.settings.title'); ?></a>
+          <a href="<?php echo $this->createUrl('pages/add'); ?>" class="list-group-item"><?php echo Yii::t('PagesModule.pages','page.add.title'); ?></a>
       </div>
     </div>
     <div class="col-md-10">
         <div class="panel panel-default">
             <div class="panel-heading table-middle clearfix">
                 <a class="btn btn-primary btn-xs pull-right" href="<?php echo $this->createUrl('add'); ?>"><span class="glyphicon glyphicon-plus"></span> <?php echo Yii::t('PagesModule.pages','button.page.add'); ?></a>
-                <h3 class="panel-title"><?php echo Yii::t('PagesModule.pages','label.pages.list'); ?></h3>
+                <h3 class="panel-title"><?php echo Yii::t('PagesModule.pages','label.pages.list'); ?></h3> <span class="label label-primary"><?php echo count($models); ?></span>
             </div>
             <div class="panel-body"> 
                 <?php echo CHtml::form('','POST',array(

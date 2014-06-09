@@ -37,6 +37,16 @@ class PagesSettings extends CFormModel
      */
     public $titleLengthMax;
     
+    public $thumbHeightMax;
+    public $thumbHeightMin;
+    public $thumbWidthMax;
+    public $thumbWidthMin;
+    public $thumbQuality;
+    public $thumbResize;
+    public $thumbResizeWidth;
+    public $thumbResizeHeight;
+    public $thumbSizeMax;
+    
     private $_settings = array();
     private $_relations = array();
     
@@ -47,14 +57,21 @@ class PagesSettings extends CFormModel
     public function rules()
     {
         return array(
+            array('thumbResize','boolean'),
             array(
-                'adminPagesPageSize,aliasLengthMax,aliasLengthMin,titleLengthMin,titleLengthMax',
+                'adminPagesPageSize,aliasLengthMax,aliasLengthMin,titleLengthMin,titleLengthMax,thumbHeightMax,thumbHeightMin,thumbWidthMax,thumbWidthMin,thumbQuality,thumbResize,thumbResizeWidth,thumbResizeHeight,thumbSizeMax',
                 'required',
                 'message' => Yii::t('PagesModule.settings','model.pagessettings.error.required')
             ),
             array(
-                'adminPagesPageSize,aliasLengthMax,aliasLengthMin,titleLengthMin,titleLengthMax','numerical','integerOnly' => true,'min' => 1,
+                'adminPagesPageSize,aliasLengthMax,aliasLengthMin,titleLengthMin,titleLengthMax,thumbHeightMax,thumbHeightMin,thumbWidthMax,thumbWidthMin,thumbResizeWidth,thumbResizeHeight,thumbSizeMax','numerical','integerOnly' => true,'min' => 1,
                 'tooSmall' =>  Yii::t('PagesModule.settings','model.pagessettings.error.small'),
+                'message' => Yii::t('PagesModule.settings','model.pagessettings.error.integer')
+            ),
+            array(
+                'thumbQuality','numerical','integerOnly' => true,'min' => 1, 'max' => 100,
+                'tooSmall' => Yii::t('PagesModule.settings','model.pagessettings.error.small'),
+                'tooBig' => Yii::t('PagesModule.settings','model.pagessettings.error.big'),
                 'message' => Yii::t('PagesModule.settings','model.pagessettings.error.integer')
             )
         );
@@ -106,7 +123,16 @@ class PagesSettings extends CFormModel
             'alias.length.min' => 'aliasLengthMin',
             'alias.length.max' => 'aliasLengthMax',
             'title.length.min' => 'titleLengthMin',
-            'title.length.max' => 'titleLengthMax'
+            'title.length.max' => 'titleLengthMax',
+            'thumbnail.height.max' => 'thumbHeightMax',
+            'thumbnail.height.min' => 'thumbHeightMin',
+            'thumbnail.width.max' => 'thumbWidthMax',
+            'thumbnail.width.min' => 'thumbWidthMin',
+            'thumbnail.resize.enabled' => 'thumbResize',
+            'thumbnail.resize.width' => 'thumbResizeWidth',
+            'thumbnail.resize.height' => 'thumbResizeHeight',
+            'thumbnail.size.max' => 'thumbSizeMax',
+            'thumbnail.quality' => 'thumbQuality'
         );
         
         $criteria = new CDbCriteria();

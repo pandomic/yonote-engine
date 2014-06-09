@@ -23,7 +23,8 @@ tinymce.init({
     language: '<?php echo $tinymceLanguage; ?>',
     plugins: [
         'link','image','code','media'
-    ]
+    ],
+    relative_urls: false
  });
 </script>
 <?php if (Yii::app()->user->hasFlash('pagesSuccess')): ?>

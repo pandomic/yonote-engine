@@ -64,6 +64,10 @@ class SystemSettings extends CFormModel
      * @var boolean redirect to default language version if null given.
      */
     public $redirectDefault = false;
+    /**
+     * @var string website default title.
+     */
+    public $websiteTitle;
     
     private $_settings = array();
     private $_relations = array();
@@ -95,8 +99,9 @@ class SystemSettings extends CFormModel
     public function rules()
     {
         return array(
+            array('websiteTitle','filter','filter' => array($obj = new CHtmlPurifier(),'purify')),
             array(
-                'adminTimezone,websiteTimezone,websiteLanguage,websiteTemplate,adminTimezone,websiteTimezone,systemUrlFormat,systemLoginDuration,moduleMaxSize',
+                'websiteTitle,adminTimezone,websiteTimezone,websiteLanguage,websiteTemplate,adminTimezone,websiteTimezone,systemUrlFormat,systemLoginDuration,moduleMaxSize',
                 'required',
                 'message' => Yii::t('settings','model.systemsettings.error.required')
             ),
@@ -113,6 +118,7 @@ class SystemSettings extends CFormModel
                 'allowedLanguages','match','pattern' => '/^([a-z]{2,3},?)*[a-z]{2,3}$/',
                 'message' => Yii::t('settings','model.systemsettings.error.allowedlanguages')
             ),
+            array('websiteTitle','safe'),
             array('redirectDefault,allowMultilingualUrls','boolean'),
             array('adminLanguage,websiteLanguage','languageRule'),
             array('adminTemplate','templateRule','area' => 'backend'),
@@ -250,7 +256,8 @@ class SystemSettings extends CFormModel
             'module.size.max' => 'moduleMaxSize',
             'languages' => 'allowedLanguages',
             'url.redirectondefault' => 'redirectDefault',
-            'url.multilingual' => 'allowMultilingualUrls'
+            'url.multilingual' => 'allowMultilingualUrls',
+            'website.title' => 'websiteTitle'
         );
         
         $criteria = new CDbCriteria();

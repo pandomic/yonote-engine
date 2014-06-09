@@ -83,6 +83,10 @@ class SecondStep extends CFormModel
      */
     public $phpSoap;
     /**
+     * @var mb_string extension.
+     */
+    public $phpMbString;
+    /**
      * @var string database type.
      */
     public $dbType;
@@ -135,6 +139,7 @@ class SecondStep extends CFormModel
         return array(
             'phpVersion' => Yii::t('installation','model.secondstep.phpversion'),
             'serverVars' => Yii::t('installation','model.secondstep.servervars'),
+            'phpMbString' => Yii::t('installation','model.secondstep.phpmbstring'),
             'phpReflections' => Yii::t('installation','model.secondstep.phpreflections'),
             'phpPcre' => Yii::t('installation','model.secondstep.phppcre'),
             'phpSpl' => Yii::t('installation','model.secondstep.phpspl'),
@@ -169,6 +174,7 @@ class SecondStep extends CFormModel
             array('dbType,dbHost,dbUser,dbPwd,dbName','safe'),
             array('phpVersion','phpVersionRule'),
             array('serverVars','serverVarsRule'),
+            array('phpMbString','mbStringRule'),
             array('phpReflections','reflectionRule'),
             array('phpPcre','pcreRule'),
             array('phpSpl','splRule'),
@@ -257,6 +263,12 @@ class SecondStep extends CFormModel
     {
         if (!extension_loaded("pcre"))
             $this->addError($attribute,'PCRE required!');
+    }
+    
+    public function mbStringRule($attribute,$params)
+    {
+        if (!extension_loaded("mbstring"))
+            $this->addError($attribute,'mbstring required!');
     }
     
     public function splRule($attribute,$params)

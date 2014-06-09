@@ -27,7 +27,7 @@ class FirstStep extends CFormModel
     public function getSystemLanguages()
     {
         $languages = array();
-        $scan = scandir(realpath(__DIR__.'/../../engine/messages'));
+        $scan = scandir(realpath(dirname(__FILE__).'/../../engine/messages'));
         foreach ($scan as $language)
         {
             if ($language != '.' && $language != '..')
@@ -39,7 +39,7 @@ class FirstStep extends CFormModel
     public function getInstallationLanguages()
     {
         $languages = array();
-        $scan = scandir(realpath(__DIR__.'/../messages'));
+        $scan = scandir(realpath(dirname(__FILE__).'/../messages'));
         foreach ($scan as $language)
         {
             if ($language != '.' && $language != '..')

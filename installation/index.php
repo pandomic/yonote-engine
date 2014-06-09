@@ -5,7 +5,7 @@ require_once('../framework/yii.php');
 Yii::createWebApplication(array(
     'name' => 'YOnote ENGINE',
     'charset' => 'utf-8',
-    'basePath' => __DIR__,
+    'basePath' => dirname(__FILE__),
     'defaultController' => 'base',
     'language' => 'en',
     'import' => array(

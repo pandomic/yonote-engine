@@ -56,7 +56,7 @@ class CApplicationUser extends CWebUser implements IApplicationUser
     {
         if ($fromCookie)
         {
-            $db = Yii::app()->getComponent($id);
+            $db = Yii::app()->getComponent($this->dbComponentId);
             $record = $db->createCommand()
                 ->setFetchMode(PDO::FETCH_OBJ)
                 ->select('token')
@@ -68,7 +68,7 @@ class CApplicationUser extends CWebUser implements IApplicationUser
 
             if ($record === false)
                 return false;
-            else if ($record->token !== Yii::app()->user->getState('token'))
+            else if ($record->token !== $states['token'])
                 return false;
         }
         return parent::beforeLogin($id,$states,$fromCookie);

@@ -42,8 +42,8 @@ class LoginForm extends CFormModel
                 'name,password','required',
                 'message' => Yii::t('login','model.loginform.error.required')
             ),
-            array('rememberMe','boolean','on' => 'login'),
-            array('password','authenticateRule','on' => 'login')
+            array('rememberMe','boolean'),
+            array('password','authenticateRule')
         );
     }
     
@@ -90,9 +90,7 @@ class LoginForm extends CFormModel
         {
             $duration = ($this->rememberMe) ? 
                 Yii::app()->settings->get('system','login.duration') : 0;
-            
-            Yii::app()->user->login($this->_identity,$duration);
-            
+            Yii::app()->user->login($this->_identity,$duration,$this->rememberMe);
             return true;
         }
         

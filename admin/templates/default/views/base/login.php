@@ -16,7 +16,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content="noindex,nofollow">
-    <link href="<?php echo $this->asset('application.vendors.bootstrap'); ?>/css/bootstrap.css" rel="stylesheet">
+    <link href="<?php echo $this->templateAsset('assets'); ?>/stylesheet/css/bootstrap.css" rel="stylesheet">
     <link href="<?php echo $this->templateAsset('assets'); ?>/stylesheet/css/theme.css" rel="stylesheet">
     <link href="<?php echo $this->templateAsset('assets'); ?>/stylesheet/css/theme-extended.css" rel="stylesheet">
     <link href="<?php echo $this->templateAsset('assets'); ?>/stylesheet/css/loadmeter.css" rel="stylesheet">
@@ -29,7 +29,7 @@
     <![endif]-->
   </head>
   <body>
-    <div class="container page-center" style="height:100%;">
+    <div class="container page-center">
         <div class="row page-center-body">
             <div class="col-md-6 col-md-offset-3">
                 <div class="panel panel-default">

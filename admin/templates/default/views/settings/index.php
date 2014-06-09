@@ -143,7 +143,21 @@
                             </div>
                         </div>
                         <div class="tab-pane" id="other">
-                            
+                            <div class="form-group <?php if ($model->hasErrors('websiteTitle')) echo 'has-error'; ?>">
+                                <?php echo CHtml::activeLabel($model,'websiteTitle',array(
+                                    'for' => 'websiteTitle',
+                                    'class' => 'col-md-2 control-label'
+                                )); ?>
+                                <div class="col-md-10">
+                                    <?php echo CHtml::activeTextField($model,'websiteTitle',array(
+                                        'class' => 'form-control',
+                                        'id' => 'websiteTitle'
+                                    )); ?>
+                                    <?php echo CHtml::error($model,'websiteTitle',array(
+                                        'class' => 'help-block text-danger'
+                                    )); ?>
+                                </div>
+                            </div>
                             <div class="form-group <?php if ($model->hasErrors('systemLoginDuration')) echo 'has-error'; ?>">
                                 <?php echo CHtml::activeLabel($model,'systemLoginDuration',array(
                                     'for' => 'systemLoginDuration',

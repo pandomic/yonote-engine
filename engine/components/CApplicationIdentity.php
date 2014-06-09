@@ -34,12 +34,12 @@ class CApplicationIdentity extends CUserIdentity
             $this->errorCode = self::ERROR_PASSWORD_INVALID;
         else
         {
-            $this->setState('token',$record->token);
+            $token = CPasswordHelper::generateSalt();
+            $this->setState('token',$token);
             $this->_id = $record->name;
             $this->errorCode = self::ERROR_NONE;
-            
             Yii::app()->db->createCommand()->update('{{user}}',array(
-                'token' => CPasswordHelper::generateSalt()
+                'token' => $token
             ),'name=:username OR email=:username',array(
                 ':username' => $this->username
             ));

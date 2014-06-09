@@ -30,6 +30,7 @@ return array(
     'description.website.template' => 'Default website template',
     'description.website.time.zone' => 'Website default time zone',
     'description.module.size.max' => 'Maximum module file size',
+    'description.website.title' => 'Website default title',
     'label.url.format.path' => 'Path format',
     'label.url.format.get' => 'Get format',
     'success.settings.update' => 'Settings have been successfully updated.',

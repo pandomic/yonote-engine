@@ -5,6 +5,7 @@ class BaseController extends CApplicationController
     
     public function actionIndex()
     {
+        $this->pageTitle = Yii::app()->settings->get('system','website.title');
         $this->render('index',array(
             'content' => self::$_baseContent
         ));

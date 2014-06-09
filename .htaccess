@@ -8,6 +8,7 @@
 #
 
 Options +FollowSymLinks
+Options All -Indexes
 IndexIgnore */*
 RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-d

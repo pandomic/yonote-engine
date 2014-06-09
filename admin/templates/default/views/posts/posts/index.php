@@ -48,7 +48,7 @@
         <div class="panel panel-default">
             <div class="panel-heading table-middle clearfix">
                 <a class="btn btn-primary btn-xs pull-right" href="<?php echo $this->createUrl('add'); ?>"><span class="glyphicon glyphicon-plus"></span> <?php echo Yii::t('PostsModule.posts','button.post.add'); ?></a>
-                <h3 class="panel-title"><?php echo Yii::t('PostsModule.posts','label.posts.list'); ?></h3>
+                <h3 class="panel-title"><?php echo Yii::t('PostsModule.posts','label.posts.list'); ?></h3> <span class="label label-primary"><?php echo count($models); ?></span>
             </div>
             <div class="panel-body"> 
                 

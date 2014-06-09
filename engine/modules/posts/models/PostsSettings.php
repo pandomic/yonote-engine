@@ -11,7 +11,7 @@ class PostsSettings extends CFormModel
     public $thumbWidthMax;
     public $thumbWidthMin;
     public $thumbQuality;
-    public $thumbResize;//
+    public $thumbResize;
     public $thumbResizeWidth;
     public $thumbResizeHeight;
     public $thumbSizeMax;

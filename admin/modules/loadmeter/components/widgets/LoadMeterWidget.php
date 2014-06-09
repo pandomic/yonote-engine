@@ -42,7 +42,7 @@ class LoadMeterWidget extends CWidget
         if (function_exists('sys_getloadavg'))
         {
             $usage = sys_getloadavg();
-            return $usage[0];
+            return ceil($usage[0]);
         }
         return 0;
     }
@@ -67,8 +67,8 @@ class LoadMeterWidget extends CWidget
      */
     public function getDiskUsage()
     {
-        $total = disk_total_space('/');
-        $free = disk_free_space('/');
+        $total = disk_total_space($_SERVER['DOCUMENT_ROOT']);
+        $free = disk_free_space($_SERVER['DOCUMENT_ROOT']);
         $used = $total-$free;
         return ceil($used/$total*100);
     }

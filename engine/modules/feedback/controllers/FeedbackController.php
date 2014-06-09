@@ -13,6 +13,7 @@ class FeedbackController extends CApplicationController
 
     public function actionIndex()
     {
+        $this->pageTitle = Yii::t('FeedbackModule.feedback','page.feedback.title');
         $model = new Feedback();
         if (isset($_POST['Feedback']))
         {

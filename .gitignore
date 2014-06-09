@@ -10,9 +10,16 @@ engine/templates/sovi
 engine/templates/sovi/
 engine/templates/nikolai
 engine/templates/nikolai/
-
 engine/assets/**
 engine/cache/*.bin
+engine/uploads/archives/*.zip
+engine/uploads/images/*.jpg
+engine/uploads/images/*.png
+engine/uploads/images/*.gif
+engine/uploads/photos/*.jpg
+engine/uploads/photos/*.png
+engine/uploads/photos/*.gif
+yonote.sql
 >>>>>>> 37a660eae4f6a4fe8943220fb84cccfedc3d989d
 
 #################

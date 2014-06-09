@@ -213,7 +213,7 @@
   -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2);
 }
-@media (max-width: 767px) {
+@media (max-width: 1199px) {
   .sidebar {
     width: auto;
     float: none;

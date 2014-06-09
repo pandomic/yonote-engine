@@ -131,6 +131,7 @@ return array(
             'loginUrl' => array('base/login'),
             'returnUrl' => array('base/index'),
             'allowAutoLogin' => true,
+            'autoRenewCookie' => true,
             'dbComponentId' => 'db',
             'userTable' => '{{user}}'
         ),

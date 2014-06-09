@@ -30,6 +30,7 @@ return array(
     'model.secondstep.email' => 'Email',
     'model.secondstep.password' => 'Password',
     'model.secondstep.passwordrepeat' => 'Repeat password',
+    'model.secondstep.phpmbstring' => 'Checking the mbstring extension',
     
     'model.secondstep.error.required' => 'An empty field given.',
     'model.secondstep.error.name.match' => 'Username can consists of only word characters, and "_","-" symbols.',
